@@ -28,38 +28,14 @@ export default async function ServicesPage() {
         <div className="container">
           {/* Table of Contents */}
           <div className="toc-section">
-            <h2 className="toc-title">Какво предлагаме</h2>
-            <div className="toc-grid">
-              <a href="#prodajbi-dostavki" className="toc-card">
-                <div className="toc-icon">📦</div>
-                <h3>Продажби и доставки</h3>
-                <p>Фискални устройства, POS оборудване, софтуер и консумативи</p>
-              </a>
-
-              <a href="#abonamentno-obsluzhvane" className="toc-card">
-                <div className="toc-icon">💼</div>
-                <h3>Абонаментно обслужване</h3>
-                <p>Договори за сервиз и поддръжка на фискални устройства</p>
-              </a>
-
-              <a href="#servizni-uslugi" className="toc-card">
-                <div className="toc-icon">🛠️</div>
-                <h3>Сервизни услуги</h3>
-                <p>Ремонт, програмиране и техническо обслужване</p>
-              </a>
-
-              <a href="#kompyutarni-uslugi" className="toc-card">
-                <div className="toc-icon">💻</div>
-                <h3>Компютърни услуги</h3>
-                <p>Монтаж, настройка и поддръжка на IT инфраструктура</p>
-              </a>
-
-              <a href="#dopalnitelni-uslugi" className="toc-card">
-                <div className="toc-icon">🎓</div>
-                <h3>Допълнителни услуги</h3>
-                <p>Обучение, консултации и проектиране на системи</p>
-              </a>
-            </div>
+            <h2 className="toc-title">Съдържание</h2>
+            <ol className="toc-list">
+              <li><a href="#prodajbi-dostavki">Продажби и доставки</a></li>
+              <li><a href="#abonamentno-obsluzhvane">Абонаментно обслужване (сервиз на фискални устройства)</a></li>
+              <li><a href="#servizni-uslugi">Сервизни услуги</a></li>
+              <li><a href="#kompyutarni-uslugi">Компютърни услуги</a></li>
+              <li><a href="#dopalnitelni-uslugi">Допълнителни услуги</a></li>
+            </ol>
           </div>
 
           {/* Продажби и доставки */}
