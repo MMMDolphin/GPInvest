@@ -46,6 +46,18 @@ export const HeroSlides: CollectionConfig = {
       relationTo: 'media',
       required: true,
       label: 'Фоново изображение',
+      admin: {
+        description: 'Full-width background image for the slide',
+      },
+    },
+    {
+      name: 'productImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Продуктово изображение',
+      admin: {
+        description: 'Product image displayed on the right side of the slide',
+      },
     },
     {
       name: 'order',

@@ -51,6 +51,10 @@ export default async function HomePage() {
       url: typeof slide.backgroundImage === 'object' ? slide.backgroundImage.url : '',
       alt: typeof slide.backgroundImage === 'object' ? slide.backgroundImage.alt : slide.title,
     },
+    productImage: slide.productImage && typeof slide.productImage === 'object' ? {
+      url: slide.productImage.url,
+      alt: slide.productImage.alt || slide.title,
+    } : undefined,
   }))
 
   // Transform products data

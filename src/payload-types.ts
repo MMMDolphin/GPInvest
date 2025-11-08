@@ -255,7 +255,14 @@ export interface HeroSlide {
    * URL to redirect when button is clicked
    */
   buttonLink?: string | null;
+  /**
+   * Full-width background image for the slide
+   */
   backgroundImage: number | Media;
+  /**
+   * Product image displayed on the right side of the slide
+   */
+  productImage?: (number | null) | Media;
   /**
    * Order in the carousel (1, 2, 3...)
    */
@@ -449,6 +456,7 @@ export interface HeroSlidesSelect<T extends boolean = true> {
   buttonText?: T;
   buttonLink?: T;
   backgroundImage?: T;
+  productImage?: T;
   order?: T;
   active?: T;
   updatedAt?: T;

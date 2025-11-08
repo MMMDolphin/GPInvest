@@ -15,6 +15,10 @@ interface HeroSlide {
     url: string
     alt: string
   }
+  productImage?: {
+    url: string
+    alt: string
+  }
 }
 
 interface HeroCarouselProps {
@@ -57,7 +61,8 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
           key={slide.id}
           className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
         >
-          <div className="hero-image">
+          {/* Background Image */}
+          <div className="hero-background">
             <Image
               src={slide.backgroundImage.url}
               alt={slide.backgroundImage.alt}
@@ -65,19 +70,37 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
               priority={index === 0}
               style={{ objectFit: 'cover' }}
             />
-            <div className="hero-overlay"></div>
           </div>
 
-          <div className="hero-content">
+          {/* Content Container */}
+          <div className="hero-content-wrapper">
             <div className="container">
-              <div className="hero-text">
-                {slide.subtitle && <p className="hero-subtitle">{slide.subtitle}</p>}
-                <h1 className="hero-title">{slide.title}</h1>
-                {slide.description && <p className="hero-description">{slide.description}</p>}
-                {slide.buttonText && slide.buttonLink && (
-                  <a href={slide.buttonLink} className="btn btn-primary hero-btn">
-                    {slide.buttonText}
-                  </a>
+              <div className="hero-split-layout">
+                {/* Left Side - Text Content */}
+                <div className="hero-text-section">
+                  {slide.subtitle && <p className="hero-subtitle">{slide.subtitle}</p>}
+                  <h1 className="hero-title">{slide.title}</h1>
+                  {slide.description && <p className="hero-description">{slide.description}</p>}
+                  {slide.buttonText && slide.buttonLink && (
+                    <a href={slide.buttonLink} className="btn btn-light hero-btn">
+                      {slide.buttonText}
+                    </a>
+                  )}
+                </div>
+
+                {/* Right Side - Product Image */}
+                {slide.productImage && (
+                  <div className="hero-product-section">
+                    <div className="hero-product-image">
+                      <Image
+                        src={slide.productImage.url}
+                        alt={slide.productImage.alt}
+                        fill
+                        style={{ objectFit: 'contain' }}
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
