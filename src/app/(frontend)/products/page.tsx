@@ -45,10 +45,10 @@ export default async function ProductsPage() {
   return (
     <>
       <Navigation companyName={siteSettings.companyName} />
-      <Breadcrumb items={[{ label: 'Продукти' }]} />
 
       <div className="page-header">
         <div className="container">
+          <Breadcrumb items={[{ label: 'Продукти' }]} />
           <h1>Нашите продукти</h1>
           <p className="page-subtitle">
             Професионално оборудване и софтуер за вашия бизнес

@@ -17,10 +17,10 @@ export default async function ContactPage() {
   return (
     <>
       <Navigation companyName={siteSettings.companyName} />
-      <Breadcrumb items={[{ label: 'Контакти' }]} />
 
       <div className="page-header">
         <div className="container">
+          <Breadcrumb items={[{ label: 'Контакти' }]} />
           <h1>Контакти</h1>
           <p className="page-subtitle">Свържете се с нас за консултация или запитване</p>
         </div>

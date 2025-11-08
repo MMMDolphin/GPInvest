@@ -17,10 +17,10 @@ export default async function AboutPage() {
   return (
     <>
       <Navigation companyName={siteSettings.companyName} />
-      <Breadcrumb items={[{ label: 'За нас' }]} />
 
       <div className="page-header">
         <div className="container">
+          <Breadcrumb items={[{ label: 'За нас' }]} />
           <h1>За нас</h1>
           <p className="page-subtitle">Дългогодишен опит и надеждни решения</p>
         </div>

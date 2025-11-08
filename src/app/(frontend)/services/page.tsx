@@ -17,10 +17,10 @@ export default async function ServicesPage() {
   return (
     <>
       <Navigation companyName={siteSettings.companyName} />
-      <Breadcrumb items={[{ label: 'Услуги' }]} />
 
       <div className="page-header">
         <div className="container">
+          <Breadcrumb items={[{ label: 'Услуги' }]} />
           <h1>Услуги</h1>
           <p className="page-subtitle">Цялостни решения за вашия бизнес</p>
         </div>
