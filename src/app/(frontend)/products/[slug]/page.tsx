@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/ContactForm'
+import StickyCTA from '@/components/StickyCTA'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 import { headers } from 'next/headers'
@@ -118,6 +119,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // Get category name
   const categoryName = typeof product.category === 'object' ? product.category.name : ''
 
+  // Calculate price without VAT
+  const vatRate = product.vatRate || 20
+  const priceWithVAT = product.price
+  const priceWithoutVAT = priceWithVAT / (1 + vatRate / 100)
+
+  // Build SEO-optimized title
+  const seoTitle = product.brand && product.model
+    ? `${product.brand} | ${product.model} | ${product.name}`
+    : product.brand
+    ? `${product.brand} | ${product.name}`
+    : product.name
+
   return (
     <>
       <Navigation companyName={siteSettings.companyName} />
@@ -130,7 +143,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               { label: product.name },
             ]}
           />
-          <h1>{product.name}</h1>
+          <h1 className="product-seo-title">{seoTitle}</h1>
           {product.shortDescription && (
             <p className="page-subtitle">{product.shortDescription}</p>
           )}
@@ -177,12 +190,41 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div className="product-info">
               <div className="product-category">{categoryName}</div>
 
+              {/* Highlights */}
+              {product.highlights && product.highlights.length > 0 && (
+                <div className="product-highlights">
+                  <ul className="highlights-list">
+                    {product.highlights.map((item: any, index: number) => (
+                      <li key={index}>{item.highlight}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <div className="product-price-section">
-                <div className="product-price">{product.price.toFixed(2)} лв</div>
+                <div className="price-with-vat">
+                  <div className="product-price">{priceWithVAT.toFixed(2)} лв</div>
+                  <div className="price-label">с ДДС</div>
+                </div>
+                <div className="price-without-vat">
+                  Цена без ДДС: {priceWithoutVAT.toFixed(2)} лв
+                </div>
                 <div className={`product-stock ${product.inStock ? 'in-stock' : 'out-of-stock'}`}>
                   {product.inStock ? '✓ В наличност' : '✕ Няма в наличност'}
                 </div>
               </div>
+
+              {/* Trust Badges */}
+              {product.trustBadges && product.trustBadges.length > 0 && (
+                <div className="trust-badges">
+                  {product.trustBadges.map((item: any, index: number) => (
+                    <div key={index} className="trust-badge">
+                      <span className="badge-icon">✓</span>
+                      <span className="badge-text">{item.badge}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {product.features && product.features.length > 0 && (
                 <div className="product-features">
@@ -232,6 +274,48 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </table>
             </div>
           )}
+
+          {/* Included Services */}
+          {product.includedServices && product.includedServices.length > 0 && (
+            <div className="included-services-section">
+              <h2>Включени услуги</h2>
+              <div className="services-grid">
+                {product.includedServices.map((service: any, index: number) => (
+                  <div key={index} className="service-card">
+                    <div className="service-icon">✓</div>
+                    <div className="service-content">
+                      <h3>{service.service}</h3>
+                      {service.description && <p>{service.description}</p>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Certifications */}
+          {product.certifications && product.certifications.length > 0 && (
+            <div className="certifications-section">
+              <h2>Сертификати</h2>
+              <div className="certifications-grid">
+                {product.certifications.map((cert: any, index: number) => (
+                  <div key={index} className="certification-card">
+                    {typeof cert.image === 'object' && cert.image.url && (
+                      <div className="certification-image">
+                        <Image
+                          src={cert.image.url}
+                          alt={cert.name}
+                          width={200}
+                          height={200}
+                        />
+                      </div>
+                    )}
+                    <div className="certification-name">{cert.name}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -244,6 +328,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
         instagram={siteSettings.instagram}
         linkedin={siteSettings.linkedin}
       />
+
+      <StickyCTA productName={product.name} />
     </>
   )
 }

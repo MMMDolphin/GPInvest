@@ -1,0 +1,71 @@
+.sticky-cta {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--color-light-blue) 0%, var(--color-medium-blue) 100%);
+  color: var(--color-white);
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: var(--font-family);
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 163, 224, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 1000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.sticky-cta.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.sticky-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0, 163, 224, 0.5);
+}
+
+.sticky-cta:active {
+  transform: translateY(-1px);
+}
+
+.cta-icon {
+  font-size: 1.3rem;
+}
+
+.cta-text {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .sticky-cta {
+    bottom: 15px;
+    right: 15px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .cta-icon {
+    font-size: 1.2rem;
+  }
+
+  .cta-text {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sticky-cta {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    justify-content: center;
+    padding: 1rem;
+  }
+}

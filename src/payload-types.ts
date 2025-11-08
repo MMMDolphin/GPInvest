@@ -187,6 +187,14 @@ export interface Category {
  */
 export interface Product {
   id: number;
+  /**
+   * Brand or manufacturer name (e.g., Datecs, Tremol)
+   */
+  brand: string;
+  /**
+   * Product model number (e.g., Daisy Compact S 01)
+   */
+  model?: string | null;
   name: string;
   /**
    * URL-friendly version of the name
@@ -213,6 +221,14 @@ export interface Product {
   shortDescription?: string | null;
   category: number | Category;
   price: number;
+  /**
+   * VAT rate percentage (default 20%)
+   */
+  vatRate?: number | null;
+  /**
+   * Warranty period in months
+   */
+  warrantyMonths?: number | null;
   image: number | Media;
   gallery?:
     | {
@@ -220,9 +236,41 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short bullet points highlighting key product benefits
+   */
+  highlights?:
+    | {
+        highlight: string;
+        id?: string | null;
+      }[]
+    | null;
   features?:
     | {
         feature: string;
+        id?: string | null;
+      }[]
+    | null;
+  includedServices?:
+    | {
+        service: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  certifications?:
+    | {
+        name: string;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Trust indicators (e.g., "Безплатна консултация", "Гаранция 12 месеца")
+   */
+  trustBadges?:
+    | {
+        badge: string;
         id?: string | null;
       }[]
     | null;
@@ -414,12 +462,16 @@ export interface CategoriesSelect<T extends boolean = true> {
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
+  brand?: T;
+  model?: T;
   name?: T;
   slug?: T;
   description?: T;
   shortDescription?: T;
   category?: T;
   price?: T;
+  vatRate?: T;
+  warrantyMonths?: T;
   image?: T;
   gallery?:
     | T
@@ -427,10 +479,36 @@ export interface ProductsSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  highlights?:
+    | T
+    | {
+        highlight?: T;
+        id?: T;
+      };
   features?:
     | T
     | {
         feature?: T;
+        id?: T;
+      };
+  includedServices?:
+    | T
+    | {
+        service?: T;
+        description?: T;
+        id?: T;
+      };
+  certifications?:
+    | T
+    | {
+        name?: T;
+        image?: T;
+        id?: T;
+      };
+  trustBadges?:
+    | T
+    | {
+        badge?: T;
         id?: T;
       };
   specifications?:

@@ -11,6 +11,23 @@ export const Products: CollectionConfig = {
   },
   fields: [
     {
+      name: 'brand',
+      type: 'text',
+      required: true,
+      label: 'Марка / Производител',
+      admin: {
+        description: 'Brand or manufacturer name (e.g., Datecs, Tremol)',
+      },
+    },
+    {
+      name: 'model',
+      type: 'text',
+      label: 'Модел',
+      admin: {
+        description: 'Product model number (e.g., Daisy Compact S 01)',
+      },
+    },
+    {
       name: 'name',
       type: 'text',
       required: true,
@@ -51,8 +68,29 @@ export const Products: CollectionConfig = {
       name: 'price',
       type: 'number',
       required: true,
-      label: 'Цена (лв)',
+      label: 'Цена (лв с ДДС)',
       min: 0,
+    },
+    {
+      name: 'vatRate',
+      type: 'number',
+      label: 'ДДС (%)',
+      defaultValue: 20,
+      min: 0,
+      max: 100,
+      admin: {
+        description: 'VAT rate percentage (default 20%)',
+      },
+    },
+    {
+      name: 'warrantyMonths',
+      type: 'number',
+      label: 'Гаранция (месеци)',
+      defaultValue: 12,
+      min: 0,
+      admin: {
+        description: 'Warranty period in months',
+      },
     },
     {
       name: 'image',
@@ -75,6 +113,23 @@ export const Products: CollectionConfig = {
       ],
     },
     {
+      name: 'highlights',
+      type: 'array',
+      label: 'Ключови предимства (3-5)',
+      maxRows: 5,
+      admin: {
+        description: 'Short bullet points highlighting key product benefits',
+      },
+      fields: [
+        {
+          name: 'highlight',
+          type: 'text',
+          required: true,
+          label: 'Предимство',
+        },
+      ],
+    },
+    {
       name: 'features',
       type: 'array',
       label: 'Характеристики',
@@ -84,6 +139,60 @@ export const Products: CollectionConfig = {
           type: 'text',
           required: true,
           label: 'Характеристика',
+        },
+      ],
+    },
+    {
+      name: 'includedServices',
+      type: 'array',
+      label: 'Включени услуги',
+      fields: [
+        {
+          name: 'service',
+          type: 'text',
+          required: true,
+          label: 'Услуга',
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Описание',
+        },
+      ],
+    },
+    {
+      name: 'certifications',
+      type: 'array',
+      label: 'Сертификати',
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+          required: true,
+          label: 'Име на сертификат',
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'Изображение на сертификат',
+        },
+      ],
+    },
+    {
+      name: 'trustBadges',
+      type: 'array',
+      label: 'Доверителни бадж-ове',
+      maxRows: 5,
+      admin: {
+        description: 'Trust indicators (e.g., "Безплатна консултация", "Гаранция 12 месеца")',
+      },
+      fields: [
+        {
+          name: 'badge',
+          type: 'text',
+          required: true,
+          label: 'Бадж',
         },
       ],
     },
