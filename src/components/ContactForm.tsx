@@ -13,6 +13,7 @@ export default function ContactForm({ productName, productUrl }: ContactFormProp
     company: '',
     phone: '',
     email: '',
+    additionalInfo: '',
     product: productName || '',
     productUrl: productUrl || '',
   })
@@ -97,6 +98,7 @@ export default function ContactForm({ productName, productUrl }: ContactFormProp
         company: '',
         phone: '',
         email: '',
+        additionalInfo: '',
         product: productName || '',
         productUrl: productUrl || '',
       })
@@ -175,6 +177,20 @@ export default function ContactForm({ productName, productUrl }: ContactFormProp
           className={errors.email ? 'error' : ''}
         />
         {errors.email && <span className="error-message">{errors.email}</span>}
+      </div>
+
+      <div className="form-group full-width">
+        <label htmlFor="additionalInfo">
+          5. Допълнителна информация
+        </label>
+        <textarea
+          id="additionalInfo"
+          name="additionalInfo"
+          value={formData.additionalInfo}
+          onChange={handleChange}
+          rows={4}
+          placeholder="Въведете допълнителни детайли за вашето запитване..."
+        />
       </div>
 
       <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
