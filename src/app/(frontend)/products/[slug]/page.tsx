@@ -119,16 +119,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // Get category name
   const categoryName = typeof product.category === 'object' ? product.category.name : ''
 
+  // Get brand name
+  const brandName = typeof product.brand === 'object' ? product.brand.name : ''
+
   // Calculate price without VAT
   const vatRate = product.vatRate || 20
   const priceWithVAT = product.price
   const priceWithoutVAT = priceWithVAT / (1 + vatRate / 100)
 
   // Build SEO-optimized title
-  const seoTitle = product.brand && product.model
-    ? `${product.brand} | ${product.model} | ${product.name}`
-    : product.brand
-    ? `${product.brand} | ${product.name}`
+  const seoTitle = brandName && product.model
+    ? `${brandName} | ${product.model} | ${product.name}`
+    : brandName
+    ? `${brandName} | ${product.name}`
     : product.name
 
   return (
@@ -217,12 +220,26 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {/* Trust Badges */}
               {product.trustBadges && product.trustBadges.length > 0 && (
                 <div className="trust-badges">
-                  {product.trustBadges.map((item: any, index: number) => (
-                    <div key={index} className="trust-badge">
-                      <span className="badge-icon">✓</span>
-                      <span className="badge-text">{item.badge}</span>
-                    </div>
-                  ))}
+                  {product.trustBadges.map((item: any, index: number) => {
+                    const badge = typeof item === 'object' ? item : null
+                    if (!badge) return null
+
+                    const iconMap: Record<string, string> = {
+                      check: '✓',
+                      shield: '🛡️',
+                      truck: '🚚',
+                      settings: '⚙️',
+                      phone: '📞',
+                      star: '⭐',
+                    }
+
+                    return (
+                      <div key={badge.id || index} className="trust-badge">
+                        <span className="badge-icon">{iconMap[badge.icon] || '✓'}</span>
+                        <span className="badge-text">{badge.name}</span>
+                      </div>
+                    )
+                  })}
                 </div>
               )}
 
@@ -298,21 +315,29 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div className="certifications-section">
               <h2>Сертификати</h2>
               <div className="certifications-grid">
-                {product.certifications.map((cert: any, index: number) => (
-                  <div key={index} className="certification-card">
-                    {typeof cert.image === 'object' && cert.image.url && (
-                      <div className="certification-image">
-                        <Image
-                          src={cert.image.url}
-                          alt={cert.name}
-                          width={200}
-                          height={200}
-                        />
-                      </div>
-                    )}
-                    <div className="certification-name">{cert.name}</div>
-                  </div>
-                ))}
+                {product.certifications.map((item: any, index: number) => {
+                  const cert = typeof item === 'object' ? item : null
+                  if (!cert) return null
+
+                  return (
+                    <div key={cert.id || index} className="certification-card">
+                      {typeof cert.image === 'object' && cert.image.url && (
+                        <div className="certification-image">
+                          <Image
+                            src={cert.image.url}
+                            alt={cert.name}
+                            width={200}
+                            height={200}
+                          />
+                        </div>
+                      )}
+                      <div className="certification-name">{cert.name}</div>
+                      {cert.description && (
+                        <p className="certification-description">{cert.description}</p>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             </div>
           )}

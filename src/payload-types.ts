@@ -70,6 +70,9 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
+    brands: Brand;
+    certifications: Certification;
+    'trust-badges': TrustBadge;
     products: Product;
     'hero-slides': HeroSlide;
     'payload-kv': PayloadKv;
@@ -82,6 +85,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    brands: BrandsSelect<false> | BrandsSelect<true>;
+    certifications: CertificationsSelect<false> | CertificationsSelect<true>;
+    'trust-badges': TrustBadgesSelect<false> | TrustBadgesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     'hero-slides': HeroSlidesSelect<false> | HeroSlidesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -183,14 +189,58 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "brands".
+ */
+export interface Brand {
+  id: number;
+  name: string;
+  /**
+   * URL-friendly version of the name
+   */
+  slug: string;
+  description?: string | null;
+  logo?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certifications".
+ */
+export interface Certification {
+  id: number;
+  name: string;
+  type?: ('ce' | 'iso' | 'nap' | 'other') | null;
+  description?: string | null;
+  image?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trust-badges".
+ */
+export interface TrustBadge {
+  id: number;
+  /**
+   * e.g., "Безплатна консултация", "Гаранция 12 месеца"
+   */
+  name: string;
+  type?: ('warranty' | 'free-service' | 'service' | 'delivery' | 'other') | null;
+  icon?: ('check' | 'shield' | 'truck' | 'settings' | 'phone' | 'star') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products".
  */
 export interface Product {
   id: number;
   /**
-   * Brand or manufacturer name (e.g., Datecs, Tremol)
+   * Select brand from the list (e.g., Datecs, Tremol)
    */
-  brand: string;
+  brand: number | Brand;
   /**
    * Product model number (e.g., Daisy Compact S 01)
    */
@@ -258,22 +308,14 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  certifications?:
-    | {
-        name: string;
-        image?: (number | null) | Media;
-        id?: string | null;
-      }[]
-    | null;
   /**
-   * Trust indicators (e.g., "Безплатна консултация", "Гаранция 12 месеца")
+   * Select certifications from the global list
    */
-  trustBadges?:
-    | {
-        badge: string;
-        id?: string | null;
-      }[]
-    | null;
+  certifications?: (number | Certification)[] | null;
+  /**
+   * Select trust badges from the global list
+   */
+  trustBadges?: (number | TrustBadge)[] | null;
   specifications?:
     | {
         name: string;
@@ -354,6 +396,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'brands';
+        value: number | Brand;
+      } | null)
+    | ({
+        relationTo: 'certifications';
+        value: number | Certification;
+      } | null)
+    | ({
+        relationTo: 'trust-badges';
+        value: number | TrustBadge;
       } | null)
     | ({
         relationTo: 'products';
@@ -459,6 +513,41 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "brands_select".
+ */
+export interface BrandsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certifications_select".
+ */
+export interface CertificationsSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  description?: T;
+  image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "trust-badges_select".
+ */
+export interface TrustBadgesSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
@@ -498,19 +587,8 @@ export interface ProductsSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
-  certifications?:
-    | T
-    | {
-        name?: T;
-        image?: T;
-        id?: T;
-      };
-  trustBadges?:
-    | T
-    | {
-        badge?: T;
-        id?: T;
-      };
+  certifications?: T;
+  trustBadges?: T;
   specifications?:
     | T
     | {

@@ -12,11 +12,12 @@ export const Products: CollectionConfig = {
   fields: [
     {
       name: 'brand',
-      type: 'text',
+      type: 'relationship',
+      relationTo: 'brands',
       required: true,
       label: 'Марка / Производител',
       admin: {
-        description: 'Brand or manufacturer name (e.g., Datecs, Tremol)',
+        description: 'Select brand from the list (e.g., Datecs, Tremol)',
       },
     },
     {
@@ -162,39 +163,23 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'certifications',
-      type: 'array',
+      type: 'relationship',
+      relationTo: 'certifications',
+      hasMany: true,
       label: 'Сертификати',
-      fields: [
-        {
-          name: 'name',
-          type: 'text',
-          required: true,
-          label: 'Име на сертификат',
-        },
-        {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          label: 'Изображение на сертификат',
-        },
-      ],
+      admin: {
+        description: 'Select certifications from the global list',
+      },
     },
     {
       name: 'trustBadges',
-      type: 'array',
+      type: 'relationship',
+      relationTo: 'trust-badges',
+      hasMany: true,
       label: 'Доверителни бадж-ове',
-      maxRows: 5,
       admin: {
-        description: 'Trust indicators (e.g., "Безплатна консултация", "Гаранция 12 месеца")',
+        description: 'Select trust badges from the global list',
       },
-      fields: [
-        {
-          name: 'badge',
-          type: 'text',
-          required: true,
-          label: 'Бадж',
-        },
-      ],
     },
     {
       name: 'specifications',
