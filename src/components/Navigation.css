@@ -1,0 +1,130 @@
+.navigation {
+  background-color: var(--color-deep-blue);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.logo:hover {
+  color: var(--color-light-blue);
+}
+
+.nav-menu {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li a {
+  color: var(--color-white);
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-menu li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-light-blue);
+  transition: width 0.3s ease;
+}
+
+.nav-menu li a:hover {
+  color: var(--color-light-blue);
+}
+
+.nav-menu li a:hover::after {
+  width: 100%;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: var(--color-white);
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-toggle span.open:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.nav-toggle span.open:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle span.open:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-deep-blue);
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .nav-menu.active {
+    max-height: 300px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-menu li {
+    text-align: center;
+  }
+
+  .nav-menu li a {
+    display: block;
+    padding: 1rem;
+  }
+
+  .nav-menu li a::after {
+    display: none;
+  }
+}

@@ -69,6 +69,9 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    categories: Category;
+    products: Product;
+    'hero-slides': HeroSlide;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +81,9 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
+    'hero-slides': HeroSlidesSelect<false> | HeroSlidesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -86,8 +92,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -160,6 +170,102 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string | null;
+  icon?: ('cash-register' | 'printer' | 'pos-terminal' | 'software' | 'accessories') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: number;
+  name: string;
+  /**
+   * URL-friendly version of the name
+   */
+  slug: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Short description for product cards
+   */
+  shortDescription?: string | null;
+  category: number | Category;
+  price: number;
+  image: number | Media;
+  gallery?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  features?:
+    | {
+        feature: string;
+        id?: string | null;
+      }[]
+    | null;
+  specifications?:
+    | {
+        name: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  inStock?: boolean | null;
+  /**
+   * Show on homepage
+   */
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero-slides".
+ */
+export interface HeroSlide {
+  id: number;
+  title: string;
+  subtitle?: string | null;
+  description?: string | null;
+  buttonText?: string | null;
+  /**
+   * URL to redirect when button is clicked
+   */
+  buttonLink?: string | null;
+  backgroundImage: number | Media;
+  /**
+   * Order in the carousel (1, 2, 3...)
+   */
+  order: number;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -189,6 +295,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'hero-slides';
+        value: number | HeroSlide;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -274,6 +392,70 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  shortDescription?: T;
+  category?: T;
+  price?: T;
+  image?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  features?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  specifications?:
+    | T
+    | {
+        name?: T;
+        value?: T;
+        id?: T;
+      };
+  inStock?: T;
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero-slides_select".
+ */
+export interface HeroSlidesSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  description?: T;
+  buttonText?: T;
+  buttonLink?: T;
+  backgroundImage?: T;
+  order?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -311,6 +493,46 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  companyName: string;
+  tagline?: string | null;
+  description?: string | null;
+  logo?: (number | null) | Media;
+  email?: string | null;
+  phone?: string | null;
+  address?: string | null;
+  workingHours?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  companyName?: T;
+  tagline?: T;
+  description?: T;
+  logo?: T;
+  email?: T;
+  phone?: T;
+  address?: T;
+  workingHours?: T;
+  facebook?: T;
+  instagram?: T;
+  linkedin?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
