@@ -2,6 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import Navigation from '@/components/Navigation'
+import Breadcrumb from '@/components/Breadcrumb'
 import ProductCard from '@/components/ProductCard'
 import Footer from '@/components/Footer'
 import './products.css'
@@ -44,6 +45,7 @@ export default async function ProductsPage() {
   return (
     <>
       <Navigation companyName={siteSettings.companyName} />
+      <Breadcrumb items={[{ label: 'Продукти' }]} />
 
       <div className="page-header">
         <div className="container">

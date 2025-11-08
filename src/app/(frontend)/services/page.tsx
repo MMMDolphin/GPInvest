@@ -2,6 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import Navigation from '@/components/Navigation'
+import Breadcrumb from '@/components/Breadcrumb'
 import Footer from '@/components/Footer'
 import './services.css'
 
@@ -16,6 +17,7 @@ export default async function ServicesPage() {
   return (
     <>
       <Navigation companyName={siteSettings.companyName} />
+      <Breadcrumb items={[{ label: 'Услуги' }]} />
 
       <div className="page-header">
         <div className="container">
