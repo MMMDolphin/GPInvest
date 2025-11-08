@@ -283,6 +283,7 @@
 .table-header .table-cell {
   padding: var(--spacing-md);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
 }
 
 .table-header .table-cell:last-child {
