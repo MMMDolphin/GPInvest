@@ -14,6 +14,73 @@ interface ProductPageProps {
   }>
 }
 
+// Helper function to render Payload rich text (Lexical JSON)
+function renderRichText(content: any): React.ReactNode {
+  if (!content || !content.root || !content.root.children) {
+    return null
+  }
+
+  const renderNode = (node: any, index: number): React.ReactNode => {
+    if (node.type === 'text') {
+      let text = node.text
+      if (node.format & 1) text = <strong key={index}>{text}</strong> // bold
+      if (node.format & 2) text = <em key={index}>{text}</em> // italic
+      return text
+    }
+
+    if (node.type === 'paragraph') {
+      return (
+        <p key={index}>
+          {node.children?.map((child: any, i: number) => renderNode(child, i))}
+        </p>
+      )
+    }
+
+    if (node.type === 'heading') {
+      const Tag = `h${node.tag}` as keyof JSX.IntrinsicElements
+      return (
+        <Tag key={index}>
+          {node.children?.map((child: any, i: number) => renderNode(child, i))}
+        </Tag>
+      )
+    }
+
+    if (node.type === 'list') {
+      const Tag = node.listType === 'bullet' || node.listType === 'check' ? 'ul' : 'ol'
+      return (
+        <Tag key={index} className={node.listType === 'check' ? 'checklist' : ''}>
+          {node.children?.map((child: any, i: number) => renderNode(child, i))}
+        </Tag>
+      )
+    }
+
+    if (node.type === 'listitem') {
+      return (
+        <li key={index}>
+          {node.children?.map((child: any, i: number) => renderNode(child, i))}
+        </li>
+      )
+    }
+
+    if (node.type === 'link') {
+      return (
+        <a key={index} href={node.url} target="_blank" rel="noopener noreferrer">
+          {node.children?.map((child: any, i: number) => renderNode(child, i))}
+        </a>
+      )
+    }
+
+    // Default: render children if they exist
+    if (node.children) {
+      return node.children.map((child: any, i: number) => renderNode(child, i))
+    }
+
+    return null
+  }
+
+  return content.root.children.map((node: any, index: number) => renderNode(node, index))
+}
+
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params
   const payloadConfig = await config
@@ -133,9 +200,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div className="product-description-section">
               <h2>Описание</h2>
               <div className="product-description">
-                {/* Render rich text content */}
-                {typeof product.description === 'object' &&
-                  JSON.stringify(product.description)}
+                {renderRichText(product.description)}
               </div>
             </div>
           )}

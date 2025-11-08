@@ -156,6 +156,65 @@
   font-size: 1.05rem;
 }
 
+.product-description p {
+  margin-bottom: var(--spacing-md);
+}
+
+.product-description ul,
+.product-description ol {
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-xl);
+}
+
+.product-description ul.checklist {
+  list-style: none;
+  padding-left: 0;
+}
+
+.product-description ul.checklist li {
+  padding-left: 1.75rem;
+  position: relative;
+  margin-bottom: var(--spacing-sm);
+}
+
+.product-description ul.checklist li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-light-blue);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.product-description strong {
+  font-weight: 600;
+  color: var(--color-deep-blue);
+}
+
+.product-description em {
+  font-style: italic;
+}
+
+.product-description a {
+  color: var(--color-light-blue);
+  text-decoration: underline;
+}
+
+.product-description a:hover {
+  color: var(--color-medium-blue);
+}
+
+.product-description h1,
+.product-description h2,
+.product-description h3,
+.product-description h4,
+.product-description h5,
+.product-description h6 {
+  color: var(--color-deep-blue);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
 /* Specifications */
 .product-specifications {
   margin-bottom: var(--spacing-2xl);
