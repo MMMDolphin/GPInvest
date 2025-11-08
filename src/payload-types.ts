@@ -340,6 +340,10 @@ export interface Product {
     | null;
   inStock?: boolean | null;
   /**
+   * PDF file with technical specifications for download
+   */
+  specificationFile?: (number | null) | Media;
+  /**
    * Show on homepage
    */
   featured?: boolean | null;
@@ -612,6 +616,7 @@ export interface ProductsSelect<T extends boolean = true> {
         id?: T;
       };
   inStock?: T;
+  specificationFile?: T;
   featured?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -207,6 +207,15 @@ export const Products: CollectionConfig = {
       label: 'В наличност',
     },
     {
+      name: 'specificationFile',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Файл със спецификация (PDF)',
+      admin: {
+        description: 'PDF file with technical specifications for download',
+      },
+    },
+    {
       name: 'featured',
       type: 'checkbox',
       defaultValue: false,

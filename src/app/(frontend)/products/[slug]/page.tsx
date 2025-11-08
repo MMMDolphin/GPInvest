@@ -258,13 +258,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
               {/* Action Buttons */}
               <div className="product-actions">
-                <button className="btn-primary-large">
+                <a href="#inquiry-form" className="btn-primary-large">
                   Запитване за продукта
-                </button>
-                <button className="btn-secondary-outline">
-                  <Download size={20} />
-                  <span>Свали спецификация</span>
-                </button>
+                </a>
+                {typeof product.specificationFile === 'object' && product.specificationFile?.url && (
+                  <a
+                    href={product.specificationFile.url}
+                    download
+                    className="btn-secondary-outline"
+                  >
+                    <Download size={20} />
+                    <span>Свали спецификация</span>
+                  </a>
+                )}
               </div>
 
               {/* Trust Badges */}
@@ -404,7 +410,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       )}
 
       {/* Contact Form Section */}
-      <section className="product-inquiry-section">
+      <section className="product-inquiry-section" id="inquiry-form">
         <div className="container">
           <div className="inquiry-content-wrapper">
             <div className="inquiry-header">
