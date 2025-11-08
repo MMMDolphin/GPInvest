@@ -102,92 +102,199 @@ export default async function ServicesPage() {
 
           {/* Абонаментна поддръжка */}
           <div className="service-section">
-            <h2 className="service-title">Абонаментна поддръжка</h2>
+            <h2 className="service-title">💼 Абонаментно обслужване (сервиз на фискални устройства)</h2>
             <p className="service-intro">
               Осигуряваме непрекъсната работа на вашите фискални устройства със специализирани
-              абонаментни планове.
+              абонаментни планове и професионално обслужване.
             </p>
 
-            <div className="pricing-grid">
-              <div className="pricing-card">
-                <h3>12-месечен договор</h3>
-                <div className="price">100 лв</div>
-                <p className="price-note">при подписване в сервиза</p>
-                <ul className="pricing-features">
-                  <li>Редовна профилактика</li>
-                  <li>Приоритетна поддръжка</li>
-                  <li>Безплатни консултации</li>
-                  <li>Отстъпки при ремонт</li>
-                </ul>
-                <p className="price-additional">
-                  + Такса за поддръжка на връзка с НАП: 90 лв
-                </p>
+            {/* Subscription Services Table */}
+            <div className="pricing-table-container">
+              <h3 className="table-section-title">1.1. В сервиза:</h3>
+              <div className="pricing-table">
+                <div className="table-header">
+                  <div className="table-cell">Услуга</div>
+                  <div className="table-cell">Цена (лв. с ДДС)</div>
+                  <div className="table-cell">Цена (€)</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Договор за абонаментно обслужване (12 м.) + такса НАП (12 м.)</div>
+                  <div className="table-cell price-cell">190.00 лв.</div>
+                  <div className="table-cell">97.15 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Договор за абонаментно обслужване (6 м.) + такса НАП (6 м.)</div>
+                  <div className="table-cell price-cell">150.00 лв.</div>
+                  <div className="table-cell">76.69 €</div>
+                </div>
               </div>
 
-              <div className="pricing-card">
-                <h3>6-месечен договор</h3>
-                <div className="price">60 лв</div>
-                <p className="price-note">при подписване в сервиза</p>
-                <ul className="pricing-features">
-                  <li>Редовна профилактика</li>
-                  <li>Техническа поддръжка</li>
-                  <li>Консултации</li>
-                </ul>
-                <p className="price-additional">
-                  + Такса за поддръжка на връзка с НАП: 45 лв
-                </p>
+              <h3 className="table-section-title">1.2. На адрес на клиента (гр. София):</h3>
+              <div className="pricing-table">
+                <div className="table-header">
+                  <div className="table-cell">Услуга</div>
+                  <div className="table-cell">Цена (лв. с ДДС)</div>
+                  <div className="table-cell">Цена (€)</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">12 месеца + НАП + посещение</div>
+                  <div className="table-cell price-cell">214.00 лв.</div>
+                  <div className="table-cell">109.42 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">6 месеца + НАП + посещение</div>
+                  <div className="table-cell price-cell">174.00 лв.</div>
+                  <div className="table-cell">88.96 €</div>
+                </div>
               </div>
 
-              <div className="pricing-card highlighted">
-                <div className="badge">Популярен избор</div>
-                <h3>Договор на адрес</h3>
-                <div className="price">150 лв</div>
-                <p className="price-note">включва посещение на място</p>
-                <ul className="pricing-features">
-                  <li>Обслужване на адрес на клиента</li>
-                  <li>Кратко обучение на персонал</li>
-                  <li>Програмиране на данни</li>
-                  <li>Приоритетна поддръжка</li>
-                </ul>
+              <h3 className="table-section-title">1.3. Такси поддръжка връзка с НАП:</h3>
+              <div className="pricing-table">
+                <div className="table-header">
+                  <div className="table-cell">Услуга</div>
+                  <div className="table-cell">Цена (лв. с ДДС)</div>
+                  <div className="table-cell">Цена (€)</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">За 12 месеца</div>
+                  <div className="table-cell price-cell">90.00 лв.</div>
+                  <div className="table-cell">45.96 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">За 6 месеца</div>
+                  <div className="table-cell price-cell">70.00 лв.</div>
+                  <div className="table-cell">36.81 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Активация на SIM карта</div>
+                  <div className="table-cell price-cell">18.00 лв.</div>
+                  <div className="table-cell">9.20 €</div>
+                </div>
               </div>
-            </div>
-
-            <div className="service-note">
-              <p>
-                <strong>Активация на SIM карта:</strong> За свързване на устройството към НАП
-                се заплаща еднократна такса за активация.
-              </p>
             </div>
           </div>
 
           {/* Сервизни услуги */}
           <div className="service-section">
-            <h2 className="service-title">Сервизни услуги</h2>
+            <h2 className="service-title">🛠️ Сервизни услуги</h2>
 
-            <div className="services-columns">
-              <div className="service-column">
-                <h3>Услуги на място и в сервиза</h3>
-                <ul>
-                  <li>Общи сервизни услуги</li>
-                  <li>Доставка и обучение</li>
-                  <li>Програмиране на фирмени данни</li>
-                  <li>Въвеждане на департаменти и артикули</li>
-                  <li>Смяна на батерии</li>
-                  <li>Издаване на дубликати на документи</li>
-                  <li>Ремонт на компоненти</li>
-                </ul>
+            <div className="pricing-table-container">
+              <h3 className="table-section-title">2.1. В сервиза или на адрес на клиента</h3>
+              <div className="pricing-table">
+                <div className="table-header">
+                  <div className="table-cell">Услуга</div>
+                  <div className="table-cell">Цена (лв.)</div>
+                  <div className="table-cell">Цена (€)</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Посещение на адрес (гр. София, до 50 км)</div>
+                  <div className="table-cell price-cell">24.00</div>
+                  <div className="table-cell">12.27 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Посещение извън София</div>
+                  <div className="table-cell price-cell">По договаряне</div>
+                  <div className="table-cell">—</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Доставка и кратко обучение (гр. София)</div>
+                  <div className="table-cell price-cell">60.00</div>
+                  <div className="table-cell">30.68 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Общи услуги (до 30 мин.)</div>
+                  <div className="table-cell price-cell">36.00</div>
+                  <div className="table-cell">18.41 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Програмиране на клише / име / адрес</div>
+                  <div className="table-cell price-cell">24.00</div>
+                  <div className="table-cell">12.27 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Програмиране на ДДС номер</div>
+                  <div className="table-cell price-cell">24.00</div>
+                  <div className="table-cell">12.27 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Програмиране на департамент (до 50 бр.)</div>
+                  <div className="table-cell price-cell">30.00</div>
+                  <div className="table-cell">15.34 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Програмиране на артикули (до 15 бр.)</div>
+                  <div className="table-cell price-cell">36.00</div>
+                  <div className="table-cell">18.41 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Всеки следващ артикул</div>
+                  <div className="table-cell price-cell">1.00/бр.</div>
+                  <div className="table-cell">0.51 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Подмяна на батерии (без комплект)</div>
+                  <div className="table-cell price-cell">24.00</div>
+                  <div className="table-cell">12.27 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Дубликат на документи</div>
+                  <div className="table-cell price-cell">36.00</div>
+                  <div className="table-cell">18.41 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Дубликат на паспорт</div>
+                  <div className="table-cell price-cell">36.00</div>
+                  <div className="table-cell">18.41 €</div>
+                </div>
               </div>
 
-              <div className="service-column">
-                <h3>Услуги само в сервиза</h3>
-                <ul>
-                  <li>Смяна на КЛЕН (контролна лента с ел. носител)</li>
-                  <li>Смяна на фискална памет</li>
-                  <li>Бракуване на касови апарати</li>
-                  <li>Почистване и профилактика</li>
-                  <li>Подмяна на фискални компоненти</li>
-                  <li>Програмиране на лого</li>
-                </ul>
+              <h3 className="table-section-title">2.2. Само в сервиза</h3>
+              <div className="pricing-table">
+                <div className="table-header">
+                  <div className="table-cell">Услуга</div>
+                  <div className="table-cell">Цена (лв.)</div>
+                  <div className="table-cell">Цена (€)</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Смяна на КЛЕН</div>
+                  <div className="table-cell price-cell">72.00</div>
+                  <div className="table-cell">36.81 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Смяна на фискална памет – касов апарат</div>
+                  <div className="table-cell price-cell">180.00</div>
+                  <div className="table-cell">92.03 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Смяна на фискална памет – фискален принтер</div>
+                  <div className="table-cell price-cell">240.00</div>
+                  <div className="table-cell">122.71 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Бракуване на касов апарат</div>
+                  <div className="table-cell price-cell">120.00</div>
+                  <div className="table-cell">61.44 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Почистване (замърсен апарат)</div>
+                  <div className="table-cell price-cell">48.00</div>
+                  <div className="table-cell">24.54 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Подмяна на компонент (без части)</div>
+                  <div className="table-cell price-cell">48.00</div>
+                  <div className="table-cell">24.54 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Програмиране на лого (PNG, max 320×120 px)</div>
+                  <div className="table-cell price-cell">48.00</div>
+                  <div className="table-cell">24.54 €</div>
+                </div>
+                <div className="table-row">
+                  <div className="table-cell">Други ремонти</div>
+                  <div className="table-cell price-cell">По запитване</div>
+                  <div className="table-cell">—</div>
+                </div>
               </div>
             </div>
           </div>
