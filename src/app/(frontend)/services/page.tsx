@@ -26,8 +26,44 @@ export default async function ServicesPage() {
 
       <section className="section">
         <div className="container">
+          {/* Table of Contents */}
+          <div className="toc-section">
+            <h2 className="toc-title">Какво предлагаме</h2>
+            <div className="toc-grid">
+              <a href="#prodajbi-dostavki" className="toc-card">
+                <div className="toc-icon">📦</div>
+                <h3>Продажби и доставки</h3>
+                <p>Фискални устройства, POS оборудване, софтуер и консумативи</p>
+              </a>
+
+              <a href="#abonamentno-obsluzhvane" className="toc-card">
+                <div className="toc-icon">💼</div>
+                <h3>Абонаментно обслужване</h3>
+                <p>Договори за сервиз и поддръжка на фискални устройства</p>
+              </a>
+
+              <a href="#servizni-uslugi" className="toc-card">
+                <div className="toc-icon">🛠️</div>
+                <h3>Сервизни услуги</h3>
+                <p>Ремонт, програмиране и техническо обслужване</p>
+              </a>
+
+              <a href="#kompyutarni-uslugi" className="toc-card">
+                <div className="toc-icon">💻</div>
+                <h3>Компютърни услуги</h3>
+                <p>Монтаж, настройка и поддръжка на IT инфраструктура</p>
+              </a>
+
+              <a href="#dopalnitelni-uslugi" className="toc-card">
+                <div className="toc-icon">🎓</div>
+                <h3>Допълнителни услуги</h3>
+                <p>Обучение, консултации и проектиране на системи</p>
+              </a>
+            </div>
+          </div>
+
           {/* Продажби и доставки */}
-          <div className="service-section">
+          <div id="prodajbi-dostavki" className="service-section">
             <h2 className="service-title">Продажби и доставки</h2>
             <p className="service-intro">
               Предлагаме широк спектър от фискални устройства, POS оборудване и софтуерни
@@ -101,7 +137,7 @@ export default async function ServicesPage() {
           </div>
 
           {/* Абонаментна поддръжка */}
-          <div className="service-section">
+          <div id="abonamentno-obsluzhvane" className="service-section">
             <h2 className="service-title">💼 Абонаментно обслужване (сервиз на фискални устройства)</h2>
             <p className="service-intro">
               Осигуряваме непрекъсната работа на вашите фискални устройства със специализирани
@@ -175,7 +211,7 @@ export default async function ServicesPage() {
           </div>
 
           {/* Сервизни услуги */}
-          <div className="service-section">
+          <div id="servizni-uslugi" className="service-section">
             <h2 className="service-title">🛠️ Сервизни услуги</h2>
 
             <div className="pricing-table-container">
@@ -300,8 +336,8 @@ export default async function ServicesPage() {
           </div>
 
           {/* Компютърни услуги */}
-          <div className="service-section">
-            <h2 className="service-title">Компютърни услуги</h2>
+          <div id="kompyutarni-uslugi" className="service-section">
+            <h2 className="service-title">💻 Компютърни услуги</h2>
 
             <div className="services-grid">
               <div className="service-card">
@@ -327,8 +363,8 @@ export default async function ServicesPage() {
           </div>
 
           {/* Допълнителни услуги */}
-          <div className="service-section">
-            <h2 className="service-title">Допълнителни услуги</h2>
+          <div id="dopalnitelni-uslugi" className="service-section">
+            <h2 className="service-title">🎓 Допълнителни услуги</h2>
 
             <div className="additional-services">
               <div className="additional-service">
