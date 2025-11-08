@@ -39,6 +39,11 @@ export default function Navigation({ companyName = 'GP Invest' }: NavigationProp
               </Link>
             </li>
             <li>
+              <Link href="/services" onClick={() => setIsOpen(false)}>
+                Услуги
+              </Link>
+            </li>
+            <li>
               <Link href="/about" onClick={() => setIsOpen(false)}>
                 За нас
               </Link>

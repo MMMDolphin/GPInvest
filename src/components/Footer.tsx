@@ -37,6 +37,7 @@ export default function Footer({
             <ul className="footer-links">
               <li><Link href="/">Начало</Link></li>
               <li><Link href="/products">Продукти</Link></li>
+              <li><Link href="/services">Услуги</Link></li>
               <li><Link href="/about">За нас</Link></li>
               <li><Link href="/contact">Контакти</Link></li>
             </ul>
