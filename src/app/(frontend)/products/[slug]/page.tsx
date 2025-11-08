@@ -4,8 +4,10 @@ import config from '@/payload.config'
 import { notFound } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
+import ContactForm from '@/components/ContactForm'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
+import { headers } from 'next/headers'
 import './product-detail.css'
 
 interface ProductPageProps {
@@ -89,6 +91,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const siteSettings = await payload.findGlobal({
     slug: 'site-settings',
   })
+
+  // Get the full URL for the product
+  const headersList = await headers()
+  const host = headersList.get('host') || 'localhost:3000'
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+  const productUrl = `${protocol}://${host}/products/${slug}`
 
   // Fetch product by slug
   const productsData = await payload.find({
@@ -186,13 +194,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </ul>
                 </div>
               )}
-
-              <div className="product-actions">
-                <a href="/contact" className="btn btn-primary">
-                  Запитване за продукта
-                </a>
-              </div>
             </div>
+          </div>
+
+          {/* Product Inquiry Form */}
+          <div className="product-inquiry-section">
+            <h2>Запитване за продукта</h2>
+            <p className="inquiry-intro">
+              Интересувате се от този продукт? Попълнете формата по-долу и ние ще се свържем с вас скоро.
+            </p>
+            <ContactForm productName={product.name} productUrl={productUrl} />
           </div>
 
           {/* Product Description */}

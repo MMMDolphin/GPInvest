@@ -3,10 +3,20 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
+import ContactForm from '@/components/ContactForm'
 import Footer from '@/components/Footer'
 import './contact.css'
 
-export default async function ContactPage() {
+interface ContactPageProps {
+  searchParams: Promise<{
+    product?: string
+  }>
+}
+
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const params = await searchParams
+  const productName = params.product
+
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
@@ -130,47 +140,7 @@ export default async function ContactPage() {
               <p className="form-intro">
                 Попълнете формата по-долу и ние ще се свържем с вас възможно най-скоро.
               </p>
-              <form className="contact-form">
-                <div className="form-group">
-                  <label htmlFor="name">Име *</label>
-                  <input type="text" id="name" name="name" required />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="company">Фирма</label>
-                  <input type="text" id="company" name="company" />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Имейл *</label>
-                  <input type="email" id="email" name="email" required />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="phone">Телефон</label>
-                  <input type="tel" id="phone" name="phone" />
-                </div>
-
-                <div className="form-group full-width">
-                  <label htmlFor="subject">Тема</label>
-                  <select id="subject" name="subject">
-                    <option value="">Изберете тема</option>
-                    <option value="products">Запитване за продукти</option>
-                    <option value="service">Техническа поддръжка</option>
-                    <option value="subscription">Абонаментни услуги</option>
-                    <option value="other">Друго</option>
-                  </select>
-                </div>
-
-                <div className="form-group full-width">
-                  <label htmlFor="message">Съобщение *</label>
-                  <textarea id="message" name="message" rows={6} required></textarea>
-                </div>
-
-                <button type="submit" className="btn btn-primary">
-                  Изпрати запитване
-                </button>
-              </form>
+              <ContactForm productName={productName} />
             </div>
           </div>
         </div>
