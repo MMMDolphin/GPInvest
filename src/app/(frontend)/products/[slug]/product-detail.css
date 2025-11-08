@@ -179,9 +179,11 @@
 }
 
 .badge-icon {
-  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #2ecc71;
-  font-weight: bold;
+  flex-shrink: 0;
 }
 
 .badge-text {

@@ -227,7 +227,22 @@ export interface TrustBadge {
    */
   name: string;
   type?: ('warranty' | 'free-service' | 'service' | 'delivery' | 'other') | null;
-  icon?: ('check' | 'shield' | 'truck' | 'settings' | 'phone' | 'star') | null;
+  icon?:
+    | (
+        | 'check'
+        | 'shield'
+        | 'truck'
+        | 'settings'
+        | 'phone'
+        | 'star'
+        | 'award'
+        | 'wrench'
+        | 'clock'
+        | 'package'
+        | 'badge-check'
+        | 'heart'
+      )
+    | null;
   updatedAt: string;
   createdAt: string;
 }

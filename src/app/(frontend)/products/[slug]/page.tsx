@@ -9,6 +9,10 @@ import StickyCTA from '@/components/StickyCTA'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 import { headers } from 'next/headers'
+import {
+  Check, Shield, Truck, Settings, Phone, Star,
+  Award, Wrench, Clock, Package, BadgeCheck, Heart
+} from 'lucide-react'
 import './product-detail.css'
 
 interface ProductPageProps {
@@ -224,18 +228,28 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     const badge = typeof item === 'object' ? item : null
                     if (!badge) return null
 
-                    const iconMap: Record<string, string> = {
-                      check: '✓',
-                      shield: '🛡️',
-                      truck: '🚚',
-                      settings: '⚙️',
-                      phone: '📞',
-                      star: '⭐',
+                    const iconMap: Record<string, React.ElementType> = {
+                      check: Check,
+                      shield: Shield,
+                      truck: Truck,
+                      settings: Settings,
+                      phone: Phone,
+                      star: Star,
+                      award: Award,
+                      wrench: Wrench,
+                      clock: Clock,
+                      package: Package,
+                      'badge-check': BadgeCheck,
+                      heart: Heart,
                     }
+
+                    const IconComponent = iconMap[badge.icon] || Check
 
                     return (
                       <div key={badge.id || index} className="trust-badge">
-                        <span className="badge-icon">{iconMap[badge.icon] || '✓'}</span>
+                        <span className="badge-icon">
+                          <IconComponent size={20} strokeWidth={2} />
+                        </span>
                         <span className="badge-text">{badge.name}</span>
                       </div>
                     )
