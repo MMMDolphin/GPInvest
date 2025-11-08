@@ -19,13 +19,14 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .breadcrumb-item a {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
   text-decoration: none;
   transition: color 0.3s ease;
+  font-weight: 500;
 }
 
 .breadcrumb-item a:hover {
@@ -34,32 +35,33 @@
 }
 
 .breadcrumb-separator {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   opacity: 1;
   user-select: none;
+  font-weight: 400;
 }
 
 .breadcrumb-current {
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 500;
+  color: var(--color-white);
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
   .breadcrumb {
-    padding: 0 0 var(--spacing-xs) 0;
+    padding: 0 0 var(--spacing-sm) 0;
   }
 
   .breadcrumb-item {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
-  .breadcrumb-item {
-    font-size: 0.8rem;
+  .breadcrumb {
+    padding: 0 0 var(--spacing-sm) 0;
   }
 
-  .breadcrumb {
-    padding: 0 0 var(--spacing-xs) 0;
+  .breadcrumb-item {
+    font-size: 0.9rem;
   }
 }
