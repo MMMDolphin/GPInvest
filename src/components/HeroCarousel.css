@@ -190,6 +190,10 @@
     min-height: 650px;
   }
 
+  .hero-content-wrapper {
+    padding-top: var(--spacing-2xl);
+  }
+
   .hero-split-layout {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
@@ -260,8 +264,12 @@
     min-height: 550px;
   }
 
+  .hero-content-wrapper {
+    padding-top: var(--spacing-xl);
+  }
+
   .hero-split-layout {
-    padding: var(--spacing-lg) 0 var(--spacing-xl);
+    padding: var(--spacing-md) 0 var(--spacing-xl);
   }
 
   .hero-subtitle {
