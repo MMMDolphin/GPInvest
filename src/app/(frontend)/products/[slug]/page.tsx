@@ -7,6 +7,8 @@ import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/ContactForm'
 import StickyCTA from '@/components/StickyCTA'
 import Footer from '@/components/Footer'
+import ProductImageGallery from '@/components/ProductImageGallery'
+import CertificationGrid from '@/components/CertificationGrid'
 import Image from 'next/image'
 import { headers } from 'next/headers'
 import {
@@ -176,39 +178,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <section className="product-hero">
         <div className="container">
           <div className="product-hero-grid">
-            {/* Left: Product Images */}
-            <div className="product-images-section">
-              <div className="product-main-image-wrapper">
-                {typeof product.image === 'object' && product.image.url && (
-                  <Image
-                    src={product.image.url}
-                    alt={product.image.alt || product.name}
-                    width={800}
-                    height={800}
-                    className="product-main-image"
-                    priority
-                  />
-                )}
-              </div>
-
-              {product.gallery && product.gallery.length > 0 && (
-                <div className="product-thumbnails">
-                  {product.gallery.slice(0, 4).map((item: any, index: number) => (
-                    <div key={index} className="product-thumbnail">
-                      {typeof item.image === 'object' && item.image.url && (
-                        <Image
-                          src={item.image.url}
-                          alt={item.image.alt || `${product.name} ${index + 1}`}
-                          width={120}
-                          height={120}
-                          className="thumbnail-image"
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Left: Product Images with Lightbox */}
+            {typeof product.image === 'object' && product.image.url && (
+              <ProductImageGallery
+                mainImage={{
+                  url: product.image.url,
+                  alt: product.image.alt || product.name,
+                }}
+                gallery={product.gallery}
+                productName={product.name}
+              />
+            )}
 
             {/* Right: Product Information */}
             <div className="product-info-section">
@@ -374,37 +354,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
       </section>
 
-      {/* Certifications Section */}
+      {/* Certifications Section with Lightbox */}
       {product.certifications && product.certifications.length > 0 && (
         <section className="certifications-section">
           <div className="container">
             <h2 className="section-heading">Сертификати и одобрения</h2>
-            <div className="certifications-grid">
-              {product.certifications.map((item: any, index: number) => {
-                const cert = typeof item === 'object' ? item : null
-                if (!cert) return null
-
-                return (
-                  <div key={cert.id || index} className="certification-card">
-                    {typeof cert.image === 'object' && cert.image.url && (
-                      <div className="certification-image-wrapper">
-                        <Image
-                          src={cert.image.url}
-                          alt={cert.name}
-                          width={120}
-                          height={120}
-                          className="certification-image"
-                        />
-                      </div>
-                    )}
-                    <div className="certification-name">{cert.name}</div>
-                    {cert.description && (
-                      <p className="certification-description">{cert.description}</p>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
+            <CertificationGrid
+              certifications={product.certifications.map((item: any) => ({
+                id: item.id || '',
+                name: item.name || '',
+                description: item.description || '',
+                image: item.image,
+              }))}
+            />
           </div>
         </section>
       )}
