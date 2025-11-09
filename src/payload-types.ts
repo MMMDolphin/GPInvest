@@ -102,9 +102,11 @@ export interface Config {
   };
   globals: {
     'site-settings': SiteSetting;
+    'home-categories': HomeCategory;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'home-categories': HomeCategoriesSelect<false> | HomeCategoriesSelect<true>;
   };
   locale: null;
   user: User & {
@@ -744,6 +746,57 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * Manage the categories section displayed on the homepage
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-categories".
+ */
+export interface HomeCategory {
+  id: number;
+  /**
+   * Toggle to show/hide the categories section on homepage
+   */
+  enabled?: boolean | null;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * Add up to 6 product categories to display on the homepage
+   */
+  categories?:
+    | {
+        /**
+         * e.g., "Фискални устройства"
+         */
+        name: string;
+        /**
+         * Short description of the category
+         */
+        description: string;
+        /**
+         * Select an icon for this category
+         */
+        icon:
+          | 'ShoppingCart'
+          | 'Laptop'
+          | 'Wrench'
+          | 'Package'
+          | 'Smartphone'
+          | 'Monitor'
+          | 'Printer'
+          | 'HardDrive'
+          | 'Scale'
+          | 'Barcode';
+        /**
+         * e.g., "/products?category=fiscal-devices" or "/products"
+         */
+        link: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
@@ -759,6 +812,27 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   facebook?: T;
   instagram?: T;
   linkedin?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-categories_select".
+ */
+export interface HomeCategoriesSelect<T extends boolean = true> {
+  enabled?: T;
+  title?: T;
+  subtitle?: T;
+  categories?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        icon?: T;
+        link?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

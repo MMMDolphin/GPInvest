@@ -16,6 +16,7 @@ import { TrustBadges } from './collections/TrustBadges'
 import { HeroSlides } from './collections/HeroSlides'
 import { EmailNewsletter } from './collections/EmailNewsletter'
 import { SiteSettings } from './globals/SiteSettings'
+import { HomeCategories } from './globals/HomeCategories'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +29,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Categories, Brands, Certifications, TrustBadges, Products, HeroSlides, EmailNewsletter],
-  globals: [SiteSettings],
+  globals: [SiteSettings, HomeCategories],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

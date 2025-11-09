@@ -44,10 +44,9 @@ export default async function HomePage() {
     limit: 6,
   })
 
-  // Fetch categories for category overview section
-  const categoriesData = await payload.find({
-    collection: 'categories',
-    limit: 4,
+  // Fetch homepage categories from admin
+  const homeCategoriesData = await payload.findGlobal({
+    slug: 'home-categories',
   })
 
   // Transform hero slides data
@@ -82,19 +81,53 @@ export default async function HomePage() {
     inStock: product.inStock,
   }))
 
-  // Transform categories data
-  const categories = categoriesData.docs.map((category: any) => ({
-    id: category.id,
-    name: category.name,
-    slug: category.slug,
-    description: category.description,
-  }))
-
   return (
     <>
       <Navigation companyName={siteSettings.companyName} />
 
       {heroSlides.length > 0 && <HeroCarousel slides={heroSlides} />}
+
+      {/* Product Categories Section */}
+      {homeCategoriesData.enabled && homeCategoriesData.categories && homeCategoriesData.categories.length > 0 && (
+        <section className="categories-section">
+          <div className="container">
+            <div className="section-header">
+              <h2 className="section-title">{homeCategoriesData.title}</h2>
+              {homeCategoriesData.subtitle && (
+                <p className="section-subtitle">{homeCategoriesData.subtitle}</p>
+              )}
+            </div>
+
+            <div className="categories-grid">
+              {homeCategoriesData.categories.map((category: any, index: number) => {
+                const IconComponent = category.icon === 'ShoppingCart' ? ShoppingCart :
+                                     category.icon === 'Laptop' ? Laptop :
+                                     category.icon === 'Wrench' ? Wrench :
+                                     category.icon === 'Package' ? Package :
+                                     category.icon === 'Smartphone' ? Phone :
+                                     category.icon === 'Monitor' ? Laptop :
+                                     category.icon === 'Printer' ? Laptop :
+                                     category.icon === 'HardDrive' ? Package :
+                                     category.icon === 'Scale' ? Package :
+                                     category.icon === 'Barcode' ? Package : ShoppingCart
+
+                return (
+                  <Link key={index} href={category.link} className="category-card">
+                    <div className="category-icon">
+                      <IconComponent size={40} />
+                    </div>
+                    <h3>{category.name}</h3>
+                    <p>{category.description}</p>
+                    <div className="category-arrow">
+                      <ArrowRight size={20} />
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Featured Products Section */}
       <section className="featured-products-section">
@@ -217,66 +250,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Product Categories Section */}
-      {categories.length > 0 && (
-        <section className="categories-section">
-          <div className="container">
-            <div className="section-header">
-              <h2 className="section-title">Категории продукти</h2>
-              <p className="section-subtitle">
-                Разгледайте нашата богата гама от POS решения и оборудване
-              </p>
-            </div>
-
-            <div className="categories-grid">
-              <Link href="/products?category=fiscal-devices" className="category-card">
-                <div className="category-icon">
-                  <ShoppingCart size={40} />
-                </div>
-                <h3>Фискални устройства</h3>
-                <p>Фискални принтери, касови апарати и ел. везни</p>
-                <div className="category-arrow">
-                  <ArrowRight size={20} />
-                </div>
-              </Link>
-
-              <Link href="/products?category=pos-hardware" className="category-card">
-                <div className="category-icon">
-                  <Laptop size={40} />
-                </div>
-                <h3>POS Хардуер</h3>
-                <p>Терминали, дисплеи, скенери и принтери</p>
-                <div className="category-arrow">
-                  <ArrowRight size={20} />
-                </div>
-              </Link>
-
-              <Link href="/products?category=software" className="category-card">
-                <div className="category-icon">
-                  <Wrench size={40} />
-                </div>
-                <h3>Софтуер</h3>
-                <p>POS софтуер и лицензи за управление</p>
-                <div className="category-arrow">
-                  <ArrowRight size={20} />
-                </div>
-              </Link>
-
-              <Link href="/products?category=accessories" className="category-card">
-                <div className="category-icon">
-                  <Package size={40} />
-                </div>
-                <h3>Консумативи</h3>
-                <p>Термична хартия, ленти и аксесоари</p>
-                <div className="category-arrow">
-                  <ArrowRight size={20} />
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* CTA Banner Section */}
       <section className="cta-banner-section">
