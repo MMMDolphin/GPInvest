@@ -80,40 +80,29 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
                   <ChevronDown size={16} className={productsDropdownOpen ? 'rotated' : ''} />
                 </button>
                 {productsDropdownOpen && (
-                  <div className="mega-menu">
-                    <div className="mega-menu-content">
-                      <div className="mega-menu-section">
-                        <h3>Категории продукти</h3>
-                        <div className="mega-menu-grid">
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link
+                        href="/products"
+                        onClick={() => setProductsDropdownOpen(false)}
+                      >
+                        Всички продукти
+                      </Link>
+                    </li>
+                    {categories.map((category) => {
+                      if (!category.slug) return null
+                      return (
+                        <li key={category.id}>
                           <Link
-                            href="/products"
-                            className="mega-menu-item all-products"
+                            href={`/products/category/${category.slug}`}
                             onClick={() => setProductsDropdownOpen(false)}
                           >
-                            <Package size={20} />
-                            <div>
-                              <strong>Всички продукти</strong>
-                              <span>Виж целия каталог</span>
-                            </div>
+                            {category.name}
                           </Link>
-                          {categories.map((category) => {
-                            if (!category.slug) return null
-                            return (
-                              <Link
-                                key={category.id}
-                                href={`/products/category/${category.slug}`}
-                                className="mega-menu-item"
-                                onClick={() => setProductsDropdownOpen(false)}
-                              >
-                                <Package size={18} />
-                                <span>{category.name}</span>
-                              </Link>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        </li>
+                      )
+                    })}
+                  </ul>
                 )}
               </li>
               <li>
