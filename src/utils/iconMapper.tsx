@@ -1,5 +1,4 @@
 import {
-  CashRegister,
   ShoppingCart,
   Laptop,
   Wrench,
@@ -10,11 +9,12 @@ import {
   HardDrive,
   Scale,
   Barcode,
+  Banknote,
 } from 'lucide-react'
 
 // Icon mapping for category icons
 const iconMap: Record<string, any> = {
-  CashRegister,
+  CashRegister: Banknote, // Using Banknote as alternative to CashRegister
   ShoppingCart,
   Laptop,
   Wrench,

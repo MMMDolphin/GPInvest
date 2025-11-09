@@ -4,7 +4,7 @@ import config from '@/payload.config'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Breadcrumb from '@/components/Breadcrumb'
-import Link from '@/components/Link'
+import Link from 'next/link'
 import { Phone } from 'lucide-react'
 import '../software.css'
 
