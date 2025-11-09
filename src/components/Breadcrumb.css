@@ -23,26 +23,26 @@
 }
 
 .breadcrumb-item a {
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--color-gray-900);
   text-decoration: none;
   transition: color 0.3s ease;
   font-weight: 500;
 }
 
 .breadcrumb-item a:hover {
-  color: var(--color-white);
+  color: var(--color-medium-blue);
   text-decoration: underline;
 }
 
 .breadcrumb-separator {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-gray-600);
   opacity: 1;
   user-select: none;
   font-weight: 400;
 }
 
 .breadcrumb-current {
-  color: var(--color-white);
+  color: var(--color-gray-900);
   font-weight: 600;
 }
 
