@@ -6,6 +6,10 @@ import Navigation from '@/components/Navigation'
 import HeroCarousel from '@/components/HeroCarousel'
 import ProductCard from '@/components/ProductCard'
 import Footer from '@/components/Footer'
+import {
+  Shield, Headphones, Truck, Award, BadgeCheck, Clock,
+  ShoppingCart, Laptop, Wrench, Package, ArrowRight, Phone
+} from 'lucide-react'
 import './homepage.css'
 
 export default async function HomePage() {
@@ -40,6 +44,12 @@ export default async function HomePage() {
     limit: 6,
   })
 
+  // Fetch categories for category overview section
+  const categoriesData = await payload.find({
+    collection: 'categories',
+    limit: 4,
+  })
+
   // Transform hero slides data
   const heroSlides = heroSlidesData.docs.map((slide: any) => ({
     id: slide.id,
@@ -72,29 +82,49 @@ export default async function HomePage() {
     inStock: product.inStock,
   }))
 
+  // Transform categories data
+  const categories = categoriesData.docs.map((category: any) => ({
+    id: category.id,
+    name: category.name,
+    slug: category.slug,
+    description: category.description,
+  }))
+
   return (
     <>
       <Navigation companyName={siteSettings.companyName} />
 
       {heroSlides.length > 0 && <HeroCarousel slides={heroSlides} />}
 
-      <section className="section">
+      {/* Featured Products Section */}
+      <section className="featured-products-section">
         <div className="container">
-          <h2 className="section-title">Нашите продукти</h2>
-          <p className="section-subtitle">
-            Открийте най-доброто оборудване и софтуер за вашия бизнес
-          </p>
+          <div className="section-header">
+            <div className="section-header-accent"></div>
+            <h2 className="section-title">Нашите продукти</h2>
+            <p className="section-subtitle">
+              Открийте най-доброто оборудване и софтуер за вашия бизнес
+            </p>
+          </div>
 
           {products.length > 0 ? (
-            <div className="products-grid">
-              {products.map((product: any) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+            <>
+              <div className="products-grid">
+                {products.map((product: any) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              <div className="section-cta">
+                <Link href="/products" className="btn-primary-gradient">
+                  <span>Виж всички продукти</span>
+                  <ArrowRight size={20} />
+                </Link>
+              </div>
+            </>
           ) : (
             <div className="empty-state">
               <p>Все още няма продукти в каталога.</p>
-              <Link href="/admin" className="btn btn-primary">
+              <Link href="/admin" className="btn-primary-gradient">
                 Добави продукти
               </Link>
             </div>
@@ -102,15 +132,20 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section features-section">
+      {/* Features Section */}
+      <section className="features-section">
         <div className="container">
-          <h2 className="section-title">Защо да изберете GP Invest?</h2>
+          <div className="section-header">
+            <h2 className="section-title">Защо да изберете GP Invest?</h2>
+            <p className="section-subtitle">
+              Вашият надежден партньор за професионални бизнес решения
+            </p>
+          </div>
+
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <Shield size={32} />
               </div>
               <h3>Гарантирано качество</h3>
               <p>Предлагаме само проверени и сертифицирани продукти от водещи производители.</p>
@@ -118,22 +153,150 @@ export default async function HomePage() {
 
             <div className="feature-card">
               <div className="feature-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
+                <Headphones size={32} />
               </div>
               <h3>Техническа поддръжка</h3>
-              <p>Осигуряваме пълна техническа поддръжка и сервиз на всички наши продукти.</p>
+              <p>Осигуряваме пълна техническа поддръжка и сервиз на всички наши продукти 24/7.</p>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+                <Truck size={32} />
               </div>
               <h3>Бърза доставка</h3>
-              <p>Гарантираме бърза доставка и инсталация на оборудването.</p>
+              <p>Гарантираме бърза доставка и професионална инсталация на оборудването.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">
+                <Award size={32} />
+              </div>
+              <h3>Официална гаранция</h3>
+              <p>Всички продукти се предлагат с официална гаранция от производителя.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">
+                <BadgeCheck size={32} />
+              </div>
+              <h3>Сертификация</h3>
+              <p>Сертифицирани решения, отговарящи на всички нормативни изисквания.</p>
+            </div>
+
+            <div className="feature-card">
+              <div className="feature-icon">
+                <Clock size={32} />
+              </div>
+              <h3>Дългогодишен опит</h3>
+              <p>Над 15 години опит в индустрията и хиляди доволни клиенти.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section className="stats-section">
+        <div className="container">
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-number">15+</div>
+              <div className="stat-label">Години опит</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">500+</div>
+              <div className="stat-label">Доволни клиенти</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">1000+</div>
+              <div className="stat-label">Инсталирани продукта</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">24/7</div>
+              <div className="stat-label">Техническа поддръжка</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Categories Section */}
+      {categories.length > 0 && (
+        <section className="categories-section">
+          <div className="container">
+            <div className="section-header">
+              <h2 className="section-title">Категории продукти</h2>
+              <p className="section-subtitle">
+                Разгледайте нашата богата гама от POS решения и оборудване
+              </p>
+            </div>
+
+            <div className="categories-grid">
+              <Link href="/products?category=fiscal-devices" className="category-card">
+                <div className="category-icon">
+                  <ShoppingCart size={40} />
+                </div>
+                <h3>Фискални устройства</h3>
+                <p>Фискални принтери, касови апарати и ел. везни</p>
+                <div className="category-arrow">
+                  <ArrowRight size={20} />
+                </div>
+              </Link>
+
+              <Link href="/products?category=pos-hardware" className="category-card">
+                <div className="category-icon">
+                  <Laptop size={40} />
+                </div>
+                <h3>POS Хардуер</h3>
+                <p>Терминали, дисплеи, скенери и принтери</p>
+                <div className="category-arrow">
+                  <ArrowRight size={20} />
+                </div>
+              </Link>
+
+              <Link href="/products?category=software" className="category-card">
+                <div className="category-icon">
+                  <Wrench size={40} />
+                </div>
+                <h3>Софтуер</h3>
+                <p>POS софтуер и лицензи за управление</p>
+                <div className="category-arrow">
+                  <ArrowRight size={20} />
+                </div>
+              </Link>
+
+              <Link href="/products?category=accessories" className="category-card">
+                <div className="category-icon">
+                  <Package size={40} />
+                </div>
+                <h3>Консумативи</h3>
+                <p>Термична хартия, ленти и аксесоари</p>
+                <div className="category-arrow">
+                  <ArrowRight size={20} />
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Banner Section */}
+      <section className="cta-banner-section">
+        <div className="container">
+          <div className="cta-banner">
+            <div className="cta-content">
+              <h2>Готови ли сте да надградите вашия бизнес?</h2>
+              <p>
+                Свържете се с нас днес за безплатна консултация и персонализирана оферта
+              </p>
+            </div>
+            <div className="cta-actions">
+              <Link href="/contact" className="btn-cta-primary">
+                <Phone size={20} />
+                <span>Свържете се с нас</span>
+              </Link>
+              <Link href="/products" className="btn-cta-secondary">
+                <span>Разгледай продукти</span>
+                <ArrowRight size={20} />
+              </Link>
             </div>
           </div>
         </div>
