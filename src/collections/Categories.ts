@@ -26,15 +26,6 @@ export const Categories: CollectionConfig = {
       },
     },
     {
-      name: 'parent',
-      type: 'relationship',
-      relationTo: 'categories',
-      label: 'Родителска категория',
-      admin: {
-        description: 'Изберете родителска категория (оставете празно за главна категория)',
-      },
-    },
-    {
       name: 'description',
       type: 'textarea',
       label: 'Описание',
@@ -57,7 +48,7 @@ export const Categories: CollectionConfig = {
         { label: 'Barcode', value: 'Barcode' },
       ],
       admin: {
-        description: 'Иконата се показва само за главни категории на началната страница',
+        description: 'Иконата се показва на началната страница',
       },
     },
   ],

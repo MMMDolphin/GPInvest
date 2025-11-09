@@ -187,13 +187,9 @@ export interface Category {
    * URL-friendly version of the name (e.g., "pos-systems")
    */
   slug: string;
-  /**
-   * Изберете родителска категория (оставете празно за главна категория)
-   */
-  parent?: (number | null) | Category;
   description?: string | null;
   /**
-   * Иконата се показва само за главни категории на началната страница
+   * Иконата се показва на началната страница
    */
   icon?:
     | (
@@ -582,7 +578,6 @@ export interface MediaSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  parent?: T;
   description?: T;
   icon?: T;
   updatedAt?: T;

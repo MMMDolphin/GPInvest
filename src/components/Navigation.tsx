@@ -9,15 +9,6 @@ interface Category {
   id: string
   name: string
   slug?: string
-  parent?: string | Category | null
-}
-
-interface HierarchicalCategory {
-  id: string
-  name: string
-  slug?: string
-  level: number
-  children: HierarchicalCategory[]
 }
 
 interface Logo {
@@ -39,29 +30,6 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
 
   const toggleMenu = () => setIsOpen(!isOpen)
   const toggleProductsDropdown = () => setProductsDropdownOpen(!productsDropdownOpen)
-  const [hoveredParentId, setHoveredParentId] = useState<string | null>(null)
-
-  // Get parent categories only
-  const parentCategories = categories.filter(cat => {
-    const parentId = typeof cat.parent === 'object' && cat.parent !== null ? cat.parent.id : cat.parent
-    return !parentId
-  })
-
-  // Get children for a specific parent
-  const getChildrenForParent = (parentId: string) => {
-    return categories.filter(cat => {
-      const catParentId = typeof cat.parent === 'object' && cat.parent !== null ? cat.parent.id : cat.parent
-      return catParentId === parentId
-    })
-  }
-
-  // Get grandchildren for a specific child
-  const getGrandchildrenForChild = (childId: string) => {
-    return categories.filter(cat => {
-      const catParentId = typeof cat.parent === 'object' && cat.parent !== null ? cat.parent.id : cat.parent
-      return catParentId === childId
-    })
-  }
 
   const handleDropdownMouseEnter = () => {
     if (dropdownTimeout) {
@@ -127,79 +95,29 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
                   <ChevronDown size={16} className={productsDropdownOpen ? 'rotated' : ''} />
                 </span>
                 {productsDropdownOpen && (
-                  <div className="mega-menu">
-                    {/* Left Panel - Parent Categories */}
-                    <div className="mega-menu-left">
-                      <div className="mega-menu-header">
-                        <Link
-                          href="/products"
-                          onClick={() => setProductsDropdownOpen(false)}
-                          className="mega-menu-all-products"
-                        >
-                          Всички продукти
-                        </Link>
-                      </div>
-                      <ul className="mega-menu-parents">
-                        {parentCategories.map((parent) => {
-                          if (!parent.slug) return null
-                          const isHovered = hoveredParentId === parent.id
-                          return (
-                            <li
-                              key={parent.id}
-                              onMouseEnter={() => setHoveredParentId(parent.id)}
-                              className={isHovered ? 'active' : ''}
-                            >
-                              <Link
-                                href={`/products/category/${parent.slug}`}
-                                onClick={() => setProductsDropdownOpen(false)}
-                              >
-                                {parent.name}
-                              </Link>
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    </div>
-
-                    {/* Right Panel - Children & Grandchildren */}
-                    {hoveredParentId && (
-                      <div className="mega-menu-right">
-                        {getChildrenForParent(hoveredParentId).map((child) => {
-                          if (!child.slug) return null
-                          const grandchildren = getGrandchildrenForChild(child.id)
-
-                          return (
-                            <div key={child.id} className="mega-menu-category-group">
-                              <Link
-                                href={`/products/category/${child.slug}`}
-                                onClick={() => setProductsDropdownOpen(false)}
-                                className="mega-menu-child-title"
-                              >
-                                {child.name}
-                              </Link>
-                              {grandchildren.length > 0 && (
-                                <ul className="mega-menu-grandchildren">
-                                  {grandchildren.map((grandchild) => {
-                                    if (!grandchild.slug) return null
-                                    return (
-                                      <li key={grandchild.id}>
-                                        <Link
-                                          href={`/products/category/${grandchild.slug}`}
-                                          onClick={() => setProductsDropdownOpen(false)}
-                                        >
-                                          {grandchild.name}
-                                        </Link>
-                                      </li>
-                                    )
-                                  })}
-                                </ul>
-                              )}
-                            </div>
-                          )
-                        })}
-                      </div>
-                    )}
-                  </div>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link
+                        href="/products"
+                        onClick={() => setProductsDropdownOpen(false)}
+                      >
+                        Всички продукти
+                      </Link>
+                    </li>
+                    {categories.map((category) => {
+                      if (!category.slug) return null
+                      return (
+                        <li key={category.id}>
+                          <Link
+                            href={`/products/category/${category.slug}`}
+                            onClick={() => setProductsDropdownOpen(false)}
+                          >
+                            {category.name}
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
                 )}
               </li>
               <li>
@@ -278,25 +196,16 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
                         Всички продукти
                       </Link>
                     </li>
-                    {hierarchicalCategories.map((category) => {
+                    {categories.map((category) => {
                       if (!category.slug) return null
-
-                      // Determine CSS class based on level
-                      let className = ''
-                      if (category.level === 1) className = 'mobile-submenu-child'
-                      if (category.level === 2) className = 'mobile-submenu-grandchild'
-
-                      // Create indentation prefix
-                      const prefix = category.level === 1 ? '→ ' : category.level === 2 ? '→→ ' : ''
-
                       return (
-                        <li key={category.id} className={className}>
+                        <li key={category.id}>
                           <Link
                             href={`/products/category/${category.slug}`}
                             onClick={() => setIsOpen(false)}
                           >
                             <Package size={18} />
-                            {prefix}{category.name}
+                            {category.name}
                           </Link>
                         </li>
                       )
