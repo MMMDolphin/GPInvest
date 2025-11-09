@@ -190,6 +190,7 @@ export interface Category {
   description?: string | null;
   icon?:
     | (
+        | 'CashRegister'
         | 'ShoppingCart'
         | 'Laptop'
         | 'Wrench'

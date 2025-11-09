@@ -35,6 +35,7 @@ export const Categories: CollectionConfig = {
       type: 'select',
       label: 'Икона',
       options: [
+        { label: 'Cash Register', value: 'CashRegister' },
         { label: 'Shopping Cart', value: 'ShoppingCart' },
         { label: 'Laptop', value: 'Laptop' },
         { label: 'Wrench', value: 'Wrench' },

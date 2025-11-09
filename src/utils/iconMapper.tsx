@@ -1,4 +1,5 @@
 import {
+  CashRegister,
   ShoppingCart,
   Laptop,
   Wrench,
@@ -13,6 +14,7 @@ import {
 
 // Icon mapping for category icons
 const iconMap: Record<string, any> = {
+  CashRegister,
   ShoppingCart,
   Laptop,
   Wrench,
