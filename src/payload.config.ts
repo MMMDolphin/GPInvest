@@ -14,6 +14,7 @@ import { Brands } from './collections/Brands'
 import { Certifications } from './collections/Certifications'
 import { TrustBadges } from './collections/TrustBadges'
 import { HeroSlides } from './collections/HeroSlides'
+import { EmailNewsletter } from './collections/EmailNewsletter'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -26,7 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Brands, Certifications, TrustBadges, Products, HeroSlides],
+  collections: [Users, Media, Categories, Brands, Certifications, TrustBadges, Products, HeroSlides, EmailNewsletter],
   globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

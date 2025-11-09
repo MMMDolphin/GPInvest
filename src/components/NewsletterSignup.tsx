@@ -22,13 +22,24 @@ export default function NewsletterSignup() {
     setStatus('loading')
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      })
 
-      console.log('Newsletter subscription:', email)
+      const data = await response.json()
+
+      if (!response.ok) {
+        setStatus('error')
+        setMessage(data.error || 'Възникна грешка. Моля, опитайте отново.')
+        return
+      }
 
       setStatus('success')
-      setMessage('Благодарим ви! Успешно се абонирахте за нашия бюлетин.')
+      setMessage(data.message || 'Благодарим ви! Успешно се абонирахте за нашия бюлетин.')
       setEmail('')
 
       // Reset status after 5 seconds
@@ -36,7 +47,7 @@ export default function NewsletterSignup() {
         setStatus('idle')
         setMessage('')
       }, 5000)
-    } catch (error) {
+    } catch (_error) {
       setStatus('error')
       setMessage('Възникна грешка. Моля, опитайте отново.')
     }

@@ -75,6 +75,7 @@ export interface Config {
     'trust-badges': TrustBadge;
     products: Product;
     'hero-slides': HeroSlide;
+    'email-newsletter': EmailNewsletter;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     'trust-badges': TrustBadgesSelect<false> | TrustBadgesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     'hero-slides': HeroSlidesSelect<false> | HeroSlidesSelect<true>;
+    'email-newsletter': EmailNewsletterSelect<false> | EmailNewsletterSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -381,6 +383,33 @@ export interface HeroSlide {
   createdAt: string;
 }
 /**
+ * Newsletter email subscriptions
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-newsletter".
+ */
+export interface EmailNewsletter {
+  id: number;
+  /**
+   * Subscriber email address
+   */
+  email: string;
+  /**
+   * Subscription status
+   */
+  status: 'subscribed' | 'unsubscribed';
+  /**
+   * Date and time of subscription
+   */
+  subscribedAt: string;
+  /**
+   * Where the subscription came from
+   */
+  source?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -435,6 +464,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'hero-slides';
         value: number | HeroSlide;
+      } | null)
+    | ({
+        relationTo: 'email-newsletter';
+        value: number | EmailNewsletter;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -635,6 +668,18 @@ export interface HeroSlidesSelect<T extends boolean = true> {
   productImage?: T;
   order?: T;
   active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-newsletter_select".
+ */
+export interface EmailNewsletterSelect<T extends boolean = true> {
+  email?: T;
+  status?: T;
+  subscribedAt?: T;
+  source?: T;
   updatedAt?: T;
   createdAt?: T;
 }
