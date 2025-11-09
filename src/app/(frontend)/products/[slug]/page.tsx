@@ -9,12 +9,11 @@ import StickyCTA from '@/components/StickyCTA'
 import Footer from '@/components/Footer'
 import ProductImageGallery from '@/components/ProductImageGallery'
 import CertificationGrid from '@/components/CertificationGrid'
-import Image from 'next/image'
 import { headers } from 'next/headers'
 import {
   Check, Shield, Truck, Settings, Phone, Star,
   Award, Wrench, Clock, Package, BadgeCheck, Heart,
-  Download, FileText, Zap
+  Download, Zap
 } from 'lucide-react'
 import './product-detail.css'
 
@@ -47,7 +46,7 @@ function renderRichText(content: any): React.ReactNode {
     }
 
     if (node.type === 'heading') {
-      const Tag = `h${node.tag}` as keyof JSX.IntrinsicElements
+      const Tag = `h${node.tag}` as keyof React.JSX.IntrinsicElements
       return (
         <Tag key={index}>
           {node.children?.map((child: any, i: number) => renderNode(child, i))}
@@ -185,7 +184,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   url: product.image.url,
                   alt: product.image.alt || product.name,
                 }}
-                gallery={product.gallery}
+                gallery={product.gallery as any}
                 productName={product.name}
               />
             )}

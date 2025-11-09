@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import React from 'react'
+import Link from 'next/link'
 import config from '@/payload.config'
 import Navigation from '@/components/Navigation'
 import HeroCarousel from '@/components/HeroCarousel'
@@ -93,9 +94,9 @@ export default async function HomePage() {
           ) : (
             <div className="empty-state">
               <p>Все още няма продукти в каталога.</p>
-              <a href="/admin" className="btn btn-primary">
+              <Link href="/admin" className="btn btn-primary">
                 Добави продукти
-              </a>
+              </Link>
             </div>
           )}
         </div>

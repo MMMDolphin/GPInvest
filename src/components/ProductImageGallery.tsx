@@ -14,7 +14,7 @@ interface ProductImageGalleryProps {
       url: string
       alt: string
     }
-  }>
+  }> | null
   productName: string
 }
 

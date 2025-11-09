@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import Navigation from '@/components/Navigation'
@@ -85,9 +86,9 @@ export default async function ProductsPage() {
             ) : (
               <div className="empty-state">
                 <p>В момента няма налични продукти.</p>
-                <a href="/admin" className="btn btn-primary">
+                <Link href="/admin" className="btn btn-primary">
                   Добавете продукти от админ панела
-                </a>
+                </Link>
               </div>
             )}
           </div>
