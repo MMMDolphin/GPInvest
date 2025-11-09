@@ -26,9 +26,24 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false)
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null)
 
   const toggleMenu = () => setIsOpen(!isOpen)
   const toggleProductsDropdown = () => setProductsDropdownOpen(!productsDropdownOpen)
+
+  const handleDropdownMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout)
+    }
+    setProductsDropdownOpen(true)
+  }
+
+  const handleDropdownMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setProductsDropdownOpen(false)
+    }, 200)
+    setDropdownTimeout(timeout)
+  }
 
   // Track scroll for navbar shadow effect
   useEffect(() => {
@@ -72,8 +87,8 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
               </li>
               <li
                 className="nav-dropdown"
-                onMouseEnter={() => setProductsDropdownOpen(true)}
-                onMouseLeave={() => setProductsDropdownOpen(false)}
+                onMouseEnter={handleDropdownMouseEnter}
+                onMouseLeave={handleDropdownMouseLeave}
               >
                 <button className="nav-dropdown-trigger">
                   Продукти
