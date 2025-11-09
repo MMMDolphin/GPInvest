@@ -89,7 +89,7 @@ export default function Navigation({ companyName = 'GP Invest', categories = [] 
                           {categories.map((category) => (
                             <Link
                               key={category.id}
-                              href={`/products?category=${category.id}`}
+                              href={`/products/${category.slug}`}
                               className="mega-menu-item"
                               onClick={() => setProductsDropdownOpen(false)}
                             >
@@ -178,7 +178,7 @@ export default function Navigation({ companyName = 'GP Invest', categories = [] 
                     {categories.map((category) => (
                       <li key={category.id}>
                         <Link
-                          href={`/products?category=${category.id}`}
+                          href={`/products/${category.slug}`}
                           onClick={() => setIsOpen(false)}
                         >
                           <Package size={18} />

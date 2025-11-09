@@ -1,16 +1,34 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import ProductCard from '@/components/ProductCard'
 import { Package, Filter } from 'lucide-react'
 
 interface ProductsClientProps {
   products: any[]
   categories: any[]
+  initialCategory?: string | null
 }
 
-export default function ProductsClient({ products, categories }: ProductsClientProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+export default function ProductsClient({ products, categories, initialCategory = null }: ProductsClientProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory)
+  const router = useRouter()
+
+  const handleCategoryChange = (categoryId: string | null) => {
+    setSelectedCategory(categoryId)
+
+    if (categoryId === null) {
+      // Navigate to all products
+      router.push('/products')
+    } else {
+      // Find category slug and navigate
+      const category = categories.find(c => c.id === categoryId)
+      if (category?.slug) {
+        router.push(`/products/${category.slug}`)
+      }
+    }
+  }
 
   // Filter products by selected category
   const filteredProducts = selectedCategory
@@ -34,7 +52,7 @@ export default function ProductsClient({ products, categories }: ProductsClientP
             </div>
             <div className="categories-filter-grid">
               <button
-                onClick={() => setSelectedCategory(null)}
+                onClick={() => handleCategoryChange(null)}
                 className={`category-filter-btn ${selectedCategory === null ? 'active' : ''}`}
               >
                 <Package size={20} />
@@ -52,7 +70,7 @@ export default function ProductsClient({ products, categories }: ProductsClientP
                 return (
                   <button
                     key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
+                    onClick={() => handleCategoryChange(category.id)}
                     className={`category-filter-btn ${selectedCategory === category.id ? 'active' : ''}`}
                   >
                     <Package size={20} />
@@ -88,7 +106,7 @@ export default function ProductsClient({ products, categories }: ProductsClientP
               <Package size={48} />
               <p>Няма продукти в тази категория.</p>
               <button
-                onClick={() => setSelectedCategory(null)}
+                onClick={() => handleCategoryChange(null)}
                 className="btn-reset-filter"
               >
                 Виж всички продукти
