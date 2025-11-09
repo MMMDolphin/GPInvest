@@ -87,48 +87,6 @@ export default async function HomePage() {
 
       {heroSlides.length > 0 && <HeroCarousel slides={heroSlides} />}
 
-      {/* Product Categories Section */}
-      {homeCategoriesData.enabled && homeCategoriesData.categories && homeCategoriesData.categories.length > 0 && (
-        <section className="categories-section">
-          <div className="container">
-            <div className="section-header">
-              <h2 className="section-title">{homeCategoriesData.title}</h2>
-              {homeCategoriesData.subtitle && (
-                <p className="section-subtitle">{homeCategoriesData.subtitle}</p>
-              )}
-            </div>
-
-            <div className="categories-grid">
-              {homeCategoriesData.categories.map((category: any, index: number) => {
-                const IconComponent = category.icon === 'ShoppingCart' ? ShoppingCart :
-                                     category.icon === 'Laptop' ? Laptop :
-                                     category.icon === 'Wrench' ? Wrench :
-                                     category.icon === 'Package' ? Package :
-                                     category.icon === 'Smartphone' ? Phone :
-                                     category.icon === 'Monitor' ? Laptop :
-                                     category.icon === 'Printer' ? Laptop :
-                                     category.icon === 'HardDrive' ? Package :
-                                     category.icon === 'Scale' ? Package :
-                                     category.icon === 'Barcode' ? Package : ShoppingCart
-
-                return (
-                  <Link key={index} href={category.link} className="category-card">
-                    <div className="category-icon">
-                      <IconComponent size={40} />
-                    </div>
-                    <h3>{category.name}</h3>
-                    <p>{category.description}</p>
-                    <div className="category-arrow">
-                      <ArrowRight size={20} />
-                    </div>
-                  </Link>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Featured Products Section */}
       <section className="featured-products-section">
         <div className="container">
@@ -164,6 +122,50 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+
+      {/* Product Categories Section */}
+      {homeCategoriesData.enabled && homeCategoriesData.categories && homeCategoriesData.categories.length > 0 && (
+        <section className="categories-section">
+          <div className="container">
+            <div className="section-header">
+              <h2 className="section-title">{homeCategoriesData.title}</h2>
+              {homeCategoriesData.subtitle && (
+                <p className="section-subtitle">{homeCategoriesData.subtitle}</p>
+              )}
+            </div>
+
+            <div className="categories-grid">
+              {homeCategoriesData.categories.map((category: any, index: number) => {
+                const IconComponent = category.icon === 'ShoppingCart' ? ShoppingCart :
+                                     category.icon === 'Laptop' ? Laptop :
+                                     category.icon === 'Wrench' ? Wrench :
+                                     category.icon === 'Package' ? Package :
+                                     category.icon === 'Smartphone' ? Phone :
+                                     category.icon === 'Monitor' ? Laptop :
+                                     category.icon === 'Printer' ? Laptop :
+                                     category.icon === 'HardDrive' ? Package :
+                                     category.icon === 'Scale' ? Package :
+                                     category.icon === 'Barcode' ? Package : ShoppingCart
+
+                return (
+                  <Link key={index} href={category.link} className="category-card">
+                    <div className="category-icon">
+                      <IconComponent size={24} />
+                    </div>
+                    <div className="category-content">
+                      <h3>{category.name}</h3>
+                      <p>{category.description}</p>
+                    </div>
+                    <div className="category-arrow">
+                      <ArrowRight size={18} />
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Features Section */}
       <section className="features-section">
