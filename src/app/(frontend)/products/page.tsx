@@ -47,8 +47,11 @@ export default async function ProductsPage() {
   const categories = categoriesData.docs.map((category: any) => ({
     id: category.id,
     name: category.name,
+    slug: category.slug,
     description: category.description,
   }))
+
+  console.log('Categories:', categories) // Debug log
 
   return (
     <>
