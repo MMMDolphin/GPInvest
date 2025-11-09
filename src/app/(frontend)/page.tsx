@@ -180,50 +180,62 @@ export default async function HomePage() {
           <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon">
-                <Shield size={32} />
+                <Shield size={24} />
               </div>
-              <h3>Гарантирано качество</h3>
-              <p>Предлагаме само проверени и сертифицирани продукти от водещи производители.</p>
+              <div>
+                <h3>Гарантирано качество</h3>
+                <p>Проверени и сертифицирани продукти от водещи производители.</p>
+              </div>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon">
-                <Headphones size={32} />
+                <Headphones size={24} />
               </div>
-              <h3>Техническа поддръжка</h3>
-              <p>Осигуряваме пълна техническа поддръжка и сервиз на всички наши продукти 24/7.</p>
+              <div>
+                <h3>Техническа поддръжка</h3>
+                <p>Пълна техническа поддръжка и сервиз 24/7.</p>
+              </div>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon">
-                <Truck size={32} />
+                <Truck size={24} />
               </div>
-              <h3>Бърза доставка</h3>
-              <p>Гарантираме бърза доставка и професионална инсталация на оборудването.</p>
+              <div>
+                <h3>Бърза доставка</h3>
+                <p>Бърза доставка и професионална инсталация.</p>
+              </div>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon">
-                <Award size={32} />
+                <Award size={24} />
               </div>
-              <h3>Официална гаранция</h3>
-              <p>Всички продукти се предлагат с официална гаранция от производителя.</p>
+              <div>
+                <h3>Официална гаранция</h3>
+                <p>Официална гаранция от производителя на всички продукти.</p>
+              </div>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon">
-                <BadgeCheck size={32} />
+                <BadgeCheck size={24} />
               </div>
-              <h3>Сертификация</h3>
-              <p>Сертифицирани решения, отговарящи на всички нормативни изисквания.</p>
+              <div>
+                <h3>Сертификация</h3>
+                <p>Решения отговарящи на всички нормативни изисквания.</p>
+              </div>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon">
-                <Clock size={32} />
+                <Clock size={24} />
               </div>
-              <h3>Дългогодишен опит</h3>
-              <p>Над 15 години опит в индустрията и хиляди доволни клиенти.</p>
+              <div>
+                <h3>Дългогодишен опит</h3>
+                <p>Над 15 години опит и хиляди доволни клиенти.</p>
+              </div>
             </div>
           </div>
         </div>
