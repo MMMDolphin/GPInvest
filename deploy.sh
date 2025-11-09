@@ -26,6 +26,9 @@ touch gp-invest.db
 chown -R 1001:1001 media
 chown 1001:1001 gp-invest.db
 
+echo "Running database migrations..."
+docker compose -f "$COMPOSE_FILE" run --rm app pnpm payload migrate
+
 echo "Building and starting application..."
 docker compose -f "$COMPOSE_FILE" build
 docker compose -f "$COMPOSE_FILE" up -d --remove-orphans
