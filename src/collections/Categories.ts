@@ -73,8 +73,7 @@ export const Categories: CollectionConfig = {
         { label: 'Barcode (Баркод)', value: 'Barcode' },
       ],
       admin: {
-        description: 'Изберете икона, която ще се показва на началната страница (ако е активирана)',
-        condition: (data) => data.showOnHomepage === true,
+        description: 'Изберете икона, която ще се показва на началната страница (ако "Покажи на начална страница" е активирано)',
       },
     },
     {
@@ -84,7 +83,6 @@ export const Categories: CollectionConfig = {
       defaultValue: 0,
       admin: {
         description: 'По-нисък номер = по-отгоре. (0, 1, 2, 3...)',
-        condition: (data) => data.showOnHomepage === true,
       },
     },
   ],
