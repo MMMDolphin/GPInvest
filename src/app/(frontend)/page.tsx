@@ -8,8 +8,9 @@ import ProductCard from '@/components/ProductCard'
 import Footer from '@/components/Footer'
 import {
   Shield, Headphones, Truck, Award, BadgeCheck, Clock,
-  ShoppingCart, Laptop, Wrench, Package, ArrowRight, Phone
+  ArrowRight, Phone
 } from 'lucide-react'
+import { getIconComponent } from '@/utils/iconMapper'
 import './homepage.css'
 
 export default async function HomePage() {
@@ -154,16 +155,7 @@ export default async function HomePage() {
 
             <div className="categories-grid">
               {homeCategoriesData.categories.map((category: any, index: number) => {
-                const IconComponent = category.icon === 'ShoppingCart' ? ShoppingCart :
-                                     category.icon === 'Laptop' ? Laptop :
-                                     category.icon === 'Wrench' ? Wrench :
-                                     category.icon === 'Package' ? Package :
-                                     category.icon === 'Smartphone' ? Phone :
-                                     category.icon === 'Monitor' ? Laptop :
-                                     category.icon === 'Printer' ? Laptop :
-                                     category.icon === 'HardDrive' ? Package :
-                                     category.icon === 'Scale' ? Package :
-                                     category.icon === 'Barcode' ? Package : ShoppingCart
+                const IconComponent = getIconComponent(category.icon)
 
                 return (
                   <Link key={index} href={category.link} className="category-card">
