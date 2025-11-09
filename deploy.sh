@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SERVER="root@46.62.242.236"
-REMOTE_DIR="/root/gpinvest"
+REMOTE_DIR="/root/GPInvest"
 BRANCH="main"
 
 echo "Deploying to server..."
