@@ -1,35 +1,9 @@
 import React from 'react'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { ArrowRight, CheckCircle } from 'lucide-react'
-import { normalizeLogo } from '@/lib/normalizeLogo'
 import './software.css'
 
 export default async function SoftwarePage() {
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  const siteSettings = await payload.findGlobal({
-    slug: 'site-settings',
-  })
-
-  // Fetch categories for navigation
-  const categoriesData = await payload.find({
-    collection: 'categories',
-    limit: 50,
-  })
-
-  const categories = categoriesData.docs.map((category: any) => ({
-    id: category.id,
-    name: category.name,
-    slug: category.slug,
-  }))
-
-  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
-
   const softwareProducts = [
     {
       id: 1,
@@ -74,8 +48,6 @@ export default async function SoftwarePage() {
 
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} logo={logo} categories={categories} />
-
       <div className="software-hero">
         <div className="container">
           <h1>Търговски Софтуер</h1>
@@ -128,18 +100,6 @@ export default async function SoftwarePage() {
           </div>
         </div>
       </section>
-
-      <Footer
-        companyName={siteSettings.companyName}
-        logo={logo}
-        tagline={siteSettings.tagline}
-        email={siteSettings.email}
-        phone={siteSettings.phone}
-        address={siteSettings.address}
-        facebook={siteSettings.facebook}
-        instagram={siteSettings.instagram}
-        linkedin={siteSettings.linkedin}
-      />
     </>
   )
 }

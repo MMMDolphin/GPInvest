@@ -1,32 +1,19 @@
 import React from 'react'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
-import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
-import Footer from '@/components/Footer'
 import ProductsClient from './ProductsClient'
 import './products.css'
-import { normalizeLogo } from '@/lib/normalizeLogo'
+import { getPayloadClient } from '@/lib/getPayloadClient'
+import { fetchSiteData } from '@/lib/getSiteData'
 
 export default async function ProductsPage() {
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  const siteSettings = await payload.findGlobal({
-    slug: 'site-settings',
-  })
+  const payload = await getPayloadClient()
+  const { categories } = await fetchSiteData()
 
   // Fetch all products
   const productsData = await payload.find({
     collection: 'products',
     limit: 100,
     sort: '-createdAt',
-  })
-
-  // Fetch categories
-  const categoriesData = await payload.find({
-    collection: 'categories',
-    limit: 50,
   })
 
   // Transform products data
@@ -44,22 +31,8 @@ export default async function ProductsPage() {
     inStock: product.inStock,
   }))
 
-  // Transform categories data
-  const categories = categoriesData.docs.map((category: any) => ({
-    id: category.id,
-    name: category.name,
-    slug: category.slug,
-    description: category.description,
-  }))
-
-  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
-
-  console.log('Categories:', categories) // Debug log
-
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} logo={logo} categories={categories} />
-
       <div className="page-header">
         <div className="container">
           <Breadcrumb items={[{ label: 'Продукти' }]} />
@@ -71,18 +44,6 @@ export default async function ProductsPage() {
       </div>
 
       <ProductsClient products={products} categories={categories} />
-
-      <Footer
-        companyName={siteSettings.companyName}
-        logo={logo}
-        tagline={siteSettings.tagline}
-        email={siteSettings.email}
-        phone={siteSettings.phone}
-        address={siteSettings.address}
-        facebook={siteSettings.facebook}
-        instagram={siteSettings.instagram}
-        linkedin={siteSettings.linkedin}
-      />
     </>
   )
 }

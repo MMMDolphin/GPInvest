@@ -1,39 +1,12 @@
 import React from 'react'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
 import Breadcrumb from '@/components/Breadcrumb'
-import { normalizeLogo } from '@/lib/normalizeLogo'
 import Link from 'next/link'
 import { Phone } from 'lucide-react'
 import '../software.css'
 
 export default async function MistralV3Page() {
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  const siteSettings = await payload.findGlobal({
-    slug: 'site-settings',
-  })
-
-  const categoriesData = await payload.find({
-    collection: 'categories',
-    limit: 50,
-  })
-
-  const categories = categoriesData.docs.map((category: any) => ({
-    id: category.id,
-    name: category.name,
-    slug: category.slug,
-  }))
-
-  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
-
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} logo={logo} categories={categories} />
-
       <div className="software-detail-hero">
         <div className="container">
           <Breadcrumb
@@ -188,18 +161,6 @@ export default async function MistralV3Page() {
           </div>
         </div>
       </div>
-
-      <Footer
-        companyName={siteSettings.companyName}
-        logo={logo}
-        tagline={siteSettings.tagline}
-        email={siteSettings.email}
-        phone={siteSettings.phone}
-        address={siteSettings.address}
-        facebook={siteSettings.facebook}
-        instagram={siteSettings.instagram}
-        linkedin={siteSettings.linkedin}
-      />
     </>
   )
 }

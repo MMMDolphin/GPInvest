@@ -1,13 +1,10 @@
 import React from 'react'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
-import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
-import Footer from '@/components/Footer'
 import ProductsClient from '../../ProductsClient'
 import '../../products.css'
 import { notFound } from 'next/navigation'
-import { normalizeLogo } from '@/lib/normalizeLogo'
+import { getPayloadClient } from '@/lib/getPayloadClient'
+import { fetchSiteData } from '@/lib/getSiteData'
 
 interface CategoryPageProps {
   params: Promise<{
@@ -17,25 +14,8 @@ interface CategoryPageProps {
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { categorySlug } = await params
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  const siteSettings = await payload.findGlobal({
-    slug: 'site-settings',
-  })
-
-  // Fetch all categories for navigation and filtering
-  const categoriesData = await payload.find({
-    collection: 'categories',
-    limit: 50,
-  })
-
-  const categories = categoriesData.docs.map((category: any) => ({
-    id: category.id,
-    name: category.name,
-    slug: category.slug,
-    description: category.description,
-  }))
+  const payload = await getPayloadClient()
+  const { categories } = await fetchSiteData()
 
   // Find the current category by slug
   const currentCategory = categories.find(c => c.slug === categorySlug)
@@ -69,17 +49,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   // Filter products by current category
   const products = allProducts.filter((product) => {
     const productCategory = typeof product.category === 'object'
-      ? product.category?.id
-      : product.category
+      ? String(product.category?.id)
+      : String(product.category)
     return productCategory === currentCategory.id
   })
 
-  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
-
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} logo={logo} categories={categories} />
-
       <div className="page-header">
         <div className="container">
           <Breadcrumb
@@ -99,18 +75,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         products={products}
         categories={categories}
         initialCategory={currentCategory.id}
-      />
-
-      <Footer
-        companyName={siteSettings.companyName}
-        logo={logo}
-        tagline={siteSettings.tagline}
-        email={siteSettings.email}
-        phone={siteSettings.phone}
-        address={siteSettings.address}
-        facebook={siteSettings.facebook}
-        instagram={siteSettings.instagram}
-        linkedin={siteSettings.linkedin}
       />
     </>
   )

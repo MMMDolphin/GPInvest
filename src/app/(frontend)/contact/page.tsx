@@ -1,11 +1,7 @@
 import React from 'react'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
-import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/ContactForm'
-import Footer from '@/components/Footer'
-import { normalizeLogo } from '@/lib/normalizeLogo'
+import { fetchSiteData } from '@/lib/getSiteData'
 import './contact.css'
 
 interface ContactPageProps {
@@ -18,19 +14,10 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   const params = await searchParams
   const productName = params.product
 
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  const siteSettings = await payload.findGlobal({
-    slug: 'site-settings',
-  })
-
-  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
+  const { siteSettings } = await fetchSiteData()
 
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} logo={logo} />
-
       <div className="page-header">
         <div className="container">
           <Breadcrumb items={[{ label: 'Контакти' }]} />
@@ -148,18 +135,6 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           </div>
         </div>
       </section>
-
-      <Footer
-        companyName={siteSettings.companyName}
-        logo={logo}
-        tagline={siteSettings.tagline}
-        email={siteSettings.email}
-        phone={siteSettings.phone}
-        address={siteSettings.address}
-        facebook={siteSettings.facebook}
-        instagram={siteSettings.instagram}
-        linkedin={siteSettings.linkedin}
-      />
     </>
   )
 }

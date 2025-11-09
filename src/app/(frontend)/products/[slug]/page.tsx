@@ -1,12 +1,8 @@
 import React from 'react'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
 import { notFound } from 'next/navigation'
-import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/ContactForm'
 import StickyCTA from '@/components/StickyCTA'
-import Footer from '@/components/Footer'
 import ProductImageGallery from '@/components/ProductImageGallery'
 import CertificationGrid from '@/components/CertificationGrid'
 import { headers } from 'next/headers'
@@ -16,7 +12,7 @@ import {
   Download, Zap
 } from 'lucide-react'
 import './product-detail.css'
-import { normalizeLogo } from '@/lib/normalizeLogo'
+import { getPayloadClient } from '@/lib/getPayloadClient'
 
 interface ProductPageProps {
   params: Promise<{
@@ -93,14 +89,7 @@ function renderRichText(content: any): React.ReactNode {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  const siteSettings = await payload.findGlobal({
-    slug: 'site-settings',
-  })
-
-  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
+  const payload = await getPayloadClient()
 
   // Get the full URL for the product
   const headersList = await headers()
@@ -161,8 +150,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} logo={logo} />
-
       {/* Minimal Header with Breadcrumb */}
       <div className="product-header">
         <div className="container">
@@ -387,18 +374,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
       </section>
-
-      <Footer
-        companyName={siteSettings.companyName}
-        logo={logo}
-        tagline={siteSettings.tagline}
-        email={siteSettings.email}
-        phone={siteSettings.phone}
-        address={siteSettings.address}
-        facebook={siteSettings.facebook}
-        instagram={siteSettings.instagram}
-        linkedin={siteSettings.linkedin}
-      />
 
       <StickyCTA productName={product.name} />
     </>

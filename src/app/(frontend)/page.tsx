@@ -1,27 +1,19 @@
-import { getPayload } from 'payload'
 import React from 'react'
 import Link from 'next/link'
-import config from '@/payload.config'
-import Navigation from '@/components/Navigation'
 import HeroCarousel from '@/components/HeroCarousel'
 import ProductCard from '@/components/ProductCard'
-import Footer from '@/components/Footer'
-import { normalizeLogo } from '@/lib/normalizeLogo'
 import {
   Shield, Headphones, Truck, Award, BadgeCheck, Clock,
   ArrowRight, Phone
 } from 'lucide-react'
 import { getIconComponent } from '@/utils/iconMapper'
+import { getPayloadClient } from '@/lib/getPayloadClient'
+import { fetchSiteData } from '@/lib/getSiteData'
 import './homepage.css'
 
 export default async function HomePage() {
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  // Fetch site settings
-  const siteSettings = await payload.findGlobal({
-    slug: 'site-settings',
-  })
+  const payload = await getPayloadClient()
+  const { siteSettings } = await fetchSiteData()
 
   // Fetch active hero slides, sorted by order
   const heroSlidesData = await payload.find({
@@ -46,18 +38,6 @@ export default async function HomePage() {
     limit: 6,
   })
 
-  // Fetch product categories for navigation
-  const categoriesData = await payload.find({
-    collection: 'categories',
-    limit: 50,
-  })
-
-  const categories = categoriesData.docs.map((category: any) => ({
-    id: category.id,
-    name: category.name,
-    slug: category.slug,
-  }))
-
   // Fetch all categories for homepage display
   const homepageCategoriesData = await payload.find({
     collection: 'categories',
@@ -72,8 +52,6 @@ export default async function HomePage() {
     icon: category.icon || 'Package',
     link: `/products/category/${category.slug}`,
   }))
-
-  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   // Transform hero slides data
   const heroSlides = heroSlidesData.docs.map((slide: any) => ({
@@ -109,8 +87,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} logo={logo} categories={categories} />
-
       {heroSlides.length > 0 && <HeroCarousel slides={heroSlides} />}
 
       {/* Featured Products Section */}
@@ -303,18 +279,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      <Footer
-        companyName={siteSettings.companyName}
-        logo={logo}
-        tagline={siteSettings.tagline}
-        email={siteSettings.email}
-        phone={siteSettings.phone}
-        address={siteSettings.address}
-        facebook={siteSettings.facebook}
-        instagram={siteSettings.instagram}
-        linkedin={siteSettings.linkedin}
-      />
     </>
   )
 }

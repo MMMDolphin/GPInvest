@@ -1,26 +1,10 @@
 import React from 'react'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
-import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
-import Footer from '@/components/Footer'
-import { normalizeLogo } from '@/lib/normalizeLogo'
 import './services.css'
 
 export default async function ServicesPage() {
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  const siteSettings = await payload.findGlobal({
-    slug: 'site-settings',
-  })
-
-  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
-
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} logo={logo} />
-
       <div className="page-header">
         <div className="container">
           <Breadcrumb items={[{ label: 'Услуги' }]} />
@@ -375,18 +359,6 @@ export default async function ServicesPage() {
           </div>
         </div>
       </section>
-
-      <Footer
-        companyName={siteSettings.companyName}
-        logo={logo}
-        tagline={siteSettings.tagline}
-        email={siteSettings.email}
-        phone={siteSettings.phone}
-        address={siteSettings.address}
-        facebook={siteSettings.facebook}
-        instagram={siteSettings.instagram}
-        linkedin={siteSettings.linkedin}
-      />
     </>
   )
 }

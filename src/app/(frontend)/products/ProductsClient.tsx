@@ -34,8 +34,8 @@ export default function ProductsClient({ products, categories, initialCategory =
   const filteredProducts = selectedCategory
     ? products.filter((product) => {
         const productCategory = typeof product.category === 'object'
-          ? product.category?.id
-          : product.category
+          ? String(product.category?.id)
+          : String(product.category)
         return productCategory === selectedCategory
       })
     : products
@@ -62,8 +62,8 @@ export default function ProductsClient({ products, categories, initialCategory =
               {categories.map((category: any) => {
                 const categoryProductCount = products.filter((p) => {
                   const productCategory = typeof p.category === 'object'
-                    ? p.category?.id
-                    : p.category
+                    ? String(p.category?.id)
+                    : String(p.category)
                   return productCategory === category.id
                 }).length
 
