@@ -4,6 +4,7 @@ import config from '@/payload.config'
 import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
 import Footer from '@/components/Footer'
+import { normalizeLogo } from '@/lib/normalizeLogo'
 import './about.css'
 
 export default async function AboutPage() {
@@ -14,11 +15,7 @@ export default async function AboutPage() {
     slug: 'site-settings',
   })
 
-  // Transform logo data
-  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
-    url: siteSettings.logo.url,
-    alt: siteSettings.logo.alt || siteSettings.companyName,
-  } : null
+  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   return (
     <>

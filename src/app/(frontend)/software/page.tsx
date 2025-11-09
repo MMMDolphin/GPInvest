@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 import { ArrowRight, CheckCircle } from 'lucide-react'
+import { normalizeLogo } from '@/lib/normalizeLogo'
 import './software.css'
 
 export default async function SoftwarePage() {
@@ -27,10 +28,7 @@ export default async function SoftwarePage() {
     slug: category.slug,
   }))
 
-  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
-    url: siteSettings.logo.url,
-    alt: siteSettings.logo.alt || siteSettings.companyName,
-  } : null
+  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   const softwareProducts = [
     {

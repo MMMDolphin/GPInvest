@@ -6,6 +6,7 @@ import Navigation from '@/components/Navigation'
 import HeroCarousel from '@/components/HeroCarousel'
 import ProductCard from '@/components/ProductCard'
 import Footer from '@/components/Footer'
+import { normalizeLogo } from '@/lib/normalizeLogo'
 import {
   Shield, Headphones, Truck, Award, BadgeCheck, Clock,
   ArrowRight, Phone
@@ -72,11 +73,7 @@ export default async function HomePage() {
     link: `/products/category/${category.slug}`,
   }))
 
-  // Transform logo data
-  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
-    url: siteSettings.logo.url,
-    alt: siteSettings.logo.alt || siteSettings.companyName,
-  } : null
+  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   // Transform hero slides data
   const heroSlides = heroSlidesData.docs.map((slide: any) => ({

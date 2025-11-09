@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/ContactForm'
 import Footer from '@/components/Footer'
+import { normalizeLogo } from '@/lib/normalizeLogo'
 import './contact.css'
 
 interface ContactPageProps {
@@ -24,11 +25,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
     slug: 'site-settings',
   })
 
-  // Transform logo data
-  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
-    url: siteSettings.logo.url,
-    alt: siteSettings.logo.alt || siteSettings.companyName,
-  } : null
+  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   return (
     <>

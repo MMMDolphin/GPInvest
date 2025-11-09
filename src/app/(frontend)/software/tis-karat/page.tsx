@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import Breadcrumb from '@/components/Breadcrumb'
 import Link from 'next/link'
 import { Phone } from 'lucide-react'
+import { normalizeLogo } from '@/lib/normalizeLogo'
 import '../software.css'
 
 export default async function TISKaratPage() {
@@ -27,10 +28,7 @@ export default async function TISKaratPage() {
     slug: category.slug,
   }))
 
-  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
-    url: siteSettings.logo.url,
-    alt: siteSettings.logo.alt || siteSettings.companyName,
-  } : null
+  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   return (
     <>

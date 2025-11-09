@@ -12,7 +12,7 @@ export const seed = async (payload: Payload): Promise<void> => {
       name: 'Касови апарати и фискални устройства',
       slug: 'kasovi-aparati-fiskalni-ustroistva',
       description: 'Фискални касови апарати, фискални принтери и ФУВАС',
-      icon: 'cash-register',
+      icon: 'CashRegister',
     },
   })
 
@@ -22,7 +22,7 @@ export const seed = async (payload: Payload): Promise<void> => {
       name: 'POS оборудване',
       slug: 'pos-oborudvane',
       description: 'Електронни везни, етикетни и POS принтери, клиентски дисплеи, касови чекмеджета',
-      icon: 'pos-terminal',
+      icon: 'Monitor',
     },
   })
 
@@ -32,7 +32,7 @@ export const seed = async (payload: Payload): Promise<void> => {
       name: 'Търговски софтуер',
       slug: 'targovski-softuer',
       description: 'Софтуер за управление на продажби и складови наличности',
-      icon: 'software',
+      icon: 'Laptop',
     },
   })
 
@@ -42,7 +42,7 @@ export const seed = async (payload: Payload): Promise<void> => {
       name: 'Баркод скенери и четци',
       slug: 'barkod-skeneri-chetci',
       description: 'Баркод скенери и четци за магнитни/безконтактни карти',
-      icon: 'accessories',
+      icon: 'Barcode',
     },
   })
 
@@ -52,7 +52,7 @@ export const seed = async (payload: Payload): Promise<void> => {
       name: 'Консумативи',
       slug: 'konsumativti',
       description: 'Хартиени ролки, самозалепващи етикети, рибони и други консумативи',
-      icon: 'accessories',
+      icon: 'Package',
     },
   })
 

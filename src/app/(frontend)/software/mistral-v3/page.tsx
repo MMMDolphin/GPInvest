@@ -4,6 +4,7 @@ import config from '@/payload.config'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Breadcrumb from '@/components/Breadcrumb'
+import { normalizeLogo } from '@/lib/normalizeLogo'
 import Link from 'next/link'
 import { Phone } from 'lucide-react'
 import '../software.css'
@@ -27,10 +28,7 @@ export default async function MistralV3Page() {
     slug: category.slug,
   }))
 
-  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
-    url: siteSettings.logo.url,
-    alt: siteSettings.logo.alt || siteSettings.companyName,
-  } : null
+  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   return (
     <>

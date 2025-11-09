@@ -6,6 +6,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Footer from '@/components/Footer'
 import ProductsClient from './ProductsClient'
 import './products.css'
+import { normalizeLogo } from '@/lib/normalizeLogo'
 
 export default async function ProductsPage() {
   const payloadConfig = await config
@@ -51,11 +52,7 @@ export default async function ProductsPage() {
     description: category.description,
   }))
 
-  // Transform logo data
-  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
-    url: siteSettings.logo.url,
-    alt: siteSettings.logo.alt || siteSettings.companyName,
-  } : null
+  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   console.log('Categories:', categories) // Debug log
 

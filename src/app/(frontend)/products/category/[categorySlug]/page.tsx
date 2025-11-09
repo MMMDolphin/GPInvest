@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import ProductsClient from '../../ProductsClient'
 import '../../products.css'
 import { notFound } from 'next/navigation'
+import { normalizeLogo } from '@/lib/normalizeLogo'
 
 interface CategoryPageProps {
   params: Promise<{
@@ -73,11 +74,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     return productCategory === currentCategory.id
   })
 
-  // Transform logo data
-  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
-    url: siteSettings.logo.url,
-    alt: siteSettings.logo.alt || siteSettings.companyName,
-  } : null
+  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   return (
     <>

@@ -16,6 +16,7 @@ import {
   Download, Zap
 } from 'lucide-react'
 import './product-detail.css'
+import { normalizeLogo } from '@/lib/normalizeLogo'
 
 interface ProductPageProps {
   params: Promise<{
@@ -99,11 +100,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     slug: 'site-settings',
   })
 
-  // Transform logo data
-  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
-    url: siteSettings.logo.url,
-    alt: siteSettings.logo.alt || siteSettings.companyName,
-  } : null
+  const logo = normalizeLogo(siteSettings.logo, siteSettings.companyName)
 
   // Get the full URL for the product
   const headersList = await headers()
