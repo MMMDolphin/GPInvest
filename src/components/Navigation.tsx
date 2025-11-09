@@ -39,44 +39,29 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
 
   const toggleMenu = () => setIsOpen(!isOpen)
   const toggleProductsDropdown = () => setProductsDropdownOpen(!productsDropdownOpen)
+  const [hoveredParentId, setHoveredParentId] = useState<string | null>(null)
 
-  // Build hierarchical category structure for flat display with indentation
-  const buildHierarchicalCategories = (): HierarchicalCategory[] => {
-    const flatList: HierarchicalCategory[] = []
+  // Get parent categories only
+  const parentCategories = categories.filter(cat => {
+    const parentId = typeof cat.parent === 'object' && cat.parent !== null ? cat.parent.id : cat.parent
+    return !parentId
+  })
 
-    // First, find all parent categories (categories without a parent)
-    const parentCategories = categories.filter(cat => {
-      const parentId = typeof cat.parent === 'object' && cat.parent !== null ? cat.parent.id : cat.parent
-      return !parentId
+  // Get children for a specific parent
+  const getChildrenForParent = (parentId: string) => {
+    return categories.filter(cat => {
+      const catParentId = typeof cat.parent === 'object' && cat.parent !== null ? cat.parent.id : cat.parent
+      return catParentId === parentId
     })
-
-    // Recursive function to add category and its children to flat list
-    const addCategoryWithChildren = (category: Category, level: number) => {
-      flatList.push({
-        id: category.id,
-        name: category.name,
-        slug: category.slug,
-        level,
-        children: []
-      })
-
-      // Find children of this category
-      const children = categories.filter(cat => {
-        const parentId = typeof cat.parent === 'object' && cat.parent !== null ? cat.parent.id : cat.parent
-        return parentId === category.id
-      })
-
-      // Recursively add children
-      children.forEach(child => addCategoryWithChildren(child, level + 1))
-    }
-
-    // Build the flat list with hierarchy
-    parentCategories.forEach(parent => addCategoryWithChildren(parent, 0))
-
-    return flatList
   }
 
-  const hierarchicalCategories = buildHierarchicalCategories()
+  // Get grandchildren for a specific child
+  const getGrandchildrenForChild = (childId: string) => {
+    return categories.filter(cat => {
+      const catParentId = typeof cat.parent === 'object' && cat.parent !== null ? cat.parent.id : cat.parent
+      return catParentId === childId
+    })
+  }
 
   const handleDropdownMouseEnter = () => {
     if (dropdownTimeout) {
@@ -137,43 +122,84 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
                 onMouseEnter={handleDropdownMouseEnter}
                 onMouseLeave={handleDropdownMouseLeave}
               >
-                <button className="nav-dropdown-trigger">
+                <span className="nav-dropdown-trigger">
                   Продукти
                   <ChevronDown size={16} className={productsDropdownOpen ? 'rotated' : ''} />
-                </button>
+                </span>
                 {productsDropdownOpen && (
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link
-                        href="/products"
-                        onClick={() => setProductsDropdownOpen(false)}
-                      >
-                        Всички продукти
-                      </Link>
-                    </li>
-                    {hierarchicalCategories.map((category) => {
-                      if (!category.slug) return null
+                  <div className="mega-menu">
+                    {/* Left Panel - Parent Categories */}
+                    <div className="mega-menu-left">
+                      <div className="mega-menu-header">
+                        <Link
+                          href="/products"
+                          onClick={() => setProductsDropdownOpen(false)}
+                          className="mega-menu-all-products"
+                        >
+                          Всички продукти
+                        </Link>
+                      </div>
+                      <ul className="mega-menu-parents">
+                        {parentCategories.map((parent) => {
+                          if (!parent.slug) return null
+                          const isHovered = hoveredParentId === parent.id
+                          return (
+                            <li
+                              key={parent.id}
+                              onMouseEnter={() => setHoveredParentId(parent.id)}
+                              className={isHovered ? 'active' : ''}
+                            >
+                              <Link
+                                href={`/products/category/${parent.slug}`}
+                                onClick={() => setProductsDropdownOpen(false)}
+                              >
+                                {parent.name}
+                              </Link>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </div>
 
-                      // Determine CSS class based on level
-                      let className = ''
-                      if (category.level === 1) className = 'dropdown-item-child'
-                      if (category.level === 2) className = 'dropdown-item-grandchild'
+                    {/* Right Panel - Children & Grandchildren */}
+                    {hoveredParentId && (
+                      <div className="mega-menu-right">
+                        {getChildrenForParent(hoveredParentId).map((child) => {
+                          if (!child.slug) return null
+                          const grandchildren = getGrandchildrenForChild(child.id)
 
-                      // Create indentation prefix
-                      const prefix = category.level === 1 ? '→ ' : category.level === 2 ? '→→ ' : ''
-
-                      return (
-                        <li key={category.id} className={className}>
-                          <Link
-                            href={`/products/category/${category.slug}`}
-                            onClick={() => setProductsDropdownOpen(false)}
-                          >
-                            {prefix}{category.name}
-                          </Link>
-                        </li>
-                      )
-                    })}
-                  </ul>
+                          return (
+                            <div key={child.id} className="mega-menu-category-group">
+                              <Link
+                                href={`/products/category/${child.slug}`}
+                                onClick={() => setProductsDropdownOpen(false)}
+                                className="mega-menu-child-title"
+                              >
+                                {child.name}
+                              </Link>
+                              {grandchildren.length > 0 && (
+                                <ul className="mega-menu-grandchildren">
+                                  {grandchildren.map((grandchild) => {
+                                    if (!grandchild.slug) return null
+                                    return (
+                                      <li key={grandchild.id}>
+                                        <Link
+                                          href={`/products/category/${grandchild.slug}`}
+                                          onClick={() => setProductsDropdownOpen(false)}
+                                        >
+                                          {grandchild.name}
+                                        </Link>
+                                      </li>
+                                    )
+                                  })}
+                                </ul>
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
                 )}
               </li>
               <li>
