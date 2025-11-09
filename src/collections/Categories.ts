@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { triggerRevalidate } from '@/payload/utils/triggerRevalidate'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -7,6 +8,28 @@ export const Categories: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        const slug = typeof doc.slug === 'string' ? doc.slug : undefined
+        await triggerRevalidate([
+          '/',
+          '/products',
+          slug ? `/products/category/${slug}` : '',
+        ])
+      },
+    ],
+    afterDelete: [
+      async ({ doc }) => {
+        const slug = typeof doc.slug === 'string' ? doc.slug : undefined
+        await triggerRevalidate([
+          '/',
+          '/products',
+          slug ? `/products/category/${slug}` : '',
+        ])
+      },
+    ],
   },
   fields: [
     {

@@ -1,10 +1,28 @@
 import type { GlobalConfig } from 'payload'
+import { triggerRevalidate } from '@/payload/utils/triggerRevalidate'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   label: 'Настройки на сайта',
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      async () => {
+        await triggerRevalidate([
+          '/',
+          '/about',
+          '/contact',
+          '/services',
+          '/software',
+          '/software/mistral-v3',
+          '/software/zamboo',
+          '/software/tis-karat',
+          '/products',
+        ])
+      },
+    ],
   },
   fields: [
     {

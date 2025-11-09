@@ -1,4 +1,3 @@
-import { cache } from 'react'
 import type { Category, SiteSetting } from '@/payload-types'
 import { normalizeLogo, type LogoData } from './normalizeLogo'
 import { getPayloadClient } from './getPayloadClient'
@@ -16,7 +15,7 @@ export interface SiteData {
   logo: LogoData | null
 }
 
-export const fetchSiteData = cache(async (): Promise<SiteData> => {
+export const fetchSiteData = async (): Promise<SiteData> => {
   const payload = await getPayloadClient()
 
   const [siteSettings, categoriesResult] = await Promise.all([
@@ -40,4 +39,4 @@ export const fetchSiteData = cache(async (): Promise<SiteData> => {
     categories,
     logo: normalizeLogo(siteSettings.logo, siteSettings.companyName),
   }
-})
+}
