@@ -57,24 +57,35 @@ export default async function HomePage() {
     slug: category.slug,
   }))
 
-  // Fetch homepage categories (categories with showOnHomepage = true)
+  // Fetch all categories for homepage display
   const homepageCategoriesData = await payload.find({
     collection: 'categories',
-    where: {
-      showOnHomepage: {
-        equals: true,
-      },
-    },
-    sort: 'homepageOrder',
-    limit: 6,
+    limit: 50,
   })
+
+  // Simple icon mapping based on category slug
+  const getIconForCategory = (slug: string) => {
+    const iconMap: Record<string, string> = {
+      'pos-systems': 'ShoppingCart',
+      'computers': 'Laptop',
+      'tools': 'Wrench',
+      'software': 'Package',
+      'mobile': 'Smartphone',
+      'monitors': 'Monitor',
+      'printers': 'Printer',
+      'storage': 'HardDrive',
+      'scales': 'Scale',
+      'barcode': 'Barcode',
+    }
+    return iconMap[slug] || 'Package'
+  }
 
   const homepageCategories = homepageCategoriesData.docs.map((category: any) => ({
     id: category.id,
     name: category.name,
     slug: category.slug,
     description: category.description,
-    icon: category.icon,
+    icon: getIconForCategory(category.slug),
     link: `/products/category/${category.slug}`,
   }))
 

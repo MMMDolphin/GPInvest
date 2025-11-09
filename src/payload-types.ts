@@ -188,31 +188,6 @@ export interface Category {
    */
   slug: string;
   description?: string | null;
-  /**
-   * Тази категория ще се показва в секцията с категории на началната страница
-   */
-  showOnHomepage?: boolean | null;
-  /**
-   * Изберете икона, която ще се показва на началната страница (ако "Покажи на начална страница" е активирано)
-   */
-  icon?:
-    | (
-        | 'ShoppingCart'
-        | 'Laptop'
-        | 'Wrench'
-        | 'Package'
-        | 'Smartphone'
-        | 'Monitor'
-        | 'Printer'
-        | 'HardDrive'
-        | 'Scale'
-        | 'Barcode'
-      )
-    | null;
-  /**
-   * По-нисък номер = по-отгоре. (0, 1, 2, 3...)
-   */
-  homepageOrder?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -586,9 +561,6 @@ export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   description?: T;
-  showOnHomepage?: T;
-  icon?: T;
-  homepageOrder?: T;
   updatedAt?: T;
   createdAt?: T;
 }
