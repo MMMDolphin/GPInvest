@@ -257,6 +257,19 @@
   background: linear-gradient(135deg, #e6f2ff 0%, #d9edff 100%);
 }
 
+/* Hierarchical category indentation */
+.dropdown-item-child a {
+  padding-left: calc(var(--spacing-md) + 0.5rem);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+}
+
+.dropdown-item-grandchild a {
+  padding-left: calc(var(--spacing-md) + 1rem);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
 /* Scrollbar styling for dropdown menu */
 .dropdown-menu::-webkit-scrollbar {
   width: 6px;
@@ -537,6 +550,18 @@
 .mobile-submenu svg {
   flex-shrink: 0;
   color: var(--color-light-blue);
+}
+
+/* Mobile hierarchical category indentation */
+.mobile-submenu-child a {
+  padding-left: calc(var(--spacing-lg) + 0.5rem);
+  font-size: var(--font-size-sm);
+}
+
+.mobile-submenu-grandchild a {
+  padding-left: calc(var(--spacing-lg) + 1rem);
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
 }
 
 /* Mobile CTA */

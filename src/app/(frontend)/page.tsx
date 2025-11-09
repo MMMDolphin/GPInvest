@@ -57,9 +57,14 @@ export default async function HomePage() {
     slug: category.slug,
   }))
 
-  // Fetch all categories for homepage display
+  // Fetch only parent categories for homepage display (categories without a parent)
   const homepageCategoriesData = await payload.find({
     collection: 'categories',
+    where: {
+      parent: {
+        exists: false,
+      },
+    },
     limit: 50,
   })
 
