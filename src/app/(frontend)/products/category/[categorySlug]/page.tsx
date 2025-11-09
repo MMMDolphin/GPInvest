@@ -9,13 +9,13 @@ import '../../products.css'
 import { notFound } from 'next/navigation'
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     categorySlug: string
-  }
+  }>
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { categorySlug } = params
+  const { categorySlug } = await params
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
