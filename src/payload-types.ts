@@ -185,6 +185,9 @@ export interface Media {
 export interface Category {
   id: number;
   name: string;
+  /**
+   * URL-friendly version of the name (e.g., "pos-systems")
+   */
   slug: string;
   description?: string | null;
   icon?: ('cash-register' | 'printer' | 'pos-terminal' | 'software' | 'accessories') | null;

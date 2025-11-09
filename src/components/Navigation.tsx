@@ -86,17 +86,20 @@ export default function Navigation({ companyName = 'GP Invest', categories = [] 
                               <span>Виж целия каталог</span>
                             </div>
                           </Link>
-                          {categories.map((category) => (
-                            <Link
-                              key={category.id}
-                              href={`/products/${category.slug}`}
-                              className="mega-menu-item"
-                              onClick={() => setProductsDropdownOpen(false)}
-                            >
-                              <Package size={18} />
-                              <span>{category.name}</span>
-                            </Link>
-                          ))}
+                          {categories.map((category) => {
+                            if (!category.slug) return null
+                            return (
+                              <Link
+                                key={category.id}
+                                href={`/products/${category.slug}`}
+                                className="mega-menu-item"
+                                onClick={() => setProductsDropdownOpen(false)}
+                              >
+                                <Package size={18} />
+                                <span>{category.name}</span>
+                              </Link>
+                            )
+                          })}
                         </div>
                       </div>
                     </div>
@@ -175,17 +178,20 @@ export default function Navigation({ companyName = 'GP Invest', categories = [] 
                         Всички продукти
                       </Link>
                     </li>
-                    {categories.map((category) => (
-                      <li key={category.id}>
-                        <Link
-                          href={`/products/${category.slug}`}
-                          onClick={() => setIsOpen(false)}
-                        >
-                          <Package size={18} />
-                          {category.name}
-                        </Link>
-                      </li>
-                    ))}
+                    {categories.map((category) => {
+                      if (!category.slug) return null
+                      return (
+                        <li key={category.id}>
+                          <Link
+                            href={`/products/${category.slug}`}
+                            onClick={() => setIsOpen(false)}
+                          >
+                            <Package size={18} />
+                            {category.name}
+                          </Link>
+                        </li>
+                      )
+                    })}
                   </ul>
                 )}
               </li>

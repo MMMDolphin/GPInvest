@@ -21,6 +21,25 @@ export const Categories: CollectionConfig = {
       required: true,
       unique: true,
       label: 'URL slug',
+      admin: {
+        description: 'URL-friendly version of the name (e.g., "pos-systems")',
+      },
+      hooks: {
+        beforeValidate: [
+          ({ data, operation }) => {
+            if (operation === 'create' && data?.name && !data?.slug) {
+              // Auto-generate slug from name if not provided
+              data.slug = data.name
+                .toLowerCase()
+                .replace(/[^\w\s-]/g, '') // Remove special characters
+                .replace(/\s+/g, '-') // Replace spaces with dashes
+                .replace(/-+/g, '-') // Replace multiple dashes with single dash
+                .trim()
+            }
+            return data
+          },
+        ],
+      },
     },
     {
       name: 'description',
