@@ -1,0 +1,256 @@
+/* ==================== SOFTWARE HERO ==================== */
+.software-hero {
+  background: linear-gradient(135deg, var(--color-deep-blue) 0%, var(--color-medium-blue) 100%);
+  padding: var(--spacing-4xl) 0 var(--spacing-3xl);
+  text-align: center;
+  color: var(--color-white);
+}
+
+.software-hero h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.02em;
+}
+
+.software-hero .hero-subtitle {
+  font-size: var(--font-size-xl);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ==================== SOFTWARE SECTION ==================== */
+.software-section {
+  padding: var(--spacing-4xl) 0;
+  background: var(--color-gray-50);
+}
+
+.software-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-2xl);
+}
+
+.software-card {
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-gray-200);
+  transition: all var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.software-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2xl);
+  border-color: var(--color-light-blue);
+}
+
+.software-card-header h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-deep-blue);
+  margin-bottom: var(--spacing-md);
+}
+
+.software-description {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-600);
+  line-height: 1.6;
+}
+
+.software-highlights h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-800);
+  margin-bottom: var(--spacing-md);
+}
+
+.software-highlights ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.software-highlights li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  color: var(--color-gray-700);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.software-highlights li svg {
+  color: var(--color-light-blue);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.software-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-deep-blue) 0%, var(--color-medium-blue) 100%);
+  color: var(--color-white);
+  text-decoration: none;
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-blue-sm);
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.software-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-blue-md);
+}
+
+/* ==================== CONTACT CTA SECTION ==================== */
+.software-contact-section {
+  padding: var(--spacing-4xl) 0;
+  background: var(--color-white);
+}
+
+.contact-cta-box {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-3xl);
+  text-align: center;
+  border: 2px solid var(--color-light-blue);
+}
+
+.contact-cta-box h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-deep-blue);
+  margin-bottom: var(--spacing-md);
+}
+
+.contact-cta-box p {
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-700);
+  margin-bottom: var(--spacing-xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==================== SOFTWARE DETAIL PAGE ==================== */
+.software-detail-hero {
+  background: linear-gradient(135deg, var(--color-deep-blue) 0%, var(--color-medium-blue) 100%);
+  padding: var(--spacing-3xl) 0;
+  color: var(--color-white);
+}
+
+.software-detail-hero h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+}
+
+.software-detail-hero .lead {
+  font-size: var(--font-size-xl);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.software-content {
+  padding: var(--spacing-4xl) 0;
+}
+
+.software-content-section {
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-gray-200);
+}
+
+.software-content-section h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-deep-blue);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--color-light-blue);
+}
+
+.software-content-section h3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-800);
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.software-content-section p {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-700);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+}
+
+.software-content-section ul {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-md) 0;
+}
+
+.software-content-section li {
+  padding-left: var(--spacing-xl);
+  margin-bottom: var(--spacing-sm);
+  position: relative;
+  color: var(--color-gray-700);
+  line-height: 1.6;
+}
+
+.software-content-section li::before {
+  content: '•';
+  position: absolute;
+  left: var(--spacing-md);
+  color: var(--color-light-blue);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .software-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .software-hero h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  .software-hero .hero-subtitle {
+    font-size: var(--font-size-lg);
+  }
+
+  .contact-cta-box {
+    padding: var(--spacing-2xl);
+  }
+
+  .contact-cta-box h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .software-detail-hero h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  .software-detail-hero .lead {
+    font-size: var(--font-size-lg);
+  }
+}

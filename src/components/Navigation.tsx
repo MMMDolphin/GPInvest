@@ -121,6 +121,9 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
                 )}
               </li>
               <li>
+                <Link href="/software">Търговски Софтуер</Link>
+              </li>
+              <li>
                 <Link href="/services">Услуги</Link>
               </li>
               <li>
@@ -212,6 +215,11 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
                     })}
                   </ul>
                 )}
+              </li>
+              <li>
+                <Link href="/software" onClick={() => setIsOpen(false)}>
+                  Търговски Софтуер
+                </Link>
               </li>
               <li>
                 <Link href="/services" onClick={() => setIsOpen(false)}>

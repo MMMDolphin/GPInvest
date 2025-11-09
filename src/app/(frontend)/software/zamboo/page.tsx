@@ -1,0 +1,183 @@
+import React from 'react'
+import { getPayload } from 'payload'
+import config from '@/payload.config'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
+import Breadcrumb from '@/components/Breadcrumb'
+import Link from 'next/link'
+import { Phone } from 'lucide-react'
+import '../software.css'
+
+export default async function ZambooPage() {
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
+
+  const siteSettings = await payload.findGlobal({
+    slug: 'site-settings',
+  })
+
+  const categoriesData = await payload.find({
+    collection: 'categories',
+    limit: 50,
+  })
+
+  const categories = categoriesData.docs.map((category: any) => ({
+    id: category.id,
+    name: category.name,
+    slug: category.slug,
+  }))
+
+  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
+    url: siteSettings.logo.url,
+    alt: siteSettings.logo.alt || siteSettings.companyName,
+  } : null
+
+  return (
+    <>
+      <Navigation companyName={siteSettings.companyName} logo={logo} categories={categories} />
+
+      <div className="software-detail-hero">
+        <div className="container">
+          <Breadcrumb
+            items={[
+              { label: 'Търговски Софтуер', href: '/software' },
+              { label: 'Zamboo' }
+            ]}
+          />
+          <h1>Zamboo</h1>
+          <p className="lead">
+            Интуитивен и мултифункционален софтуер за управление на ресторанти, заведения, хотели и магазини
+          </p>
+        </div>
+      </div>
+
+      <div className="software-content">
+        <div className="container">
+          <div className="software-content-section">
+            <h2>Общо описание</h2>
+            <p>
+              Zamboo е интуитивен и мултифункционален софтуер, разработен от българската компания Mistral Software,
+              предназначен за управление на ресторанти, заведения, хотели и магазини. Системата обединява всички
+              ключови бизнес процеси в единна платформа, предлагайки решения за POS, складово управление, лоялни
+              програми и отчетност.
+            </p>
+          </div>
+
+          <div className="software-content-section">
+            <h2>Основни функционалности</h2>
+
+            <h3>POS система</h3>
+            <p>
+              Поддържа разнообразие от интерфейси, подходящи за различни типове бизнеси, включително възможности за:
+            </p>
+            <ul>
+              <li>Прехвърляне на сметки между маси</li>
+              <li>Управление на резервации</li>
+              <li>Интеграция с кухнята в реално време чрез KDS (Kitchen Display System)</li>
+              <li>Бърза и интуитивна обработка на поръчки</li>
+              <li>Поддръжка на различни видове плащания</li>
+            </ul>
+
+            <h3>Web управление</h3>
+            <p>
+              Позволява дистанционно управление на ресторанта чрез уеб интерфейс, включително:
+            </p>
+            <ul>
+              <li>Управление на материали и складови наличности</li>
+              <li>Планиране на менюта</li>
+              <li>Извършване на ревизии</li>
+              <li>Преглед на отчети и статистики в реално време</li>
+              <li>Управление на персонал и работно време</li>
+            </ul>
+
+            <h3>OCR за доставки</h3>
+            <p>
+              Иновативна функционалност, която сканира и автоматично въвежда данни от фактури, ускорявайки процеса
+              на приемане на стоки и намалявайки човешките грешки. Системата разпознава автоматично:
+            </p>
+            <ul>
+              <li>Наименования на артикули</li>
+              <li>Количества</li>
+              <li>Цени</li>
+              <li>Дати на доставка</li>
+            </ul>
+
+            <h3>Лоялна програма</h3>
+            <p>
+              Позволява изграждане на дългосрочна връзка с клиентите чрез:
+            </p>
+            <ul>
+              <li>Управление на клиентски поръчки</li>
+              <li>Система за резервации</li>
+              <li>История на покупките на всеки клиент</li>
+              <li>Персонализирани отстъпки и промоции</li>
+              <li>Точки за лоялност</li>
+            </ul>
+
+            <h3>Отчети и анализи</h3>
+            <p>
+              Предоставя подробни отчети и анализи за:
+            </p>
+            <ul>
+              <li>Продажби по период, артикул, категория</li>
+              <li>Инвентаризация и складови движения</li>
+              <li>Ефективност на персонала</li>
+              <li>Финансови показатели</li>
+              <li>Най-продавани продукти</li>
+              <li>Приходи и разходи</li>
+            </ul>
+            <p>
+              Всички анализи подпомагат вземането на информирани бизнес решения.
+            </p>
+          </div>
+
+          <div className="software-content-section">
+            <h2>Приложения</h2>
+            <p>Zamboo е подходящ за широк спектър от обекти, включително:</p>
+            <ul>
+              <li>Ресторанти и заведения за бързо хранене</li>
+              <li>Хотели и хотелски ресторанти</li>
+              <li>Клубове и барове</li>
+              <li>Магазини за храни и напитки</li>
+              <li>Столово хранене и кафетерии</li>
+              <li>Кетъринг компании</li>
+            </ul>
+          </div>
+
+          <div className="software-content-section">
+            <h2>Доверени клиенти</h2>
+            <p>
+              Компанията има разнообразни клиенти, включително водещи вериги като Wok to Walk и много други
+              успешни заведения в България и чужбина.
+            </p>
+          </div>
+
+          <div className="software-content-section">
+            <div style={{ textAlign: 'center' }}>
+              <h2>Заинтересовани ли сте?</h2>
+              <p style={{ marginBottom: 'var(--spacing-xl)' }}>
+                Свържете се с нас за демонстрация и персонализирана оферта
+              </p>
+              <Link href="/contact" className="btn-primary-gradient" style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
+                <Phone size={20} />
+                <span>Свържете се с нас</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Footer
+        companyName={siteSettings.companyName}
+        logo={logo}
+        tagline={siteSettings.tagline}
+        email={siteSettings.email}
+        phone={siteSettings.phone}
+        address={siteSettings.address}
+        facebook={siteSettings.facebook}
+        instagram={siteSettings.instagram}
+        linkedin={siteSettings.linkedin}
+      />
+    </>
+  )
+}
