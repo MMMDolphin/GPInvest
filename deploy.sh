@@ -33,6 +33,10 @@ docker run --rm \
   --env-file .env \
   node:22.17.0-alpine sh -c "apk add --no-cache libc6-compat >/dev/null && corepack enable pnpm && pnpm install --frozen-lockfile && pnpm payload migrate"
 
+echo "Restoring file permissions..."
+chown -R 1001:1001 media
+chown 1001:1001 gp-invest.db
+
 echo "Building and starting application..."
 docker compose -f "$COMPOSE_FILE" build
 docker compose -f "$COMPOSE_FILE" up -d --remove-orphans
