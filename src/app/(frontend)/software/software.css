@@ -1,9 +1,10 @@
 /* ==================== SOFTWARE HERO ==================== */
 .software-hero {
   background: linear-gradient(135deg, var(--color-deep-blue) 0%, var(--color-medium-blue) 100%);
-  padding: var(--spacing-4xl) 0 var(--spacing-3xl);
+  padding: var(--spacing-4xl) 0 var(--spacing-5xl);
   text-align: center;
   color: var(--color-white);
+  margin-bottom: var(--spacing-5xl);
 }
 
 .software-hero h1 {
@@ -22,14 +23,27 @@
 
 /* ==================== SOFTWARE SECTION ==================== */
 .software-section {
-  padding: var(--spacing-4xl) 0;
+  padding: var(--spacing-5xl) 0 var(--spacing-4xl);
   background: var(--color-gray-50);
 }
 
 .software-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--spacing-2xl);
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-3xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+@media (max-width: 1200px) {
+  .software-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .software-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .software-card {
@@ -119,14 +133,16 @@
 .software-contact-section {
   padding: var(--spacing-4xl) 0;
   background: var(--color-white);
+  margin-top: var(--spacing-4xl);
 }
 
 .contact-cta-box {
   background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
   border-radius: var(--radius-xl);
-  padding: var(--spacing-3xl);
+  padding: var(--spacing-4xl) var(--spacing-3xl);
   text-align: center;
   border: 2px solid var(--color-light-blue);
+  margin-top: var(--spacing-2xl);
 }
 
 .contact-cta-box h2 {

@@ -4,7 +4,7 @@ This template comes configured with the bare minimum to get started on anything 
 
 ## Quick start
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+This template originally targeted Payload Cloud (MongoDB + S3), but this project is configured to run entirely on SQLite with media stored on the local filesystem.
 
 ## Quick Start - local setup
 
@@ -17,7 +17,7 @@ After you click the `Deploy` button above, you'll want to have standalone copy o
 ### Development
 
 1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URI` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+2. `cd my-project && cp .env.example .env` to copy the example environment variables. The default `DATABASE_URI=file:./gp-invest.db` keeps your data in a local SQLite file.
 
 3. `pnpm install && pnpm dev` to install dependencies and start the dev server
 4. open `http://localhost:3000` to open the app in your browser
@@ -26,13 +26,7 @@ That's it! Changes made in `./src` will be reflected in your app. Follow the on-
 
 #### Docker (Optional)
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
-
-To do so, follow these steps:
-
-- Modify the `MONGODB_URI` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URI` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+If you prefer to use Docker for local development, the provided docker-compose.yml file will start the dev server inside a container while mounting your local `media/` folder and `gp-invest.db` SQLite database file for persistence. Run `docker compose up` (optionally `-d`) after ensuring `gp-invest.db` exists in the project root.
 
 ## How it works
 
