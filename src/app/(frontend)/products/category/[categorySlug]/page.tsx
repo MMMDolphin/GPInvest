@@ -73,9 +73,15 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     return productCategory === currentCategory.id
   })
 
+  // Transform logo data
+  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
+    url: siteSettings.logo.url,
+    alt: siteSettings.logo.alt || siteSettings.companyName,
+  } : null
+
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} categories={categories} />
+      <Navigation companyName={siteSettings.companyName} logo={logo} categories={categories} />
 
       <div className="page-header">
         <div className="container">
@@ -100,6 +106,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
       <Footer
         companyName={siteSettings.companyName}
+        logo={logo}
+        tagline={siteSettings.tagline}
         email={siteSettings.email}
         phone={siteSettings.phone}
         address={siteSettings.address}

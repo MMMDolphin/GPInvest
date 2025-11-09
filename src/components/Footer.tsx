@@ -4,8 +4,15 @@ import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react
 import NewsletterSignup from './NewsletterSignup'
 import './Footer.css'
 
+interface Logo {
+  url: string
+  alt?: string
+}
+
 interface FooterProps {
   companyName?: string
+  logo?: Logo | null
+  tagline?: string | null
   email?: string | null
   phone?: string | null
   address?: string | null
@@ -16,6 +23,8 @@ interface FooterProps {
 
 export default function Footer({
   companyName = 'GP Invest',
+  logo,
+  tagline,
   email = 'info@gpinvest.bg',
   phone = '+359 2 123 4567',
   address = 'София, България',
@@ -33,10 +42,16 @@ export default function Footer({
           <div className="footer-grid">
             {/* Company Info Section */}
             <div className="footer-section footer-brand">
-              <h3 className="footer-brand-title">{companyName}</h3>
-              <p className="footer-tagline">
-                Вашият надежден партньор за професионални POS решения и бизнес оборудване
-              </p>
+              {logo ? (
+                <img src={logo.url} alt={logo.alt || companyName} className="footer-logo" />
+              ) : (
+                <h3 className="footer-brand-title">{companyName}</h3>
+              )}
+              {tagline && (
+                <p className="footer-tagline">
+                  {tagline}
+                </p>
+              )}
               <div className="footer-social">
                 {facebook && (
                   <a

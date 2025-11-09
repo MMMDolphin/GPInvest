@@ -61,6 +61,12 @@ export default async function HomePage() {
     slug: category.slug,
   }))
 
+  // Transform logo data
+  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
+    url: siteSettings.logo.url,
+    alt: siteSettings.logo.alt || siteSettings.companyName,
+  } : null
+
   // Transform hero slides data
   const heroSlides = heroSlidesData.docs.map((slide: any) => ({
     id: slide.id,
@@ -95,7 +101,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} categories={categories} />
+      <Navigation companyName={siteSettings.companyName} logo={logo} categories={categories} />
 
       {heroSlides.length > 0 && <HeroCarousel slides={heroSlides} />}
 
@@ -303,6 +309,8 @@ export default async function HomePage() {
 
       <Footer
         companyName={siteSettings.companyName}
+        logo={logo}
+        tagline={siteSettings.tagline}
         email={siteSettings.email}
         phone={siteSettings.phone}
         address={siteSettings.address}

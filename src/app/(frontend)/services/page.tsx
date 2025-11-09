@@ -14,9 +14,15 @@ export default async function ServicesPage() {
     slug: 'site-settings',
   })
 
+  // Transform logo data
+  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
+    url: siteSettings.logo.url,
+    alt: siteSettings.logo.alt || siteSettings.companyName,
+  } : null
+
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} />
+      <Navigation companyName={siteSettings.companyName} logo={logo} />
 
       <div className="page-header">
         <div className="container">
@@ -375,6 +381,8 @@ export default async function ServicesPage() {
 
       <Footer
         companyName={siteSettings.companyName}
+        logo={logo}
+        tagline={siteSettings.tagline}
         email={siteSettings.email}
         phone={siteSettings.phone}
         address={siteSettings.address}

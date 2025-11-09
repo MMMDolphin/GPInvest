@@ -99,6 +99,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
     slug: 'site-settings',
   })
 
+  // Transform logo data
+  const logo = siteSettings.logo && typeof siteSettings.logo === 'object' ? {
+    url: siteSettings.logo.url,
+    alt: siteSettings.logo.alt || siteSettings.companyName,
+  } : null
+
   // Get the full URL for the product
   const headersList = await headers()
   const host = headersList.get('host') || 'localhost:3000'
@@ -158,7 +164,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} />
+      <Navigation companyName={siteSettings.companyName} logo={logo} />
 
       {/* Minimal Header with Breadcrumb */}
       <div className="product-header">
@@ -387,6 +393,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <Footer
         companyName={siteSettings.companyName}
+        logo={logo}
+        tagline={siteSettings.tagline}
         email={siteSettings.email}
         phone={siteSettings.phone}
         address={siteSettings.address}

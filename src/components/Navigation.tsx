@@ -11,12 +11,18 @@ interface Category {
   slug?: string
 }
 
+interface Logo {
+  url: string
+  alt?: string
+}
+
 interface NavigationProps {
   companyName?: string
+  logo?: Logo | null
   categories?: Category[]
 }
 
-export default function Navigation({ companyName = 'GP Invest', categories = [] }: NavigationProps) {
+export default function Navigation({ companyName = 'GP Invest', logo, categories = [] }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false)
@@ -52,7 +58,11 @@ export default function Navigation({ companyName = 'GP Invest', categories = [] 
           <div className="nav-wrapper">
             {/* Logo */}
             <Link href="/" className="logo" onClick={() => setIsOpen(false)}>
-              {companyName}
+              {logo ? (
+                <img src={logo.url} alt={logo.alt || companyName} className="logo-image" />
+              ) : (
+                companyName
+              )}
             </Link>
 
             {/* Desktop Navigation Menu */}
@@ -144,7 +154,11 @@ export default function Navigation({ companyName = 'GP Invest', categories = [] 
           <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
             {/* Mobile Menu Header */}
             <div className="mobile-menu-header">
-              <span className="mobile-menu-title">{companyName}</span>
+              {logo ? (
+                <img src={logo.url} alt={logo.alt || companyName} className="mobile-menu-logo" />
+              ) : (
+                <span className="mobile-menu-title">{companyName}</span>
+              )}
               <button
                 className="mobile-menu-close"
                 onClick={() => setIsOpen(false)}
