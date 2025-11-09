@@ -45,11 +45,6 @@ export default async function HomePage() {
     limit: 6,
   })
 
-  // Fetch homepage categories from admin
-  const homeCategoriesData = await payload.findGlobal({
-    slug: 'home-categories',
-  })
-
   // Fetch product categories for navigation
   const categoriesData = await payload.find({
     collection: 'categories',
@@ -60,6 +55,27 @@ export default async function HomePage() {
     id: category.id,
     name: category.name,
     slug: category.slug,
+  }))
+
+  // Fetch homepage categories (categories with showOnHomepage = true)
+  const homepageCategoriesData = await payload.find({
+    collection: 'categories',
+    where: {
+      showOnHomepage: {
+        equals: true,
+      },
+    },
+    sort: 'homepageOrder',
+    limit: 6,
+  })
+
+  const homepageCategories = homepageCategoriesData.docs.map((category: any) => ({
+    id: category.id,
+    name: category.name,
+    slug: category.slug,
+    description: category.description,
+    icon: category.icon,
+    link: `/products/category/${category.slug}`,
   }))
 
   // Transform logo data
@@ -143,22 +159,20 @@ export default async function HomePage() {
       </section>
 
       {/* Product Categories Section */}
-      {homeCategoriesData.enabled && homeCategoriesData.categories && homeCategoriesData.categories.length > 0 && (
+      {homepageCategories.length > 0 && (
         <section className="categories-section">
           <div className="container">
             <div className="section-header">
-              <h2 className="section-title">{homeCategoriesData.title}</h2>
-              {homeCategoriesData.subtitle && (
-                <p className="section-subtitle">{homeCategoriesData.subtitle}</p>
-              )}
+              <h2 className="section-title">Категории продукти</h2>
+              <p className="section-subtitle">Разгледайте нашата богата гама от POS решения и оборудване</p>
             </div>
 
             <div className="categories-grid">
-              {homeCategoriesData.categories.map((category: any, index: number) => {
+              {homepageCategories.map((category: any) => {
                 const IconComponent = getIconComponent(category.icon)
 
                 return (
-                  <Link key={index} href={category.link} className="category-card">
+                  <Link key={category.id} href={category.link} className="category-card">
                     <div className="category-icon">
                       <IconComponent size={24} />
                     </div>
