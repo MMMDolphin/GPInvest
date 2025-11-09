@@ -3,8 +3,8 @@
 # Minimal deployment script
 set -euo pipefail
 
-SERVER="root@195.201.118.88"
-REMOTE_DIR="/root/kmpbuild.com"
+SERVER="root@46.62.242.236"
+REMOTE_DIR="/root/gpinvest"
 BRANCH="main"
 COMPOSE_FILE="docker-compose.prod.yml"
 
