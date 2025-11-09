@@ -49,12 +49,14 @@ export default async function HomePage() {
   const categoriesData = await payload.find({
     collection: 'categories',
     limit: 50,
+    depth: 1, // Populate parent relationship
   })
 
   const categories = categoriesData.docs.map((category: any) => ({
     id: category.id,
     name: category.name,
     slug: category.slug,
+    parent: category.parent, // Include parent field for hierarchy
   }))
 
   // Fetch only parent categories for homepage display (categories without a parent)

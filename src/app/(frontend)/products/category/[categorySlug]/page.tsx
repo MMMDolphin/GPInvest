@@ -27,6 +27,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const categoriesData = await payload.find({
     collection: 'categories',
     limit: 50,
+    depth: 1, // Populate parent relationship
   })
 
   const categories = categoriesData.docs.map((category: any) => ({
@@ -34,6 +35,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     name: category.name,
     slug: category.slug,
     description: category.description,
+    parent: category.parent, // Include parent field for hierarchy
   }))
 
   // Find the current category by slug

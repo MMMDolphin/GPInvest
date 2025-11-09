@@ -26,6 +26,7 @@ export default async function ProductsPage() {
   const categoriesData = await payload.find({
     collection: 'categories',
     limit: 50,
+    depth: 1, // Populate parent relationship
   })
 
   // Transform products data
@@ -49,6 +50,7 @@ export default async function ProductsPage() {
     name: category.name,
     slug: category.slug,
     description: category.description,
+    parent: category.parent, // Include parent field for hierarchy
   }))
 
   // Transform logo data
