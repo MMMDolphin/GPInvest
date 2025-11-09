@@ -2,12 +2,9 @@ import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   eslint: {
     ignoreDuringBuilds: true,
   },
-  serverExternalPackages: ['libsql', '@libsql/linux-x64-musl'],
-  // Your Next.js config here
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],

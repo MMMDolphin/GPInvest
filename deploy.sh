@@ -1,14 +1,12 @@
 #!/bin/bash
 
-# Minimal deployment script
 set -euo pipefail
 
 SERVER="root@46.62.242.236"
 REMOTE_DIR="/root/gpinvest"
 BRANCH="main"
-COMPOSE_FILE="docker-compose.prod.yml"
 
-echo "Connecting to server and deploying..."
+echo "Deploying to server..."
 
 ssh "$SERVER" <<REMOTE
 set -euo pipefail
@@ -20,26 +18,17 @@ git fetch origin "$BRANCH"
 git checkout "$BRANCH"
 git pull origin "$BRANCH"
 
-echo "Ensuring persistent directories exist..."
-mkdir -p media
-touch gp-invest.db
-chown -R 1001:1001 media
-chown 1001:1001 gp-invest.db
+echo "Installing dependencies..."
+pnpm install --frozen-lockfile
 
 echo "Running database migrations..."
-docker run --rm \
-  -v "$REMOTE_DIR":/app \
-  -w /app \
-  --env-file .env \
-  node:22.17.0-alpine sh -c "apk add --no-cache libc6-compat >/dev/null && corepack enable pnpm && pnpm install --frozen-lockfile && pnpm payload migrate"
+pnpm payload migrate
 
-echo "Restoring file permissions..."
-chown -R 1001:1001 media
-chown 1001:1001 gp-invest.db
+echo "Building application..."
+pnpm build
 
-echo "Building and starting application..."
-docker compose -f "$COMPOSE_FILE" build
-docker compose -f "$COMPOSE_FILE" up -d --remove-orphans
+echo "Reloading process via PM2..."
+pm2 reload gp-invest || pm2 start "pnpm start" --name gp-invest
 
 echo "Deployment complete!"
 REMOTE
