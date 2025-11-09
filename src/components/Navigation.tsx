@@ -121,7 +121,7 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
                 )}
               </li>
               <li>
-                <Link href="/software">Търговски Софтуер</Link>
+                <Link href="/software">Софтуер</Link>
               </li>
               <li>
                 <Link href="/services">Услуги</Link>
@@ -218,7 +218,7 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
               </li>
               <li>
                 <Link href="/software" onClick={() => setIsOpen(false)}>
-                  Търговски Софтуер
+                  Софтуер
                 </Link>
               </li>
               <li>
