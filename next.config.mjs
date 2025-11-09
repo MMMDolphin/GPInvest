@@ -6,9 +6,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    serverComponentsExternalPackages: ['libsql', '@libsql/linux-x64-musl'],
-  },
+  serverExternalPackages: ['libsql', '@libsql/linux-x64-musl'],
   // Your Next.js config here
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

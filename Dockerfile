@@ -63,10 +63,8 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Ensure native libsql bindings are available at runtime
-RUN mkdir -p node_modules
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/libsql ./node_modules/libsql
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@libsql ./node_modules/@libsql
+# Include node_modules to support native bindings like libsql
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
 USER nextjs
 
