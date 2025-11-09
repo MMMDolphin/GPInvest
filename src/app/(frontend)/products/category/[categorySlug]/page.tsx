@@ -4,8 +4,8 @@ import config from '@/payload.config'
 import Navigation from '@/components/Navigation'
 import Breadcrumb from '@/components/Breadcrumb'
 import Footer from '@/components/Footer'
-import ProductsClient from '../ProductsClient'
-import '../products.css'
+import ProductsClient from '../../ProductsClient'
+import '../../products.css'
 import { notFound } from 'next/navigation'
 
 interface CategoryPageProps {

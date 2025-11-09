@@ -25,7 +25,7 @@ export default function ProductsClient({ products, categories, initialCategory =
       // Find category slug and navigate
       const category = categories.find(c => c.id === categoryId)
       if (category?.slug) {
-        router.push(`/products/${category.slug}`)
+        router.push(`/products/category/${category.slug}`)
       }
     }
   }

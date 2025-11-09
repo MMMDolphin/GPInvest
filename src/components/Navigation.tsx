@@ -91,7 +91,7 @@ export default function Navigation({ companyName = 'GP Invest', categories = [] 
                             return (
                               <Link
                                 key={category.id}
-                                href={`/products/${category.slug}`}
+                                href={`/products/category/${category.slug}`}
                                 className="mega-menu-item"
                                 onClick={() => setProductsDropdownOpen(false)}
                               >
@@ -183,7 +183,7 @@ export default function Navigation({ companyName = 'GP Invest', categories = [] 
                       return (
                         <li key={category.id}>
                           <Link
-                            href={`/products/${category.slug}`}
+                            href={`/products/category/${category.slug}`}
                             onClick={() => setIsOpen(false)}
                           >
                             <Package size={18} />
