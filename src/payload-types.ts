@@ -188,6 +188,20 @@ export interface Category {
    */
   slug: string;
   description?: string | null;
+  icon?:
+    | (
+        | 'ShoppingCart'
+        | 'Laptop'
+        | 'Wrench'
+        | 'Package'
+        | 'Smartphone'
+        | 'Monitor'
+        | 'Printer'
+        | 'HardDrive'
+        | 'Scale'
+        | 'Barcode'
+      )
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -561,6 +575,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   description?: T;
+  icon?: T;
   updatedAt?: T;
   createdAt?: T;
 }

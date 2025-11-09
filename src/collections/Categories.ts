@@ -30,5 +30,22 @@ export const Categories: CollectionConfig = {
       type: 'textarea',
       label: 'Описание',
     },
+    {
+      name: 'icon',
+      type: 'select',
+      label: 'Икона',
+      options: [
+        { label: 'Shopping Cart', value: 'ShoppingCart' },
+        { label: 'Laptop', value: 'Laptop' },
+        { label: 'Wrench', value: 'Wrench' },
+        { label: 'Package', value: 'Package' },
+        { label: 'Smartphone', value: 'Smartphone' },
+        { label: 'Monitor', value: 'Monitor' },
+        { label: 'Printer', value: 'Printer' },
+        { label: 'HardDrive', value: 'HardDrive' },
+        { label: 'Scale', value: 'Scale' },
+        { label: 'Barcode', value: 'Barcode' },
+      ],
+    },
   ],
 }

@@ -63,29 +63,12 @@ export default async function HomePage() {
     limit: 50,
   })
 
-  // Simple icon mapping based on category slug
-  const getIconForCategory = (slug: string) => {
-    const iconMap: Record<string, string> = {
-      'pos-systems': 'ShoppingCart',
-      'computers': 'Laptop',
-      'tools': 'Wrench',
-      'software': 'Package',
-      'mobile': 'Smartphone',
-      'monitors': 'Monitor',
-      'printers': 'Printer',
-      'storage': 'HardDrive',
-      'scales': 'Scale',
-      'barcode': 'Barcode',
-    }
-    return iconMap[slug] || 'Package'
-  }
-
   const homepageCategories = homepageCategoriesData.docs.map((category: any) => ({
     id: category.id,
     name: category.name,
     slug: category.slug,
     description: category.description,
-    icon: getIconForCategory(category.slug),
+    icon: category.icon || 'Package',
     link: `/products/category/${category.slug}`,
   }))
 
