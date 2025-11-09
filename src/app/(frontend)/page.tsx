@@ -49,6 +49,18 @@ export default async function HomePage() {
     slug: 'home-categories',
   })
 
+  // Fetch product categories for navigation
+  const categoriesData = await payload.find({
+    collection: 'categories',
+    limit: 50,
+  })
+
+  const categories = categoriesData.docs.map((category: any) => ({
+    id: category.id,
+    name: category.name,
+    slug: category.slug,
+  }))
+
   // Transform hero slides data
   const heroSlides = heroSlidesData.docs.map((slide: any) => ({
     id: slide.id,
@@ -83,7 +95,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} />
+      <Navigation companyName={siteSettings.companyName} categories={categories} />
 
       {heroSlides.length > 0 && <HeroCarousel slides={heroSlides} />}
 

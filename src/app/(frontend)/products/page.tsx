@@ -52,7 +52,7 @@ export default async function ProductsPage() {
 
   return (
     <>
-      <Navigation companyName={siteSettings.companyName} />
+      <Navigation companyName={siteSettings.companyName} categories={categories} />
 
       <div className="page-header">
         <div className="container">

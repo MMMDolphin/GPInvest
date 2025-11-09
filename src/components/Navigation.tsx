@@ -2,18 +2,27 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Phone } from 'lucide-react'
+import { Phone, ChevronDown, Package } from 'lucide-react'
 import './Navigation.css'
+
+interface Category {
+  id: string
+  name: string
+  slug?: string
+}
 
 interface NavigationProps {
   companyName?: string
+  categories?: Category[]
 }
 
-export default function Navigation({ companyName = 'GP Invest' }: NavigationProps) {
+export default function Navigation({ companyName = 'GP Invest', categories = [] }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false)
 
   const toggleMenu = () => setIsOpen(!isOpen)
+  const toggleProductsDropdown = () => setProductsDropdownOpen(!productsDropdownOpen)
 
   // Track scroll for navbar shadow effect
   useEffect(() => {
@@ -51,8 +60,48 @@ export default function Navigation({ companyName = 'GP Invest' }: NavigationProp
               <li>
                 <Link href="/">Начало</Link>
               </li>
-              <li>
-                <Link href="/products">Продукти</Link>
+              <li
+                className="nav-dropdown"
+                onMouseEnter={() => setProductsDropdownOpen(true)}
+                onMouseLeave={() => setProductsDropdownOpen(false)}
+              >
+                <button className="nav-dropdown-trigger">
+                  Продукти
+                  <ChevronDown size={16} className={productsDropdownOpen ? 'rotated' : ''} />
+                </button>
+                {productsDropdownOpen && (
+                  <div className="mega-menu">
+                    <div className="mega-menu-content">
+                      <div className="mega-menu-section">
+                        <h3>Категории продукти</h3>
+                        <div className="mega-menu-grid">
+                          <Link
+                            href="/products"
+                            className="mega-menu-item all-products"
+                            onClick={() => setProductsDropdownOpen(false)}
+                          >
+                            <Package size={20} />
+                            <div>
+                              <strong>Всички продукти</strong>
+                              <span>Виж целия каталог</span>
+                            </div>
+                          </Link>
+                          {categories.map((category) => (
+                            <Link
+                              key={category.id}
+                              href={`/products?category=${category.id}`}
+                              className="mega-menu-item"
+                              onClick={() => setProductsDropdownOpen(false)}
+                            >
+                              <Package size={18} />
+                              <span>{category.name}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </li>
               <li>
                 <Link href="/services">Услуги</Link>
@@ -110,10 +159,35 @@ export default function Navigation({ companyName = 'GP Invest' }: NavigationProp
                   Начало
                 </Link>
               </li>
-              <li>
-                <Link href="/products" onClick={() => setIsOpen(false)}>
+              <li className="mobile-dropdown">
+                <button
+                  className="mobile-dropdown-trigger"
+                  onClick={toggleProductsDropdown}
+                >
                   Продукти
-                </Link>
+                  <ChevronDown size={20} className={productsDropdownOpen ? 'rotated' : ''} />
+                </button>
+                {productsDropdownOpen && (
+                  <ul className="mobile-submenu">
+                    <li>
+                      <Link href="/products" onClick={() => setIsOpen(false)}>
+                        <Package size={18} />
+                        Всички продукти
+                      </Link>
+                    </li>
+                    {categories.map((category) => (
+                      <li key={category.id}>
+                        <Link
+                          href={`/products?category=${category.id}`}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <Package size={18} />
+                          {category.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
               <li>
                 <Link href="/services" onClick={() => setIsOpen(false)}>
