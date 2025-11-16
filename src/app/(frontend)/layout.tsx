@@ -1,6 +1,6 @@
 import React from 'react'
 import { Montserrat } from 'next/font/google'
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { fetchSiteData } from '@/lib/getSiteData'
@@ -12,6 +12,12 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
   display: 'swap',
 })
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gpinvest.bg'),
@@ -61,11 +67,6 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
   },
   icons: {
     icon: '/favicon.ico',

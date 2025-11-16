@@ -11,22 +11,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const products = await payload.find({
       collection: 'products',
       limit: 1000,
-      where: {
-        _status: {
-          equals: 'published',
-        },
-      },
     })
 
     // Fetch all categories
     const categories = await payload.find({
       collection: 'categories',
       limit: 100,
-      where: {
-        _status: {
-          equals: 'published',
-        },
-      },
     })
 
     const staticPages = [
