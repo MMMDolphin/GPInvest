@@ -1,8 +1,22 @@
 import React from 'react'
+import { Metadata } from 'next'
 import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/ContactForm'
 import { fetchSiteData } from '@/lib/getSiteData'
 import './contact.css'
+
+export const metadata: Metadata = {
+  title: 'Контакти - Свържете се с нас',
+  description: 'Свържете се с GP Invest за оферта, консултация или поддръжка на касови апарати и POS системи. Телефон, имейл, адрес. Отговаряме бързо.',
+  openGraph: {
+    title: 'Контакти - Свържете се с нас | GP Invest',
+    description: 'Свържете се с GP Invest за оферта, консултация или поддръжка на касови апарати и POS системи.',
+    url: 'https://gpinvest.bg/contact',
+  },
+  alternates: {
+    canonical: 'https://gpinvest.bg/contact',
+  },
+}
 
 interface ContactPageProps {
   searchParams: Promise<{

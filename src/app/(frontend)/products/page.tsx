@@ -1,9 +1,23 @@
 import React from 'react'
+import { Metadata } from 'next'
 import Breadcrumb from '@/components/Breadcrumb'
 import ProductsClient from './ProductsClient'
 import './products.css'
 import { getPayloadClient } from '@/lib/getPayloadClient'
 import { fetchSiteData } from '@/lib/getSiteData'
+
+export const metadata: Metadata = {
+  title: 'Продукти - Касови апарати и POS системи',
+  description: 'Разгледайте нашата гама от касови апарати, фискални принтери, POS терминали и аксесоари. Професионално оборудване за Вашия бизнес с гаранция и сервиз.',
+  openGraph: {
+    title: 'Продукти - Касови апарати и POS системи | GP Invest',
+    description: 'Разгледайте нашата гама от касови апарати, фискални принтери, POS терминали и аксесоари.',
+    url: 'https://gpinvest.bg/products',
+  },
+  alternates: {
+    canonical: 'https://gpinvest.bg/products',
+  },
+}
 
 export default async function ProductsPage() {
   const payload = await getPayloadClient()

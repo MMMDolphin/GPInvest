@@ -1,7 +1,21 @@
 import React from 'react'
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import './software.css'
+
+export const metadata: Metadata = {
+  title: 'Търговски Софтуер - Мистрал V3, Zamboo, ТИС Карат',
+  description: 'Професионални софтуерни решения за управление на търговия - Мистрал V3, Zamboo, ТИС Карат. BackOffice, POS системи, складово управление, автоматизация.',
+  openGraph: {
+    title: 'Търговски Софтуер - Мистрал V3, Zamboo, ТИС Карат | GP Invest',
+    description: 'Професионални софтуерни решения за управление на търговия - Мистрал V3, Zamboo, ТИС Карат.',
+    url: 'https://gpinvest.bg/software',
+  },
+  alternates: {
+    canonical: 'https://gpinvest.bg/software',
+  },
+}
 
 export default async function SoftwarePage() {
   const softwareProducts = [

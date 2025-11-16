@@ -1,6 +1,20 @@
 import React from 'react'
+import { Metadata } from 'next'
 import Breadcrumb from '@/components/Breadcrumb'
 import './about.css'
+
+export const metadata: Metadata = {
+  title: 'За нас - GP Invest',
+  description: 'Джи Пи Инвест ЕООД - дългогодишен опит в продажбата и поддръжката на касови апарати, фискални принтери и търговски софтуер. Професионализъм и качество.',
+  openGraph: {
+    title: 'За нас - GP Invest',
+    description: 'Джи Пи Инвест ЕООД - дългогодишен опит в продажбата и поддръжката на касови апарати, фискални принтери и търговски софтуер.',
+    url: 'https://gpinvest.bg/about',
+  },
+  alternates: {
+    canonical: 'https://gpinvest.bg/about',
+  },
+}
 
 export default async function AboutPage() {
   return (

@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { Metadata } from 'next'
 import HeroCarousel from '@/components/HeroCarousel'
 import ProductCard from '@/components/ProductCard'
 import {
@@ -10,6 +11,20 @@ import { getIconComponent } from '@/utils/iconMapper'
 import { getPayloadClient } from '@/lib/getPayloadClient'
 import { fetchSiteData } from '@/lib/getSiteData'
 import './homepage.css'
+
+export const metadata: Metadata = {
+  title: 'GP Invest - Касови апарати, POS системи и софтуер за търговия',
+  description: 'Професионални решения за търговия - касови апарати, фискални принтери, POS системи и софтуер. Мистрал V3, Zamboo, ТИС Карат. Експертна поддръжка и сервиз в цяла България.',
+  openGraph: {
+    title: 'GP Invest - Касови апарати, POS системи и софтуер за търговия',
+    description: 'Професионални решения за търговия - касови апарати, фискални принтери, POS системи и софтуер. Мистрал V3, Zamboo, ТИС Карат.',
+    url: 'https://gpinvest.bg',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://gpinvest.bg',
+  },
+}
 
 export default async function HomePage() {
   const payload = await getPayloadClient()
@@ -279,6 +294,40 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* JSON-LD Structured Data - Organization */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'GP Invest',
+            legalName: 'Джи Пи Инвест ЕООД',
+            url: 'https://gpinvest.bg',
+            logo: 'https://gpinvest.bg/logo.png',
+            description: 'Професионални решения за търговия - касови апарати, фискални принтери, POS системи и софтуер',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'ж.к Надежда 2 ул. "Чудомир" № 14',
+              addressLocality: 'София',
+              addressCountry: 'BG',
+            },
+            contactPoint: {
+              '@type': 'ContactPoint',
+              telephone: siteSettings.phone || '+359 899 70 70 56',
+              contactType: 'customer service',
+              areaServed: 'BG',
+              availableLanguage: ['Bulgarian'],
+            },
+            sameAs: [
+              siteSettings.facebook,
+              siteSettings.instagram,
+              siteSettings.linkedin,
+            ].filter(Boolean),
+          }),
+        }}
+      />
     </>
   )
 }

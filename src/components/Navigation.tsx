@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Phone, ChevronDown, Package } from 'lucide-react'
 import './Navigation.css'
 
@@ -74,7 +75,14 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
             {/* Logo */}
             <Link href="/" className="logo" onClick={() => setIsOpen(false)}>
               {logo ? (
-                <img src={logo.url} alt={logo.alt || companyName} className="logo-image" />
+                <Image
+                  src={logo.url}
+                  alt={logo.alt || companyName}
+                  className="logo-image"
+                  width={180}
+                  height={60}
+                  priority
+                />
               ) : (
                 companyName
               )}
@@ -162,7 +170,13 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
             {/* Mobile Menu Header */}
             <div className="mobile-menu-header">
               {logo ? (
-                <img src={logo.url} alt={logo.alt || companyName} className="mobile-menu-logo" />
+                <Image
+                  src={logo.url}
+                  alt={logo.alt || companyName}
+                  className="mobile-menu-logo"
+                  width={150}
+                  height={50}
+                />
               ) : (
                 <span className="mobile-menu-title">{companyName}</span>
               )}

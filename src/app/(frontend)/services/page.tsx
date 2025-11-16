@@ -1,6 +1,20 @@
 import React from 'react'
+import { Metadata } from 'next'
 import Breadcrumb from '@/components/Breadcrumb'
 import './services.css'
+
+export const metadata: Metadata = {
+  title: 'Услуги - Сервиз, Поддръжка, Регистрация в НАП',
+  description: 'Професионални услуги за касови апарати и POS системи - сервиз, поддръжка, регистрация в НАП, монтаж, обучение. Бърза реакция и експертна подкрепа.',
+  openGraph: {
+    title: 'Услуги - Сервиз, Поддръжка, Регистрация в НАП | GP Invest',
+    description: 'Професионални услуги за касови апарати и POS системи - сервиз, поддръжка, регистрация в НАП, монтаж, обучение.',
+    url: 'https://gpinvest.bg/services',
+  },
+  alternates: {
+    canonical: 'https://gpinvest.bg/services',
+  },
+}
 
 export default async function ServicesPage() {
   return (

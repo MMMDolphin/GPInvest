@@ -1,5 +1,6 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/ContactForm'
 import StickyCTA from '@/components/StickyCTA'
@@ -18,6 +19,70 @@ interface ProductPageProps {
   params: Promise<{
     slug: string
   }>
+}
+
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const payload = await getPayloadClient()
+
+  const productsData = await payload.find({
+    collection: 'products',
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    depth: 2,
+  })
+
+  if (!productsData.docs || productsData.docs.length === 0) {
+    return {
+      title: 'Продукт не е намерен',
+      description: 'Търсеният продукт не е намерен.',
+    }
+  }
+
+  const product = productsData.docs[0]
+  const categoryName = typeof product.category === 'object' ? product.category.name : ''
+  const brandName = typeof product.brand === 'object' ? product.brand.name : ''
+
+  const seoTitle = brandName && product.model
+    ? `${brandName} ${product.model} - ${product.name}`
+    : brandName
+    ? `${brandName} - ${product.name}`
+    : product.name
+
+  const imageUrl = typeof product.image === 'object' && product.image?.url
+    ? product.image.url
+    : '/og-image.jpg'
+
+  return {
+    title: seoTitle,
+    description: product.shortDescription || `${seoTitle} - Професионално оборудване за търговия. Гаранция и сервиз. Свържете се с нас за оферта.`,
+    openGraph: {
+      title: seoTitle,
+      description: product.shortDescription || `${seoTitle} - Професионално оборудване за търговия`,
+      url: `https://gpinvest.bg/products/${slug}`,
+      type: 'website',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seoTitle,
+      description: product.shortDescription,
+      images: [imageUrl],
+    },
+    alternates: {
+      canonical: `https://gpinvest.bg/products/${slug}`,
+    },
+  }
 }
 
 // Helper function to render Payload rich text (Lexical JSON)
@@ -376,6 +441,77 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </section>
 
       <StickyCTA productName={product.name} />
+
+      {/* JSON-LD Structured Data - Product */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: product.name,
+            description: product.shortDescription,
+            brand: {
+              '@type': 'Brand',
+              name: brandName || 'GP Invest',
+            },
+            model: product.model,
+            sku: product.sku,
+            image: typeof product.image === 'object' ? product.image.url : '',
+            offers: {
+              '@type': 'Offer',
+              price: product.price,
+              priceCurrency: 'BGN',
+              priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
+              availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+              url: `https://gpinvest.bg/products/${slug}`,
+            },
+            aggregateRating: product.rating ? {
+              '@type': 'AggregateRating',
+              ratingValue: product.rating,
+              bestRating: '5',
+              worstRating: '1',
+            } : undefined,
+          }),
+        }}
+      />
+
+      {/* JSON-LD Structured Data - BreadcrumbList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Начало',
+                item: 'https://gpinvest.bg',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Продукти',
+                item: 'https://gpinvest.bg/products',
+              },
+              categoryName ? {
+                '@type': 'ListItem',
+                position: 3,
+                name: categoryName,
+                item: `https://gpinvest.bg/products/category/${typeof product.category === 'object' ? product.category.slug : ''}`,
+              } : undefined,
+              {
+                '@type': 'ListItem',
+                position: categoryName ? 4 : 3,
+                name: product.name,
+                item: `https://gpinvest.bg/products/${slug}`,
+              },
+            ].filter(Boolean),
+          }),
+        }}
+      />
     </>
   )
 }
