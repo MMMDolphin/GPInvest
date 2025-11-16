@@ -158,6 +158,19 @@ export default function Footer({
               <Link href="/terms">Общи условия</Link>
             </div>
           </div>
+          <div className="footer-attribution">
+            <p>
+              Изработка и Подръжка от{' '}
+              <a
+                href="https://saitami.bg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="saitami-link"
+              >
+                Software Company Saitami
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

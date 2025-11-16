@@ -304,6 +304,47 @@ a.contact-link:hover {
   width: 100%;
 }
 
+/* ==================== ATTRIBUTION ==================== */
+.footer-attribution {
+  text-align: center;
+  padding-top: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-attribution p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--font-size-xs);
+  margin: 0;
+}
+
+.footer-attribution .saitami-link {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.footer-attribution .saitami-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: var(--color-light-blue);
+  transition: width var(--transition-base);
+}
+
+.footer-attribution .saitami-link:hover {
+  color: var(--color-light-blue);
+}
+
+.footer-attribution .saitami-link:hover::after {
+  width: 100%;
+}
+
 /* ==================== RESPONSIVE DESIGN ==================== */
 
 /* Tablet */
@@ -362,7 +403,8 @@ a.contact-link:hover {
 .social-link:focus-visible,
 .footer-links a:focus-visible,
 .contact-link:focus-visible,
-.footer-legal a:focus-visible {
+.footer-legal a:focus-visible,
+.footer-attribution .saitami-link:focus-visible {
   outline: 2px solid var(--color-light-blue);
   outline-offset: 2px;
 }
