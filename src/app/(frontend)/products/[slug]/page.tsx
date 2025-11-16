@@ -76,7 +76,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     twitter: {
       card: 'summary_large_image',
       title: seoTitle,
-      description: product.shortDescription,
+      description: product.shortDescription || `${seoTitle} - Професионално оборудване за търговия`,
       images: [imageUrl],
     },
     alternates: {
