@@ -1,5 +1,5 @@
 import type { GlobalConfig } from 'payload'
-import { triggerRevalidate } from '@/payload/utils/triggerRevalidate'
+import { revalidateGlobalAfterChange } from '@/payload/hooks/revalidate'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -8,21 +8,7 @@ export const SiteSettings: GlobalConfig = {
     read: () => true,
   },
   hooks: {
-    afterChange: [
-      async () => {
-        await triggerRevalidate([
-          '/',
-          '/about',
-          '/contact',
-          '/services',
-          '/software',
-          '/software/mistral-v3',
-          '/software/zamboo',
-          '/software/tis-karat',
-          '/products',
-        ])
-      },
-    ],
+    afterChange: [revalidateGlobalAfterChange],
   },
   fields: [
     {

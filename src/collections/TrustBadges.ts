@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateAfterChange, revalidateAfterDelete } from '@/payload/hooks/revalidate'
 
 export const TrustBadges: CollectionConfig = {
   slug: 'trust-badges',
@@ -8,6 +9,10 @@ export const TrustBadges: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
   },
   fields: [
     {
