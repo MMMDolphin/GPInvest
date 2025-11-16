@@ -35,6 +35,8 @@
   --spacing-xl: 3rem;      /* 48px */
   --spacing-2xl: 4rem;     /* 64px */
   --spacing-3xl: 6rem;     /* 96px */
+  --spacing-4xl: 8rem;     /* 128px */
+  --spacing-5xl: 10rem;    /* 160px */
 
   /* Typography - Font Family */
   --font-family: 'Montserrat', sans-serif;
@@ -202,6 +204,39 @@ p {
   background-color: var(--color-white);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary-gradient {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(
+    135deg,
+    var(--color-light-blue) 0%,
+    var(--color-medium-blue) 100%
+  );
+  color: var(--color-white);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-blue-md);
+  transition: all var(--transition-base);
+}
+
+.btn-primary-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-blue-lg);
+}
+
+.btn-primary-gradient:active {
+  transform: translateY(0);
+}
+
+.btn-primary-gradient:focus-visible {
+  outline: 2px solid var(--color-light-blue);
+  outline-offset: 2px;
 }
 
 /* Container */
