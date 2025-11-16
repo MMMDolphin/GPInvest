@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   const imageUrl = typeof product.image === 'object' && product.image?.url
     ? product.image.url
-    : '/og-image.jpg'
+    : '/gpinvest-preview-cart.webp'
 
   return {
     title: seoTitle,
