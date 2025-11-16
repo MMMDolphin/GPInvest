@@ -44,9 +44,9 @@ export const metadata: Metadata = {
     description: 'GP Invest - Вашият надежден партньор за касови апарати, фискални принтери, POS терминали и софтуер за търговия.',
     images: [
       {
-        url: '/gpinvest-preview-cart.webp',
-        width: 1200,
-        height: 630,
+        url: '/og-image.jpg',
+        width: 1536,
+        height: 1024,
         alt: 'GP Invest - Професионални решения за търговия',
       },
     ],
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'GP Invest - Касови апарати, POS системи и софтуер за търговия',
     description: 'GP Invest - Вашият надежден партньор за касови апарати, фискални принтери, POS терминали и софтуер за търговия.',
-    images: ['/gpinvest-preview-cart.webp'],
+    images: ['/og-image.jpg'],
   },
   robots: {
     index: true,
