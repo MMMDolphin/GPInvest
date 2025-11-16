@@ -450,28 +450,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
             '@context': 'https://schema.org',
             '@type': 'Product',
             name: product.name,
-            description: product.shortDescription,
+            description: product.shortDescription || product.name,
             brand: {
               '@type': 'Brand',
               name: brandName || 'GP Invest',
             },
-            model: product.model,
-            sku: product.sku,
+            ...(product.model && { model: product.model }),
             image: typeof product.image === 'object' ? product.image.url : '',
             offers: {
               '@type': 'Offer',
               price: product.price,
               priceCurrency: 'BGN',
               priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
-              availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+              availability: 'https://schema.org/InStock',
               url: `https://gpinvest.bg/products/${slug}`,
             },
-            aggregateRating: product.rating ? {
-              '@type': 'AggregateRating',
-              ratingValue: product.rating,
-              bestRating: '5',
-              worstRating: '1',
-            } : undefined,
           }),
         }}
       />
