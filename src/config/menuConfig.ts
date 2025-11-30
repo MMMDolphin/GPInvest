@@ -32,9 +32,9 @@ export const menuItems: MenuItem[] = [
       { label: 'Периферни устройства', href: '/products/category/periferni-ustroystva' },
     ],
   },
-  { label: 'ПОС ТЕРМИНАЛИ', href: '/pos-terminali' },
+  { label: 'ПОС ТЕРМИНАЛИ', href: '/products/category/pos-terminali' },
   { label: 'УСЛУГИ', href: '/services' },
-  { label: 'КОНСУМАТИВИ', href: '/consumables' },
+  { label: 'КОНСУМАТИВИ', href: '/products/category/consumativi' },
   { label: 'ЗА НАС', href: '/about' },
   { label: 'КОНТАКТИ', href: '/contact' },
 ]
