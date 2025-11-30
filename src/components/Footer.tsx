@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react'
+import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Linkedin } from 'lucide-react'
 import NewsletterSignup from './NewsletterSignup'
 import './Footer.css'
 
@@ -16,6 +16,7 @@ interface FooterProps {
   email?: string | null
   phone?: string | null
   address?: string | null
+  workingHours?: string | null
   facebook?: string | null
   instagram?: string | null
   linkedin?: string | null
@@ -25,9 +26,10 @@ export default function Footer({
   companyName = 'GP Invest',
   logo,
   tagline,
-  email = 'info@gpinvest.bg',
-  phone = '+359 2 123 4567',
-  address = 'София, България',
+  email = 'office@gpinvest.bg',
+  phone = '0899 70 70 56, 0887 72 02 84',
+  address = 'гр. София, ж.к. Надежда 2, ул. "Чудомир" №14',
+  workingHours,
   facebook,
   instagram,
   linkedin,
@@ -131,6 +133,12 @@ export default function Footer({
                   <MapPin size={18} />
                   <span>{address}</span>
                 </li>
+                {workingHours && (
+                  <li className="contact-link working-hours">
+                    <Clock size={18} />
+                    <span style={{ whiteSpace: 'pre-line' }}>{workingHours}</span>
+                  </li>
+                )}
               </ul>
             </div>
 

@@ -94,6 +94,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           email={siteSettings.email}
           phone={siteSettings.phone}
           address={siteSettings.address}
+          workingHours={siteSettings.workingHours}
           facebook={siteSettings.facebook}
           instagram={siteSettings.instagram}
           linkedin={siteSettings.linkedin}

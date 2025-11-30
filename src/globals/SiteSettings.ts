@@ -63,7 +63,7 @@ export const SiteSettings: GlobalConfig = {
             },
             {
               name: 'workingHours',
-              type: 'text',
+              type: 'textarea',
               label: 'Работно време',
             },
           ],
