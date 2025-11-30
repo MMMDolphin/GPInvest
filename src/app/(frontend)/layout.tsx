@@ -85,7 +85,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <a href="#main-content" className="skip-to-content">
           Премини към съдържанието
         </a>
-        <Navigation companyName={siteSettings.companyName} logo={logo} categories={categories} />
+        <Navigation companyName={siteSettings.companyName} logo={logo} />
         <main id="main-content">{children}</main>
         <Footer
           companyName={siteSettings.companyName}

@@ -3,14 +3,9 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Phone, ChevronDown, Package } from 'lucide-react'
+import { Phone, ChevronDown } from 'lucide-react'
+import { menuItems } from '@/config/menuConfig'
 import './Navigation.css'
-
-interface Category {
-  id: string
-  name: string
-  slug?: string
-}
 
 interface Logo {
   url: string
@@ -20,30 +15,33 @@ interface Logo {
 interface NavigationProps {
   companyName?: string
   logo?: Logo | null
-  categories?: Category[]
 }
 
-export default function Navigation({ companyName = 'GP Invest', logo, categories = [] }: NavigationProps) {
+export default function Navigation({ companyName = 'GP Invest', logo }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false)
+  const [activeDropdown, setActiveDropdown] = useState<number | null>(null)
+  const [mobileActiveDropdown, setMobileActiveDropdown] = useState<number | null>(null)
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null)
 
   const toggleMenu = () => setIsOpen(!isOpen)
-  const toggleProductsDropdown = () => setProductsDropdownOpen(!productsDropdownOpen)
 
-  const handleDropdownMouseEnter = () => {
+  const handleDropdownMouseEnter = (index: number) => {
     if (dropdownTimeout) {
       clearTimeout(dropdownTimeout)
     }
-    setProductsDropdownOpen(true)
+    setActiveDropdown(index)
   }
 
   const handleDropdownMouseLeave = () => {
     const timeout = setTimeout(() => {
-      setProductsDropdownOpen(false)
+      setActiveDropdown(null)
     }, 200)
     setDropdownTimeout(timeout)
+  }
+
+  const toggleMobileDropdown = (index: number) => {
+    setMobileActiveDropdown(mobileActiveDropdown === index ? null : index)
   }
 
   // Track scroll for navbar shadow effect
@@ -90,56 +88,47 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
 
             {/* Desktop Navigation Menu */}
             <ul className="nav-menu-desktop">
-              <li>
-                <Link href="/">Начало</Link>
-              </li>
-              <li
-                className="nav-dropdown"
-                onMouseEnter={handleDropdownMouseEnter}
-                onMouseLeave={handleDropdownMouseLeave}
-              >
-                <span className="nav-dropdown-trigger">
-                  Продукти
-                  <ChevronDown size={16} className={productsDropdownOpen ? 'rotated' : ''} />
-                </span>
-                {productsDropdownOpen && (
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link
-                        href="/products"
-                        onClick={() => setProductsDropdownOpen(false)}
-                      >
-                        Всички продукти
-                      </Link>
-                    </li>
-                    {categories.map((category) => {
-                      if (!category.slug) return null
-                      return (
-                        <li key={category.id}>
-                          <Link
-                            href={`/products/category/${category.slug}`}
-                            onClick={() => setProductsDropdownOpen(false)}
-                          >
-                            {category.name}
-                          </Link>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                )}
-              </li>
-              <li>
-                <Link href="/software">Софтуер</Link>
-              </li>
-              <li>
-                <Link href="/services">Услуги</Link>
-              </li>
-              <li>
-                <Link href="/about">За нас</Link>
-              </li>
-              <li>
-                <Link href="/contact">Контакти</Link>
-              </li>
+              {menuItems.map((item, index) => (
+                <li
+                  key={index}
+                  className={item.children ? 'nav-dropdown' : ''}
+                  onMouseEnter={item.children ? () => handleDropdownMouseEnter(index) : undefined}
+                  onMouseLeave={item.children ? handleDropdownMouseLeave : undefined}
+                >
+                  {item.children ? (
+                    <>
+                      <span className="nav-dropdown-trigger">
+                        {item.label}
+                        <ChevronDown size={16} className={activeDropdown === index ? 'rotated' : ''} />
+                      </span>
+                      {activeDropdown === index && (
+                        <ul className="dropdown-menu">
+                          <li>
+                            <Link
+                              href={item.href}
+                              onClick={() => setActiveDropdown(null)}
+                            >
+                              Всички {item.label.toLowerCase()}
+                            </Link>
+                          </li>
+                          {item.children.map((child, childIndex) => (
+                            <li key={childIndex}>
+                              <Link
+                                href={child.href}
+                                onClick={() => setActiveDropdown(null)}
+                              >
+                                {child.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <Link href={item.href}>{item.label}</Link>
+                  )}
+                </li>
+              ))}
             </ul>
 
             {/* CTA Button */}
@@ -192,64 +181,44 @@ export default function Navigation({ companyName = 'GP Invest', logo, categories
 
             {/* Mobile Menu Items */}
             <ul className="mobile-menu-items">
-              <li>
-                <Link href="/" onClick={() => setIsOpen(false)}>
-                  Начало
-                </Link>
-              </li>
-              <li className="mobile-dropdown">
-                <button
-                  className="mobile-dropdown-trigger"
-                  onClick={toggleProductsDropdown}
-                >
-                  Продукти
-                  <ChevronDown size={20} className={productsDropdownOpen ? 'rotated' : ''} />
-                </button>
-                {productsDropdownOpen && (
-                  <ul className="mobile-submenu">
-                    <li>
-                      <Link href="/products" onClick={() => setIsOpen(false)}>
-                        <Package size={18} />
-                        Всички продукти
-                      </Link>
-                    </li>
-                    {categories.map((category) => {
-                      if (!category.slug) return null
-                      return (
-                        <li key={category.id}>
-                          <Link
-                            href={`/products/category/${category.slug}`}
-                            onClick={() => setIsOpen(false)}
-                          >
-                            <Package size={18} />
-                            {category.name}
-                          </Link>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                )}
-              </li>
-              <li>
-                <Link href="/software" onClick={() => setIsOpen(false)}>
-                  Софтуер
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" onClick={() => setIsOpen(false)}>
-                  Услуги
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" onClick={() => setIsOpen(false)}>
-                  За нас
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" onClick={() => setIsOpen(false)}>
-                  Контакти
-                </Link>
-              </li>
+              {menuItems.map((item, index) => (
+                <li key={index} className={item.children ? 'mobile-dropdown' : ''}>
+                  {item.children ? (
+                    <>
+                      <button
+                        className="mobile-dropdown-trigger"
+                        onClick={() => toggleMobileDropdown(index)}
+                      >
+                        {item.label}
+                        <ChevronDown size={20} className={mobileActiveDropdown === index ? 'rotated' : ''} />
+                      </button>
+                      {mobileActiveDropdown === index && (
+                        <ul className="mobile-submenu">
+                          <li>
+                            <Link href={item.href} onClick={() => setIsOpen(false)}>
+                              Всички {item.label.toLowerCase()}
+                            </Link>
+                          </li>
+                          {item.children.map((child, childIndex) => (
+                            <li key={childIndex}>
+                              <Link
+                                href={child.href}
+                                onClick={() => setIsOpen(false)}
+                              >
+                                {child.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <Link href={item.href} onClick={() => setIsOpen(false)}>
+                      {item.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
             </ul>
 
             {/* Mobile CTA */}
