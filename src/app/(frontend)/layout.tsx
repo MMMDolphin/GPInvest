@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google'
 import { Metadata, Viewport } from 'next'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import CookieConsent from '@/components/CookieConsent'
 import { fetchSiteData } from '@/lib/getSiteData'
 import './styles.css'
 
@@ -99,6 +100,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           instagram={siteSettings.instagram}
           linkedin={siteSettings.linkedin}
         />
+        <CookieConsent />
       </body>
     </html>
   )
