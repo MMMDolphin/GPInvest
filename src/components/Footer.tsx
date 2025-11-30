@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Linkedin } from 'lucide-react'
+import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Linkedin, Star, Headphones } from 'lucide-react'
 import NewsletterSignup from './NewsletterSignup'
 import './Footer.css'
 
@@ -54,40 +54,34 @@ export default function Footer({
                   {tagline}
                 </p>
               )}
-              <div className="footer-social">
-                {facebook && (
-                  <a
-                    href={facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link"
-                    aria-label="Facebook"
-                  >
-                    <Facebook size={20} />
-                  </a>
-                )}
-                {instagram && (
-                  <a
-                    href={instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link"
-                    aria-label="Instagram"
-                  >
-                    <Instagram size={20} />
-                  </a>
-                )}
-                {linkedin && (
-                  <a
-                    href={linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin size={20} />
-                  </a>
-                )}
+              <div className="footer-social-links">
+                <a
+                  href="https://www.facebook.com/GP.Invest.Ltd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-item"
+                >
+                  <Facebook size={20} />
+                  <span>Facebook</span>
+                </a>
+                <a
+                  href="https://g.page/r/CYceINgCo28DEAE/review"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-item"
+                >
+                  <Star size={20} />
+                  <span>Google отзив</span>
+                </a>
+                <a
+                  href="https://anydesk.com/bg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-item"
+                >
+                  <Headphones size={20} />
+                  <span>Дистанционна помощ</span>
+                </a>
               </div>
             </div>
 
@@ -151,6 +145,7 @@ export default function Footer({
               <NewsletterSignup />
             </div>
           </div>
+
         </div>
       </div>
 

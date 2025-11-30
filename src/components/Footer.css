@@ -241,6 +241,41 @@ a.contact-link:hover {
   transform: translateY(-2px);
 }
 
+/* Social Links with Text */
+.footer-social-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.footer-social-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  padding: 0.5rem 0;
+  transition: all var(--transition-base);
+}
+
+.footer-social-item svg {
+  flex-shrink: 0;
+  color: var(--color-light-blue);
+  transition: all var(--transition-base);
+}
+
+.footer-social-item:hover {
+  color: var(--color-white);
+  transform: translateX(4px);
+}
+
+.footer-social-item:hover svg {
+  transform: scale(1.1);
+}
+
 /* ==================== NEWSLETTER SECTION ==================== */
 .footer-newsletter-text {
   color: rgba(255, 255, 255, 0.7);
@@ -404,7 +439,8 @@ a.contact-link:hover {
 .footer-links a:focus-visible,
 .contact-link:focus-visible,
 .footer-legal a:focus-visible,
-.footer-attribution .saitami-link:focus-visible {
+.footer-attribution .saitami-link:focus-visible,
+.footer-social-item:focus-visible {
   outline: 2px solid var(--color-light-blue);
   outline-offset: 2px;
 }
