@@ -82,14 +82,23 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: 'customVat',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Различно ДДС',
+      admin: {
+        description: 'Включете ако продуктът има различна ДДС ставка от стандартните 20%',
+      },
+    },
+    {
       name: 'vatRate',
       type: 'number',
-      label: 'ДДС (%)',
-      defaultValue: 20,
+      label: 'ДДС ставка (%)',
       min: 0,
       max: 100,
       admin: {
-        description: 'VAT rate percentage (default 20%)',
+        description: 'Въведете ДДС ставка (стандартна е 20%)',
+        condition: (data) => data?.customVat === true,
       },
     },
     {

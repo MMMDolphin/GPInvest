@@ -312,7 +312,11 @@ export interface Product {
    */
   price: number;
   /**
-   * VAT rate percentage (default 20%)
+   * Включете ако продуктът има различна ДДС ставка от стандартните 20%
+   */
+  customVat?: boolean | null;
+  /**
+   * Въведете ДДС ставка (стандартна е 20%)
    */
   vatRate?: number | null;
   /**
@@ -634,6 +638,7 @@ export interface ProductsSelect<T extends boolean = true> {
   shortDescription?: T;
   category?: T;
   price?: T;
+  customVat?: T;
   vatRate?: T;
   warrantyMonths?: T;
   image?: T;
