@@ -13,7 +13,7 @@ export const menuItems: MenuItem[] = [
   { label: 'НАЧАЛО', href: '/' },
   {
     label: 'ФИСКАЛНИ УСТРОЙСТВА',
-    href: '/fiskalni-ustroystva',
+    href: '/products/category/fiskalni-ustroystva',
     children: [
       { label: 'Касови апарати', href: '/products/category/kasovi-aparati' },
       { label: 'Фискални принтери', href: '/products/category/fiskalni-printeri' },
@@ -23,7 +23,7 @@ export const menuItems: MenuItem[] = [
   { label: 'СОФТУЕР', href: '/software' },
   {
     label: 'POS ОБОРУДВАНЕ',
-    href: '/pos-oborudvane',
+    href: '/products/category/pos-oborudvane',
     children: [
       { label: 'ЕЛЕКТРОННИ ВЕЗНИ', href: '/products/category/elektronni-vezni' },
       { label: 'ESC/POS принтери', href: '/products/category/escpos-printeri' },
