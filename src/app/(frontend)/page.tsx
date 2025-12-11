@@ -12,6 +12,9 @@ import { getPayloadClient } from '@/lib/getPayloadClient'
 import { fetchSiteData } from '@/lib/getSiteData'
 import './homepage.css'
 
+// Revalidate every 60 seconds to pick up new products
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'GP Invest - Касови апарати, POS системи и софтуер за търговия',
   description: 'Професионални решения за търговия - касови апарати, фискални принтери, POS системи и софтуер. Мистрал V3, Zamboo, ТИС Карат. Експертна поддръжка и сервиз в цяла България.',
@@ -43,7 +46,7 @@ export default async function HomePage() {
   })
 
   // Fetch featured products
-  const featuredProductsData = await payload.find({
+  let featuredProductsData = await payload.find({
     collection: 'products',
     where: {
       featured: {
@@ -52,6 +55,15 @@ export default async function HomePage() {
     },
     limit: 6,
   })
+
+  // If no featured products, show recent products instead
+  if (featuredProductsData.docs.length === 0) {
+    featuredProductsData = await payload.find({
+      collection: 'products',
+      sort: '-createdAt',
+      limit: 6,
+    })
+  }
 
   // Fetch all categories for homepage display
   const homepageCategoriesData = await payload.find({
