@@ -45,30 +45,38 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 
   const product = productsData.docs[0]
-  const categoryName = typeof product.category === 'object' ? product.category.name : ''
   const brandName = typeof product.brand === 'object' ? product.brand.name : ''
 
-  const seoTitle = brandName && product.model
+  // Auto-generated SEO title (fallback)
+  const autoTitle = brandName && product.model
     ? `${brandName} ${product.model} - ${product.name}`
     : brandName
     ? `${brandName} - ${product.name}`
     : product.name
 
-  const imageUrl = typeof product.image === 'object' && product.image?.url
+  // Use custom SEO fields if provided, otherwise use auto-generated
+  const seo = product.seo as { metaTitle?: string; metaDescription?: string; ogImage?: any; noIndex?: boolean } | undefined
+  const metaTitle = seo?.metaTitle || autoTitle
+  const metaDescription = seo?.metaDescription || product.shortDescription || `${autoTitle} - Професионално оборудване за търговия. Гаранция и сервиз. Свържете се с нас за оферта.`
+
+  // OG Image: custom SEO image > product main image > default
+  const ogImage = seo?.ogImage && typeof seo.ogImage === 'object' && seo.ogImage.url
+    ? seo.ogImage.url
+    : typeof product.image === 'object' && product.image?.url
     ? product.image.url
     : '/og-image.jpg'
 
-  return {
-    title: seoTitle,
-    description: product.shortDescription || `${seoTitle} - Професионално оборудване за търговия. Гаранция и сервиз. Свържете се с нас за оферта.`,
+  const metadata: Metadata = {
+    title: metaTitle,
+    description: metaDescription,
     openGraph: {
-      title: seoTitle,
-      description: product.shortDescription || `${seoTitle} - Професионално оборудване за търговия`,
+      title: metaTitle,
+      description: metaDescription,
       url: `https://gpinvest.bg/products/${slug}`,
       type: 'website',
       images: [
         {
-          url: imageUrl,
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: product.name,
@@ -77,14 +85,24 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     },
     twitter: {
       card: 'summary_large_image',
-      title: seoTitle,
-      description: product.shortDescription || `${seoTitle} - Професионално оборудване за търговия`,
-      images: [imageUrl],
+      title: metaTitle,
+      description: metaDescription,
+      images: [ogImage],
     },
     alternates: {
       canonical: `https://gpinvest.bg/products/${slug}`,
     },
   }
+
+  // Add noindex if specified
+  if (seo?.noIndex) {
+    metadata.robots = {
+      index: false,
+      follow: false,
+    }
+  }
+
+  return metadata
 }
 
 // Helper function to render Payload rich text (Lexical JSON)

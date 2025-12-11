@@ -376,6 +376,27 @@ export interface Product {
    * Show on homepage
    */
   featured?: boolean | null;
+  /**
+   * Оптимизация за търсачки. Ако не попълните, ще се генерират автоматично от името и описанието.
+   */
+  seo?: {
+    /**
+     * Заглавие за търсачки (препоръчително: 50-60 символа)
+     */
+    metaTitle?: string | null;
+    /**
+     * Описание за търсачки (препоръчително: 150-160 символа)
+     */
+    metaDescription?: string | null;
+    /**
+     * Изображение за споделяне в социални мрежи (препоръчително: 1200x630px). Ако не е зададено, ще се използва основното изображение.
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Ако е включено, страницата няма да се индексира от Google и други търсачки
+     */
+    noIndex?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -679,6 +700,14 @@ export interface ProductsSelect<T extends boolean = true> {
   inStock?: T;
   specificationFile?: T;
   featured?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        noIndex?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

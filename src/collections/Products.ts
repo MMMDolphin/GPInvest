@@ -242,5 +242,50 @@ export const Products: CollectionConfig = {
         description: 'Show on homepage',
       },
     },
+    // SEO Fields
+    {
+      name: 'seo',
+      type: 'group',
+      label: 'SEO настройки',
+      admin: {
+        description: 'Оптимизация за търсачки. Ако не попълните, ще се генерират автоматично от името и описанието.',
+      },
+      fields: [
+        {
+          name: 'metaTitle',
+          type: 'text',
+          label: 'Meta Title',
+          admin: {
+            description: 'Заглавие за търсачки (препоръчително: 50-60 символа)',
+          },
+        },
+        {
+          name: 'metaDescription',
+          type: 'textarea',
+          label: 'Meta Description',
+          admin: {
+            description: 'Описание за търсачки (препоръчително: 150-160 символа)',
+          },
+        },
+        {
+          name: 'ogImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'OG Image (Social sharing)',
+          admin: {
+            description: 'Изображение за споделяне в социални мрежи (препоръчително: 1200x630px). Ако не е зададено, ще се използва основното изображение.',
+          },
+        },
+        {
+          name: 'noIndex',
+          type: 'checkbox',
+          defaultValue: false,
+          label: 'Изключи от търсачки (noindex)',
+          admin: {
+            description: 'Ако е включено, страницата няма да се индексира от Google и други търсачки',
+          },
+        },
+      ],
+    },
   ],
 }
