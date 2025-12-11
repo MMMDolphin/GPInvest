@@ -12,8 +12,8 @@ import { getPayloadClient } from '@/lib/getPayloadClient'
 import { fetchSiteData } from '@/lib/getSiteData'
 import './homepage.css'
 
-// Revalidate every 60 seconds to pick up new products
-export const revalidate = 60
+// Revalidate every hour to pick up new products
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'GP Invest - Касови апарати, POS системи и софтуер за търговия',
