@@ -1,9 +1,15 @@
 import * as migration_20251109_102553_add_parent_to_categories from './20251109_102553_add_parent_to_categories';
+import * as migration_20251211_055911_add_currency_settings from './20251211_055911_add_currency_settings';
 
 export const migrations = [
   {
     up: migration_20251109_102553_add_parent_to_categories.up,
     down: migration_20251109_102553_add_parent_to_categories.down,
-    name: '20251109_102553_add_parent_to_categories'
+    name: '20251109_102553_add_parent_to_categories',
+  },
+  {
+    up: migration_20251211_055911_add_currency_settings.up,
+    down: migration_20251211_055911_add_currency_settings.down,
+    name: '20251211_055911_add_currency_settings'
   },
 ];
