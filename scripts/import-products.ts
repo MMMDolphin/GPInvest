@@ -195,7 +195,8 @@ async function importProducts() {
                 children: [
                   {
                     type: 'paragraph',
-                    children: [{ type: 'text', text: description }],
+                    children: [{ type: 'text', text: description, version: 1 }],
+                    version: 1,
                   },
                 ],
                 direction: 'ltr',
