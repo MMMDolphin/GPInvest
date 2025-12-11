@@ -27,7 +27,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	FOREIGN KEY (\`specification_file_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null
   );
   `)
-  await db.run(sql`INSERT INTO \`__new_products\`("id", "brand_id", "model", "name", "slug", "description", "short_description", "category_id", "price", "custom_vat", "vat_rate", "warranty_months", "image_id", "in_stock", "specification_file_id", "featured", "updated_at", "created_at") SELECT "id", "brand_id", "model", "name", "slug", "description", "short_description", "category_id", "price", "custom_vat", "vat_rate", "warranty_months", "image_id", "in_stock", "specification_file_id", "featured", "updated_at", "created_at" FROM \`products\`;`)
+  await db.run(sql`INSERT INTO \`__new_products\`("id", "brand_id", "model", "name", "slug", "description", "short_description", "category_id", "price", "custom_vat", "vat_rate", "warranty_months", "image_id", "in_stock", "specification_file_id", "featured", "updated_at", "created_at") SELECT "id", "brand_id", "model", "name", "slug", "description", "short_description", "category_id", "price", false, "vat_rate", "warranty_months", "image_id", "in_stock", "specification_file_id", "featured", "updated_at", "created_at" FROM \`products\`;`)
   await db.run(sql`DROP TABLE \`products\`;`)
   await db.run(sql`ALTER TABLE \`__new_products\` RENAME TO \`products\`;`)
   await db.run(sql`PRAGMA foreign_keys=ON;`)
