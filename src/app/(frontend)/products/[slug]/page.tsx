@@ -14,6 +14,8 @@ import {
 } from 'lucide-react'
 import './product-detail.css'
 import { getPayloadClient } from '@/lib/getPayloadClient'
+import { fetchSiteData } from '@/lib/getSiteData'
+import { formatPrice, eurToBgn } from '@/lib/currency'
 
 interface ProductPageProps {
   params: Promise<{
@@ -155,6 +157,7 @@ function renderRichText(content: any): React.ReactNode {
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params
   const payload = await getPayloadClient()
+  const { currencySettings } = await fetchSiteData()
 
   // Get the full URL for the product
   const headersList = await headers()
@@ -185,10 +188,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // Get brand name
   const brandName = typeof product.brand === 'object' ? product.brand.name : ''
 
-  // Calculate price without VAT
+  // Price calculations (prices are now in EUR)
   const vatRate = product.vatRate || 20
-  const priceWithVAT = product.price
-  const priceWithoutVAT = priceWithVAT / (1 + vatRate / 100)
+  const priceEurWithVAT = product.price
+  const priceEurWithoutVAT = priceEurWithVAT / (1 + vatRate / 100)
+
+  // Format prices
+  const priceFormatted = formatPrice(priceEurWithVAT, currencySettings)
+  const priceWithoutVATFormatted = formatPrice(priceEurWithoutVAT, currencySettings)
 
   // Build SEO-optimized title
   const seoTitle = brandName && product.model
@@ -277,11 +284,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <div className="product-price-card">
                 <div className="price-card-content">
                   <div className="price-main">
-                    <div className="price-amount">{priceWithVAT.toFixed(2)} лв</div>
+                    <div className="price-amount">{priceFormatted.eur}</div>
+                    {priceFormatted.bgn && (
+                      <div className="price-bgn">{priceFormatted.bgn}</div>
+                    )}
                     <div className="price-label">с ДДС</div>
                   </div>
                   <div className="price-without-vat">
-                    Без ДДС: {priceWithoutVAT.toFixed(2)} лв
+                    Без ДДС: {priceWithoutVATFormatted.eur}
+                    {priceWithoutVATFormatted.bgn && ` / ${priceWithoutVATFormatted.bgn}`}
                   </div>
                   <div className={`stock-status ${product.inStock ? 'in-stock' : 'out-of-stock'}`}>
                     <div className="stock-indicator"></div>
@@ -460,7 +471,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             offers: {
               '@type': 'Offer',
               price: product.price,
-              priceCurrency: 'BGN',
+              priceCurrency: 'EUR',
               priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
               availability: 'https://schema.org/InStock',
               url: `https://gpinvest.bg/products/${slug}`,

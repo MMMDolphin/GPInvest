@@ -307,6 +307,9 @@ export interface Product {
    */
   shortDescription?: string | null;
   category: number | Category;
+  /**
+   * Въведете цената в евро. Цената в лева се изчислява автоматично.
+   */
   price: number;
   /**
    * VAT rate percentage (default 20%)
@@ -760,6 +763,14 @@ export interface SiteSetting {
   facebook?: string | null;
   instagram?: string | null;
   linkedin?: string | null;
+  /**
+   * Фиксиран курс: 1 EUR = 1.95583 BGN (препоръчително: 1.96)
+   */
+  eurToBgnRate: number;
+  /**
+   * Ако е включено, ще се показва и цената в лева до евро цената
+   */
+  showBgnPrice?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -779,6 +790,8 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   facebook?: T;
   instagram?: T;
   linkedin?: T;
+  eurToBgnRate?: T;
+  showBgnPrice?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

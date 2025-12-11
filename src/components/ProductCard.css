@@ -79,10 +79,22 @@
   border-top: 1px solid var(--color-light-gray);
 }
 
+.product-price-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
 .product-price {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-light-blue);
+}
+
+.product-price-bgn {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-dark-gray);
 }
 
 .product-cta {

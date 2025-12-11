@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default async function ProductsPage() {
   const payload = await getPayloadClient()
-  const { categories } = await fetchSiteData()
+  const { categories, currencySettings } = await fetchSiteData()
 
   // Fetch all products
   const productsData = await payload.find({
@@ -57,7 +57,7 @@ export default async function ProductsPage() {
         </div>
       </div>
 
-      <ProductsClient products={products} categories={categories} />
+      <ProductsClient products={products} categories={categories} currencySettings={currencySettings} />
     </>
   )
 }

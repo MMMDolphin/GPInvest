@@ -4,14 +4,16 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ProductCard from '@/components/ProductCard'
 import { Package, Filter } from 'lucide-react'
+import type { CurrencySettings } from '@/lib/currency'
 
 interface ProductsClientProps {
   products: any[]
   categories: any[]
   initialCategory?: string | null
+  currencySettings?: CurrencySettings
 }
 
-export default function ProductsClient({ products, categories, initialCategory = null }: ProductsClientProps) {
+export default function ProductsClient({ products, categories, initialCategory = null, currencySettings }: ProductsClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory)
   const router = useRouter()
 
@@ -98,7 +100,7 @@ export default function ProductsClient({ products, categories, initialCategory =
           {filteredProducts.length > 0 ? (
             <div className="products-grid">
               {filteredProducts.map((product: any) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product.id} product={product} currencySettings={currencySettings} />
               ))}
             </div>
           ) : (

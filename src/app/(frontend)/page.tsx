@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const payload = await getPayloadClient()
-  const { siteSettings } = await fetchSiteData()
+  const { siteSettings, currencySettings } = await fetchSiteData()
 
   // Fetch active hero slides, sorted by order
   const heroSlidesData = await payload.find({
@@ -119,7 +119,7 @@ export default async function HomePage() {
             <>
               <div className="products-grid">
                 {products.map((product: any) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard key={product.id} product={product} currencySettings={currencySettings} />
                 ))}
               </div>
               <div className="section-cta">

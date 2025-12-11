@@ -88,6 +88,31 @@ export const SiteSettings: GlobalConfig = {
             },
           ],
         },
+        {
+          label: 'Валута',
+          fields: [
+            {
+              name: 'eurToBgnRate',
+              type: 'number',
+              required: true,
+              defaultValue: 1.96,
+              label: 'Курс EUR → BGN',
+              admin: {
+                description: 'Фиксиран курс: 1 EUR = 1.95583 BGN (препоръчително: 1.96)',
+                step: 0.01,
+              },
+            },
+            {
+              name: 'showBgnPrice',
+              type: 'checkbox',
+              defaultValue: true,
+              label: 'Показвай цена в лева (BGN)',
+              admin: {
+                description: 'Ако е включено, ще се показва и цената в лева до евро цената',
+              },
+            },
+          ],
+        },
       ],
     },
   ],

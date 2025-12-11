@@ -74,8 +74,12 @@ export const Products: CollectionConfig = {
       name: 'price',
       type: 'number',
       required: true,
-      label: 'Цена (лв с ДДС)',
+      label: 'Цена (EUR с ДДС)',
       min: 0,
+      admin: {
+        description: 'Въведете цената в евро. Цената в лева се изчислява автоматично.',
+        step: 0.01,
+      },
     },
     {
       name: 'vatRate',

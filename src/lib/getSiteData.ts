@@ -1,6 +1,7 @@
 import type { Category, SiteSetting } from '@/payload-types'
 import { normalizeLogo, type LogoData } from './normalizeLogo'
 import { getPayloadClient } from './getPayloadClient'
+import { type CurrencySettings, getDefaultCurrencySettings } from './currency'
 
 export type SiteCategory = {
   id: string
@@ -13,6 +14,7 @@ export interface SiteData {
   siteSettings: SiteSetting
   categories: SiteCategory[]
   logo: LogoData | null
+  currencySettings: CurrencySettings
 }
 
 export const fetchSiteData = async (): Promise<SiteData> => {
@@ -34,9 +36,17 @@ export const fetchSiteData = async (): Promise<SiteData> => {
     description: category.description ?? undefined,
   }))
 
+  // Get currency settings from site settings with fallback to defaults
+  const defaultCurrency = getDefaultCurrencySettings()
+  const currencySettings: CurrencySettings = {
+    eurToBgnRate: siteSettings.eurToBgnRate ?? defaultCurrency.eurToBgnRate,
+    showBgnPrice: siteSettings.showBgnPrice ?? defaultCurrency.showBgnPrice,
+  }
+
   return {
     siteSettings,
     categories,
     logo: normalizeLogo(siteSettings.logo, siteSettings.companyName),
+    currencySettings,
   }
 }

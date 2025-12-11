@@ -15,7 +15,7 @@ interface CategoryPageProps {
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { categorySlug } = await params
   const payload = await getPayloadClient()
-  const { categories } = await fetchSiteData()
+  const { categories, currencySettings } = await fetchSiteData()
 
   // Find the current category by slug
   const currentCategory = categories.find(c => c.slug === categorySlug)
@@ -75,6 +75,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         products={products}
         categories={categories}
         initialCategory={currentCategory.id}
+        currencySettings={currencySettings}
       />
     </>
   )
