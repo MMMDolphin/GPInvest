@@ -7,6 +7,7 @@ export interface MenuItem {
   label: string
   href: string
   children?: SubMenuItem[]
+  childrenSlugs?: string[]
 }
 
 export const menuItems: MenuItem[] = [
@@ -19,6 +20,7 @@ export const menuItems: MenuItem[] = [
       { label: 'Фискални принтери', href: '/products/category/fiskalni-printeri' },
       { label: 'ФУВАС', href: '/products/category/fuvas' },
     ],
+    childrenSlugs: ['kasovi-aparati', 'fiskalni-printeri', 'fuvas'],
   },
   { label: 'СОФТУЕР', href: '/software' },
   {
@@ -31,6 +33,7 @@ export const menuItems: MenuItem[] = [
       { label: 'Баркод скенери', href: '/products/category/barkod-skeneri' },
       { label: 'Периферни устройства', href: '/products/category/periferni-ustroystva' },
     ],
+    childrenSlugs: ['elektronni-vezni', 'escpos-printeri', 'label-printeri', 'barkod-skeneri', 'periferni-ustroystva'],
   },
   { label: 'ПОС ТЕРМИНАЛИ', href: '/products/category/pos-terminali' },
   { label: 'УСЛУГИ', href: '/services' },
@@ -38,3 +41,7 @@ export const menuItems: MenuItem[] = [
   { label: 'ЗА НАС', href: '/about' },
   { label: 'КОНТАКТИ', href: '/contact' },
 ]
+
+export function getParentCategoryBySlug(slug: string): MenuItem | undefined {
+  return menuItems.find(item => item.href === `/products/category/${slug}` && item.childrenSlugs)
+}

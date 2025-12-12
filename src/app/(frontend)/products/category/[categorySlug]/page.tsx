@@ -5,6 +5,7 @@ import '../../products.css'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/getPayloadClient'
 import { fetchSiteData } from '@/lib/getSiteData'
+import { getParentCategoryBySlug } from '@/config/menuConfig'
 
 interface CategoryPageProps {
   params: Promise<{
@@ -17,10 +18,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const payload = await getPayloadClient()
   const { categories, currencySettings } = await fetchSiteData()
 
+  // Check if this is a parent category (aggregates multiple child categories)
+  const parentCategory = getParentCategoryBySlug(categorySlug)
+
   // Find the current category by slug
   const currentCategory = categories.find(c => c.slug === categorySlug)
 
-  if (!currentCategory) {
+  // If neither a parent category nor a regular category, return 404
+  if (!currentCategory && !parentCategory) {
     notFound()
   }
 
@@ -46,13 +51,38 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     inStock: product.inStock,
   }))
 
-  // Filter products by current category
-  const products = allProducts.filter((product) => {
-    const productCategory = typeof product.category === 'object'
-      ? String(product.category?.id)
-      : String(product.category)
-    return productCategory === currentCategory.id
-  })
+  // Filter products based on whether this is a parent category or regular category
+  let products
+  let pageTitle: string
+  let pageDescription: string | undefined
+  let childCategoryIds: string[] = []
+
+  if (parentCategory && parentCategory.childrenSlugs) {
+    // This is a parent category - get products from all child categories
+    const childCategories = categories.filter(c => parentCategory.childrenSlugs!.includes(c.slug))
+    childCategoryIds = childCategories.map(c => c.id)
+
+    products = allProducts.filter((product) => {
+      const productCategoryId = typeof product.category === 'object'
+        ? String(product.category?.id)
+        : String(product.category)
+      return childCategoryIds.includes(productCategoryId)
+    })
+
+    pageTitle = parentCategory.label
+    pageDescription = `Всички продукти от категория ${parentCategory.label.toLowerCase()}`
+  } else {
+    // Regular single category
+    products = allProducts.filter((product) => {
+      const productCategory = typeof product.category === 'object'
+        ? String(product.category?.id)
+        : String(product.category)
+      return productCategory === currentCategory!.id
+    })
+
+    pageTitle = currentCategory!.name
+    pageDescription = currentCategory!.description
+  }
 
   return (
     <>
@@ -61,12 +91,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <Breadcrumb
             items={[
               { label: 'Продукти', href: '/products' },
-              { label: currentCategory.name }
+              { label: pageTitle }
             ]}
           />
-          <h1>{currentCategory.name}</h1>
-          {currentCategory.description && (
-            <p className="page-subtitle">{currentCategory.description}</p>
+          <h1>{pageTitle}</h1>
+          {pageDescription && (
+            <p className="page-subtitle">{pageDescription}</p>
           )}
         </div>
       </div>
@@ -74,7 +104,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <ProductsClient
         products={products}
         categories={categories}
-        initialCategory={currentCategory.id}
+        initialCategory={currentCategory?.id}
         currencySettings={currencySettings}
       />
     </>
