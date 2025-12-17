@@ -26,9 +26,21 @@ export default async function ProductsPage() {
   // Fetch all products
   const productsData = await payload.find({
     collection: 'products',
-    limit: 100,
+    limit: 200,
     sort: '-createdAt',
   })
+
+  // Fetch all brands
+  const brandsData = await payload.find({
+    collection: 'brands',
+    limit: 50,
+  })
+
+  const brands = brandsData.docs.map((brand: any) => ({
+    id: String(brand.id),
+    name: brand.name,
+    slug: brand.slug,
+  }))
 
   // Transform products data
   const products = productsData.docs.map((product: any) => ({
@@ -38,6 +50,7 @@ export default async function ProductsPage() {
     shortDescription: product.shortDescription,
     price: product.price,
     category: product.category,
+    brand: typeof product.brand === 'object' ? { id: String(product.brand.id), name: product.brand.name } : null,
     image: {
       url: typeof product.image === 'object' ? product.image.url : '',
       alt: typeof product.image === 'object' ? product.image.alt : product.name,
@@ -57,7 +70,7 @@ export default async function ProductsPage() {
         </div>
       </div>
 
-      <ProductsClient products={products} categories={categories} currencySettings={currencySettings} />
+      <ProductsClient products={products} categories={categories} brands={brands} currencySettings={currencySettings} />
     </>
   )
 }
