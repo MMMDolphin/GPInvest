@@ -36,6 +36,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     sort: '-createdAt',
   })
 
+  // Fetch all brands
+  const brandsData = await payload.find({
+    collection: 'brands',
+    limit: 50,
+  })
+
+  const brands = brandsData.docs.map((brand: any) => ({
+    id: String(brand.id),
+    name: brand.name,
+    slug: brand.slug,
+  }))
+
   // Transform products data
   const allProducts = productsData.docs.map((product: any) => ({
     id: product.id,
@@ -44,6 +56,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     shortDescription: product.shortDescription,
     price: product.price,
     category: product.category,
+    brand: typeof product.brand === 'object' ? { id: String(product.brand.id), name: product.brand.name } : null,
     image: {
       url: typeof product.image === 'object' ? product.image.url : '',
       alt: typeof product.image === 'object' ? product.image.alt : product.name,
@@ -104,6 +117,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <ProductsClient
         products={products}
         categories={categories}
+        brands={brands}
         initialCategory={currentCategory?.id}
         currencySettings={currencySettings}
       />
