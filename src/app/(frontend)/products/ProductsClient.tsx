@@ -200,7 +200,7 @@ export default function ProductsClient({
                     <span className="option-label">Всички</span>
                     <span className="option-count">{products.length}</span>
                   </label>
-                  {categoriesWithCounts.map(cat => (
+                  {categoriesWithCounts.filter(cat => cat.count > 0).map(cat => (
                     <label
                       key={cat.id}
                       className={`filter-option ${selectedCategory === cat.id ? 'active' : ''}`}
