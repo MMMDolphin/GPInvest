@@ -84,14 +84,22 @@ export default function ContactForm({ productName, productUrl }: ContactFormProp
     setIsSubmitting(true)
 
     try {
-      // Here you would send the form data to your backend
-      console.log('Form submitted:', formData)
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Възникна грешка')
+      }
 
       // Show success message
-      alert('Благодарим ви за запитването! Ще се свържем с вас скоро.')
+      alert(result.message || 'Благодарим ви за запитването! Ще се свържем с вас скоро.')
 
       // Reset form
       setFormData({
@@ -104,7 +112,8 @@ export default function ContactForm({ productName, productUrl }: ContactFormProp
         productUrl: productUrl || '',
       })
     } catch (error) {
-      alert('Възникна грешка при изпращането на формата. Моля, опитайте отново.')
+      const errorMessage = error instanceof Error ? error.message : 'Възникна грешка при изпращането на формата. Моля, опитайте отново.'
+      alert(errorMessage)
     } finally {
       setIsSubmitting(false)
     }

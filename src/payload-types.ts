@@ -76,6 +76,7 @@ export interface Config {
     products: Product;
     'hero-slides': HeroSlide;
     'email-newsletter': EmailNewsletter;
+    orders: Order;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +93,7 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     'hero-slides': HeroSlidesSelect<false> | HeroSlidesSelect<true>;
     'email-newsletter': EmailNewsletterSelect<false> | EmailNewsletterSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -458,6 +460,35 @@ export interface EmailNewsletter {
   createdAt: string;
 }
 /**
+ * Запитвания и поръчки от клиенти
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: number;
+  fullName: string;
+  company: string;
+  phone: string;
+  email: string;
+  /**
+   * Продукт, за който е направено запитването
+   */
+  product?: string | null;
+  /**
+   * Линк към продукта
+   */
+  productUrl?: string | null;
+  additionalInfo?: string | null;
+  status?: ('new' | 'processing' | 'contacted' | 'completed' | 'cancelled') | null;
+  /**
+   * Бележки за вътрешно ползване (не се показват на клиента)
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -516,6 +547,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'email-newsletter';
         value: number | EmailNewsletter;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: number | Order;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -737,6 +772,23 @@ export interface EmailNewsletterSelect<T extends boolean = true> {
   status?: T;
   subscribedAt?: T;
   source?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  fullName?: T;
+  company?: T;
+  phone?: T;
+  email?: T;
+  product?: T;
+  productUrl?: T;
+  additionalInfo?: T;
+  status?: T;
+  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }
