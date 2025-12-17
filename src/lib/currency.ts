@@ -30,11 +30,22 @@ export function formatBgn(amount: number): string {
 
 /**
  * Format price with both currencies if showBgn is enabled
+ * Returns "Получи оферта" for products with price = 0
  */
 export function formatPrice(
   eurAmount: number,
   settings: CurrencySettings
-): { eur: string; bgn: string | null; bgnAmount: number | null } {
+): { eur: string; bgn: string | null; bgnAmount: number | null; isQuoteOnly: boolean } {
+  // Handle "get a quote" products (price = 0)
+  if (eurAmount === 0) {
+    return {
+      eur: 'Получи оферта',
+      bgn: null,
+      bgnAmount: null,
+      isQuoteOnly: true,
+    }
+  }
+
   const eur = formatEur(eurAmount)
 
   if (settings.showBgnPrice) {
@@ -43,10 +54,11 @@ export function formatPrice(
       eur,
       bgn: formatBgn(bgnAmount),
       bgnAmount,
+      isQuoteOnly: false,
     }
   }
 
-  return { eur, bgn: null, bgnAmount: null }
+  return { eur, bgn: null, bgnAmount: null, isQuoteOnly: false }
 }
 
 /**

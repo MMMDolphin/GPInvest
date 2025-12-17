@@ -91,6 +91,15 @@
   color: var(--color-light-blue);
 }
 
+.product-price.quote-only {
+  font-size: 1.1rem;
+  color: var(--color-medium-blue);
+  background: linear-gradient(135deg, var(--color-light-blue), var(--color-medium-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .product-price-bgn {
   font-size: 0.9rem;
   font-weight: 500;
