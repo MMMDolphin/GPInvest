@@ -1,11 +1,19 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Phone, ChevronDown } from 'lucide-react'
+import { Phone, ChevronDown, Search, X, Loader2 } from 'lucide-react'
 import { menuItems } from '@/config/menuConfig'
 import './Navigation.css'
+
+interface SearchResult {
+  id: string
+  name: string
+  slug: string
+  price: number
+  image: string | null
+}
 
 interface Logo {
   url: string
@@ -24,7 +32,82 @@ export default function Navigation({ companyName = 'GP Invest', logo }: Navigati
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState<number | null>(null)
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null)
 
+  // Search state
+  const [showSearch, setShowSearch] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([])
+  const [isSearching, setIsSearching] = useState(false)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
   const toggleMenu = () => setIsOpen(!isOpen)
+
+  // Open search
+  const openSearch = () => {
+    setShowSearch(true)
+    setTimeout(() => searchInputRef.current?.focus(), 100)
+  }
+
+  // Close search
+  const closeSearch = () => {
+    setShowSearch(false)
+    setSearchQuery('')
+    setSearchResults([])
+  }
+
+  // Search products
+  const searchProducts = useCallback(async (query: string) => {
+    if (query.length < 2) {
+      setSearchResults([])
+      return
+    }
+
+    setIsSearching(true)
+    try {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+      const data = await response.json()
+      setSearchResults(data.products || [])
+    } catch (error) {
+      console.error('Search error:', error)
+      setSearchResults([])
+    } finally {
+      setIsSearching(false)
+    }
+  }, [])
+
+  // Debounced search
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setSearchQuery(value)
+
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current)
+    }
+
+    searchTimeoutRef.current = setTimeout(() => {
+      searchProducts(value)
+    }, 300)
+  }
+
+  // Close search on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showSearch) {
+        closeSearch()
+      }
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [showSearch])
+
+  // Prevent body scroll when search is open
+  useEffect(() => {
+    if (showSearch) {
+      document.body.style.overflow = 'hidden'
+    } else if (!isOpen) {
+      document.body.style.overflow = 'unset'
+    }
+  }, [showSearch, isOpen])
 
   const handleDropdownMouseEnter = (index: number) => {
     if (dropdownTimeout) {
@@ -131,6 +214,15 @@ export default function Navigation({ companyName = 'GP Invest', logo }: Navigati
               ))}
             </ul>
 
+            {/* Search Button */}
+            <button
+              className="nav-search-btn"
+              onClick={openSearch}
+              aria-label="Търсене"
+            >
+              <Search size={20} />
+            </button>
+
             {/* CTA Button */}
             <Link href="/contact" className="nav-cta">
               <Phone size={18} />
@@ -151,6 +243,76 @@ export default function Navigation({ companyName = 'GP Invest', logo }: Navigati
           </div>
         </div>
       </nav>
+
+      {/* Search Overlay */}
+      {showSearch && (
+        <div className="search-overlay" onClick={closeSearch}>
+          <div className="search-container" onClick={(e) => e.stopPropagation()}>
+            <div className="search-header">
+              <div className="search-input-wrapper">
+                <Search size={20} className="search-icon" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="Търсене на продукти..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className="search-input"
+                />
+                {isSearching && <Loader2 size={20} className="search-spinner" />}
+              </div>
+              <button className="search-close" onClick={closeSearch} aria-label="Затвори">
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="search-results">
+              {searchQuery.length >= 2 && !isSearching && searchResults.length === 0 && (
+                <div className="search-no-results">
+                  Няма намерени продукти за "{searchQuery}"
+                </div>
+              )}
+
+              {searchResults.length > 0 && (
+                <div className="search-results-list">
+                  {searchResults.map((product) => (
+                    <Link
+                      key={product.id}
+                      href={`/products/${product.slug}`}
+                      className="search-result-item"
+                      onClick={closeSearch}
+                    >
+                      {product.image && (
+                        <div className="search-result-image">
+                          <Image
+                            src={product.image}
+                            alt={product.name}
+                            width={60}
+                            height={60}
+                            style={{ objectFit: 'cover' }}
+                          />
+                        </div>
+                      )}
+                      <div className="search-result-info">
+                        <span className="search-result-name">{product.name}</span>
+                        <span className="search-result-price">
+                          {product.price === 0 ? 'Получи оферта' : `${product.price.toFixed(2)} EUR`}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+
+              {searchQuery.length < 2 && (
+                <div className="search-hint">
+                  Въведете поне 2 символа за търсене
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
