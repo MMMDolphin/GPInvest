@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import ProductCard from '@/components/ProductCard'
 import { Package, Filter, ChevronDown, ChevronUp, X, SlidersHorizontal } from 'lucide-react'
 import type { CurrencySettings } from '@/lib/currency'
@@ -39,6 +39,18 @@ export default function ProductsClient({
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000])
   const [sortBy, setSortBy] = useState<SortOption>('newest')
   const [showFilters, setShowFilters] = useState(false)
+
+  // Lock body scroll when filters are open on mobile
+  useEffect(() => {
+    if (showFilters) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [showFilters])
 
   // Collapsible sections
   const [expandedSections, setExpandedSections] = useState({
