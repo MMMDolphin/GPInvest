@@ -304,14 +304,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <div className="price-main">
                     <div className={`price-amount ${priceFormatted.isQuoteOnly ? 'quote-only' : ''}`}>{priceFormatted.eur}</div>
                     {priceFormatted.bgn && (
-                      <div className="price-bgn">{priceFormatted.bgn}</div>
+                      <div className="price-bgn">({priceFormatted.bgn})</div>
                     )}
                     {!priceFormatted.isQuoteOnly && <div className="price-label">с ДДС</div>}
                   </div>
                   {!priceFormatted.isQuoteOnly && (
                     <div className="price-without-vat">
-                      Без ДДС: {priceWithoutVATFormatted.eur}
-                      {priceWithoutVATFormatted.bgn && ` / ${priceWithoutVATFormatted.bgn}`}
+                      Без ДДС: {priceWithoutVATFormatted.eur} ({priceWithoutVATFormatted.bgn})
                     </div>
                   )}
                   <div className={`stock-status ${product.inStock ? 'in-stock' : 'out-of-stock'}`}>

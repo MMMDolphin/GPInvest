@@ -850,11 +850,11 @@ export interface SiteSetting {
   instagram?: string | null;
   linkedin?: string | null;
   /**
-   * Фиксиран курс: 1 EUR = 1.95583 BGN (препоръчително: 1.96)
+   * Официален фиксиран курс за въвеждане на еврото: 1 EUR = 1.95583 BGN
    */
   eurToBgnRate: number;
   /**
-   * Ако е включено, ще се показва и цената в лева до евро цената
+   * Преходен период: Двойно обозначаване на цените. Пример: 49,99 € (97,77 лв.)
    */
   showBgnPrice?: boolean | null;
   updatedAt?: string | null;

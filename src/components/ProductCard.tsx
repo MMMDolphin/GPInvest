@@ -50,7 +50,7 @@ export default function ProductCard({ product, currencySettings }: ProductCardPr
           <div className="product-footer">
             <div className="product-price-container">
               <span className={`product-price ${product.price === 0 ? 'quote-only' : ''}`}>{eur}</span>
-              {bgn && <span className="product-price-bgn">{bgn}</span>}
+              {bgn && <span className="product-price-bgn">({bgn})</span>}
             </div>
             <span className="product-cta">Виж повече →</span>
           </div>
