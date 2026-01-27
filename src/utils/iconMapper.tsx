@@ -10,6 +10,10 @@ import {
   Scale,
   Barcode,
   Banknote,
+  Headphones,
+  Phone,
+  MessageCircle,
+  HelpCircle,
 } from 'lucide-react'
 
 // Icon mapping for category icons
@@ -25,6 +29,11 @@ const iconMap: Record<string, any> = {
   HardDrive,
   Scale,
   Barcode,
+  // Remote assistance icons
+  Headphones,
+  Phone,
+  MessageCircle,
+  HelpCircle,
 }
 
 export const getIconComponent = (iconName: string) => {

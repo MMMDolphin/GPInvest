@@ -89,6 +89,46 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Дистанционна помощ',
+          fields: [
+            {
+              name: 'remoteAssistanceUrl',
+              type: 'text',
+              label: 'URL за дистанционна помощ',
+              defaultValue: 'https://anydesk.com/bg',
+              admin: {
+                description: 'Линк към платформа за дистанционна помощ (напр. AnyDesk, TeamViewer)',
+              },
+            },
+            {
+              name: 'remoteAssistanceLabel',
+              type: 'text',
+              label: 'Етикет',
+              defaultValue: 'Дистанционна помощ',
+              admin: {
+                description: 'Текст, който се показва до иконата',
+              },
+            },
+            {
+              name: 'remoteAssistanceIcon',
+              type: 'select',
+              label: 'Икона',
+              defaultValue: 'Headphones',
+              options: [
+                { label: 'Слушалки (Headphones)', value: 'Headphones' },
+                { label: 'Монитор (Monitor)', value: 'Monitor' },
+                { label: 'Телефон (Phone)', value: 'Phone' },
+                { label: 'Съобщение (MessageCircle)', value: 'MessageCircle' },
+                { label: 'Помощ (HelpCircle)', value: 'HelpCircle' },
+                { label: 'Лаптоп (Laptop)', value: 'Laptop' },
+              ],
+              admin: {
+                description: 'Изберете икона за дистанционна помощ',
+              },
+            },
+          ],
+        },
+        {
           label: 'Валута',
           fields: [
             {

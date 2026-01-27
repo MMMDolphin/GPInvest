@@ -99,6 +99,9 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           facebook={siteSettings.facebook}
           instagram={siteSettings.instagram}
           linkedin={siteSettings.linkedin}
+          remoteAssistanceUrl={siteSettings.remoteAssistanceUrl}
+          remoteAssistanceLabel={siteSettings.remoteAssistanceLabel}
+          remoteAssistanceIcon={siteSettings.remoteAssistanceIcon}
         />
         <CookieConsent />
       </body>

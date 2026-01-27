@@ -850,6 +850,18 @@ export interface SiteSetting {
   instagram?: string | null;
   linkedin?: string | null;
   /**
+   * Линк към платформа за дистанционна помощ (напр. AnyDesk, TeamViewer)
+   */
+  remoteAssistanceUrl?: string | null;
+  /**
+   * Текст, който се показва до иконата
+   */
+  remoteAssistanceLabel?: string | null;
+  /**
+   * Изберете икона за дистанционна помощ
+   */
+  remoteAssistanceIcon?: ('Headphones' | 'Monitor' | 'Phone' | 'MessageCircle' | 'HelpCircle' | 'Laptop') | null;
+  /**
    * Официален фиксиран курс за въвеждане на еврото: 1 EUR = 1.95583 BGN
    */
   eurToBgnRate: number;
@@ -876,6 +888,9 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   facebook?: T;
   instagram?: T;
   linkedin?: T;
+  remoteAssistanceUrl?: T;
+  remoteAssistanceLabel?: T;
+  remoteAssistanceIcon?: T;
   eurToBgnRate?: T;
   showBgnPrice?: T;
   updatedAt?: T;

@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Linkedin, Star, Headphones } from 'lucide-react'
+import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Linkedin, Star } from 'lucide-react'
+import { getIconComponent } from '@/utils/iconMapper'
 import NewsletterSignup from './NewsletterSignup'
 import './Footer.css'
 
@@ -20,6 +21,9 @@ interface FooterProps {
   facebook?: string | null
   instagram?: string | null
   linkedin?: string | null
+  remoteAssistanceUrl?: string | null
+  remoteAssistanceLabel?: string | null
+  remoteAssistanceIcon?: string | null
 }
 
 export default function Footer({
@@ -33,7 +37,12 @@ export default function Footer({
   facebook,
   instagram,
   linkedin,
+  remoteAssistanceUrl,
+  remoteAssistanceLabel = 'Дистанционна помощ',
+  remoteAssistanceIcon = 'Headphones',
 }: FooterProps) {
+  // Get the icon component for remote assistance
+  const RemoteAssistanceIcon = getIconComponent(remoteAssistanceIcon || 'Headphones')
   const currentYear = new Date().getFullYear()
 
   return (
@@ -73,15 +82,17 @@ export default function Footer({
                   <Star size={20} />
                   <span>Google отзив</span>
                 </a>
-                <a
-                  href="https://anydesk.com/bg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-item"
-                >
-                  <Headphones size={20} />
-                  <span>Дистанционна помощ</span>
-                </a>
+                {remoteAssistanceUrl && (
+                  <a
+                    href={remoteAssistanceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-social-item"
+                  >
+                    <RemoteAssistanceIcon size={20} />
+                    <span>{remoteAssistanceLabel}</span>
+                  </a>
+                )}
               </div>
             </div>
 
