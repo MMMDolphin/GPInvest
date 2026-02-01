@@ -106,6 +106,6 @@ export function formatPrice(
 export function getDefaultCurrencySettings(): CurrencySettings {
   return {
     eurToBgnRate: FIXED_EUR_BGN_RATE,
-    showBgnPrice: true,
+    showBgnPrice: false,
   }
 }
