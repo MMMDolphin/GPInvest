@@ -45,8 +45,8 @@ export default async function HomePage() {
     limit: 10,
   })
 
-  // Fetch featured products
-  let featuredProductsData = await payload.find({
+  // Fetch featured products only
+  const featuredProductsData = await payload.find({
     collection: 'products',
     where: {
       featured: {
@@ -55,15 +55,6 @@ export default async function HomePage() {
     },
     limit: 6,
   })
-
-  // If no featured products, show recent products instead
-  if (featuredProductsData.docs.length === 0) {
-    featuredProductsData = await payload.find({
-      collection: 'products',
-      sort: '-createdAt',
-      limit: 6,
-    })
-  }
 
   // Fetch all categories for homepage display
   const homepageCategoriesData = await payload.find({
@@ -143,9 +134,9 @@ export default async function HomePage() {
             </>
           ) : (
             <div className="empty-state">
-              <p>Все още няма продукти в каталога.</p>
-              <Link href="/admin" className="btn-primary-gradient">
-                Добави продукти
+              <p>Все още няма препоръчани продукти.</p>
+              <Link href="/products" className="btn-primary-gradient">
+                Виж всички продукти
               </Link>
             </div>
           )}
